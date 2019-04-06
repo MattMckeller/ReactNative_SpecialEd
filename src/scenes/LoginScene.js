@@ -2,7 +2,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import LoginForm from '../components/LoginForm';
-import MainLayout from '../layouts/MainLayout';
+import AuthLayout from "../layouts/AuthLayout";
+import {View} from "react-native";
 
 type Props = {
 }
@@ -13,9 +14,11 @@ class LoginScene extends Component<Props> {
 
   render() {
     return (
-      <MainLayout>
-        <LoginForm />
-      </MainLayout>
+      <AuthLayout>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <LoginForm />
+        </View>
+      </AuthLayout>
     );
   }
 }

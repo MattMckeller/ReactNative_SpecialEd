@@ -8,15 +8,17 @@
 
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import {Body, Button, Container, Content, Footer, FooterTab, Header, Icon, Left, Right, Text, Title} from "native-base";
-import { Col, Row, Grid } from 'react-native-easy-grid';
-import globalStyles from "../assets/styles/GlobalStyles";
+import {
+  Body, Button, Container, Content, Footer, FooterTab, Header, Icon, Left, Right, Text, Title,
+} from 'native-base';
+import globalStyles from '../assets/styles/GlobalStyles';
 
-type Props = {};
+type Props = {
+  children: any
+};
 class MainLayout extends Component<Props> {
-
   render() {
-    const children = this.props.children;
+    const { children } = this.props;
     const { contentContainerStyle, containerStyle } = styles;
     const { flexRow, flexColumn } = globalStyles;
     return (
