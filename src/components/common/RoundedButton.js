@@ -10,6 +10,7 @@ type Props = {
   title: string,
   height?: number | string,
   onPress: () => {},
+  disabled?: boolean,
 }
 class RoundedButton extends Component<Props> {
   constructor() {
@@ -18,14 +19,19 @@ class RoundedButton extends Component<Props> {
   }
 
   render() {
-    const { buttonContainerStyle, textStyle, touchableHighlightStyle } = styles;
-    const { title, height } = this.props;
+    const {
+      buttonContainerStyle, textStyle, touchableHighlightStyle, disabledStyle,
+    } = styles;
+    const { title, height, disabled } = this.props;
+    const updatedButtonContainerStyle = (disabled)
+      ? ({ ...buttonContainerStyle, ...disabledStyle }) : (buttonContainerStyle);
     return (
       <TouchableHighlight
         onPress={this._onPress}
         style={touchableHighlightStyle}
+        disabled={disabled}
       >
-        <View style={{ ...buttonContainerStyle, ...{ height } }}>
+        <View style={{ ...updatedButtonContainerStyle, ...{ height } }}>
           <Text style={textStyle}>{title}</Text>
         </View>
       </TouchableHighlight>
@@ -40,6 +46,7 @@ class RoundedButton extends Component<Props> {
 
 RoundedButton.defaultProps = {
   height: 50,
+  disabled: false,
 };
 
 const styles = {
@@ -52,6 +59,9 @@ const styles = {
     borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  disabledStyle: {
+    backgroundColor: styleVariables.disabledButtonColor,
   },
   textStyle: {
     color: styleVariables.primaryColor,

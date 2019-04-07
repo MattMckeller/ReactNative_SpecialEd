@@ -1,4 +1,10 @@
-import {EMAIL_CHANGED, LOGIN_USER, LOGIN_USER_FAIL, LOGIN_USER_SUCCESS, PASSWORD_CHANGED} from './types';
+import {
+  EMAIL_CHANGED,
+  LOGIN_USER_START,
+  LOGIN_USER_FAIL,
+  LOGIN_USER_SUCCESS,
+  PASSWORD_CHANGED,
+} from './types';
 import { Actions } from 'react-native-router-flux';
 
 export const emailChanged = text => ({
@@ -13,16 +19,19 @@ export const passwordChanged = text => ({
 
 export const loginUser = ({ email, password }) => {
   return (dispatch) => {
-    dispatch({ type: LOGIN_USER });
+    console.log('login user action', email, password);
+    dispatch({ type: LOGIN_USER_START });
 
     // todo implement backend calls
-    loginUserSuccess(dispatch, {name: 'name val'});
+    setTimeout(() => {
+      loginUserSuccess(dispatch, {name: 'name val'});
+    }, 5000);
   };
 };
 
 const loginUserSuccess = (dispatch, user) => {
   dispatch({ type: LOGIN_USER_SUCCESS, payload: user });
-  Actions.main();
+  // Actions.main();
 };
 
 const loginUserFail = (dispatch) => {
