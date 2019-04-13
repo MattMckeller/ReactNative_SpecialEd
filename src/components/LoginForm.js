@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import {
   View, KeyboardAvoidingView, Keyboard,
 } from 'react-native';
+import {
+  Field, FormProps, reduxForm, formValueSelector,
+} from 'redux-form';
 import globalStyles from '../assets/styles/GlobalStyles';
 import RoundedTextInput from './common/RoundedTextInput';
 import RoundedButton from './common/RoundedButton';
@@ -11,48 +14,58 @@ import styleVariables from '../assets/StyleVariables';
 import { emailChanged, loginUser, passwordChanged } from '../actions';
 import CenteredSpinner from './common/CenteredSpinner';
 import Required from '../utility/validation/Required';
+import MinLength from '../utility/validation/MinLength';
+import Validate from '../utility/validation/Validate';
+import autoFormErrorDisplay from './hoc/AutoFormErrorDisplay';
 
-// todo refactor into generic form component
+const FORM_NAME = 'loginForm';
+const EMAIL_INPUT_NAME = 'email';
+const PASSWORD_INPUT_NAME = 'password';
+const InputComponent = autoFormErrorDisplay(RoundedTextInput);
+
 type Props = {
-  emailChangedAction: (text: string) => {},
+  emailChangedAction: (text: string) => {}, // todo delete unused actions and reducers
   passwordChangedAction: (text: string) => {},
   loginUserAction: ({email: string, password: string}) => {},
   email: string,
   password: string,
   loading: boolean,
-}
+} & FormProps
 class LoginForm extends Component<Props> {
   state = {
-    formIsValid: true,
-    submitButtonDisabled: false,
-    displayCurrentErrors: false,
-    inputFields: {
-      emailAddressInput: {
-        ref: null,
-        value: '',
-        isValid: false,
-        displayingError: false,
-      },
-      passwordInput: {
-        ref: null,
-        value: '',
-        isValid: false,
-        displayingError: false,
-      },
+    [EMAIL_INPUT_NAME]: {
+      previouslyDisplayedError: false,
+      shouldDisplayError: false,
+      valid: null,
+    },
+    [PASSWORD_INPUT_NAME]: {
+      previouslyDisplayedError: false,
+      shouldDisplayError: false,
+      valid: null,
     },
   };
 
+  // todo update validation rules
+  emailValidationRules = [
+    value => Validate(value, [
+      Required({ fieldName: 'Email Address' }),
+      MinLength({ fieldName: 'Email Address', length: 5 }),
+    ]),
+  ];
+
+  // todo update validation rules
+  passwordValidationRules = [
+    value => Validate(value, [
+      Required({ fieldName: 'Password' }),
+      MinLength({ fieldName: 'Password', length: 5 }),
+    ]),
+  ];
+
   constructor() {
     super();
-    this.onPasswordChanged = this.onPasswordChanged.bind(this);
-    this.onEmailChanged = this.onEmailChanged.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.setEmailRef = this.setEmailRef.bind(this);
-    this.setPasswordRef = this.setPasswordRef.bind(this);
-    this.onValidate = this.onValidate.bind(this);
-    this.checkForDisplayedErrors = this.checkForDisplayedErrors.bind(this);
-    this.onEmailErrorMessageChange = this.onEmailErrorMessageChange.bind(this);
-    this.onPasswordErrorMessageChange = this.onPasswordErrorMessageChange.bind(this);
+    this.shouldDisableSubmitButton = this.shouldDisableSubmitButton.bind(this);
+    this.onErrorStateChange = this.onErrorStateChange.bind(this);
   }
 
   renderSpinner() {
@@ -73,43 +86,39 @@ class LoginForm extends Component<Props> {
       submitButtonContainerStyle,
     } = styles;
     const { flexRow, flexColumn } = globalStyles;
-    const { email, password } = this.props;
-    const { submitButtonDisabled, displayCurrentErrors } = this.state;
+    const {
+      handleSubmit,
+    } = this.props;
+    const shouldDisableSubmitButton = this.shouldDisableSubmitButton();
     return (
       <View style={flexRow}>
         <View style={{ ...flexColumn, ...containerStyle }}>
           <KeyboardAvoidingView behavior="padding" style={wrapperStyle}>
             <View style={inputContainerStyle}>
-              <RoundedTextInput
-                ref={this.setEmailRef}
-                onChangeText={this.onEmailChanged}
-                onValidate={(valid) => { this.onValidate(valid, 'emailAddressInput'); }}
-                displayCurrentErrors={displayCurrentErrors}
-                onDisplayErrorMessage={this.onEmailErrorMessageChange}
-                value={email}
+              <Field
+                name={EMAIL_INPUT_NAME}
+                onErrorStateChange={this.onErrorStateChange}
                 label="Email Address"
+                component={InputComponent}
                 labelIcon="person"
-                validationRules={[Required({ fieldName: 'Email Address' })]}
+                validate={this.emailValidationRules}
               />
             </View>
             <View style={inputContainerStyle}>
-              <RoundedTextInput
-                ref={this.setPasswordRef}
-                onChangeText={this.onPasswordChanged}
-                onValidate={(valid) => { this.onValidate(valid, 'passwordInput'); }}
-                displayCurrentErrors={displayCurrentErrors}
-                onDisplayErrorMessage={this.onPasswordErrorMessageChange}
-                value={password}
+              <Field
+                name={PASSWORD_INPUT_NAME}
+                onErrorStateChange={this.onErrorStateChange}
                 label="Password"
                 labelIcon="lock"
                 secureTextEntry
-                validationRules={[Required({ fieldName: 'Password' })]}
+                component={InputComponent}
+                validate={this.passwordValidationRules}
               />
             </View>
             <View style={submitButtonContainerStyle}>
               <RoundedButton
-                onPress={this.onSubmit}
-                disabled={submitButtonDisabled}
+                onPress={handleSubmit(this.onSubmit)}
+                disabled={shouldDisableSubmitButton}
                 title="Sign In"
                 height={60}
               />
@@ -121,115 +130,44 @@ class LoginForm extends Component<Props> {
     );
   }
 
-  onValidate(valid: boolean, inputKey: string) {
-    const { inputFields } = this.state;
-    const newState = { inputFields: { ...inputFields } };
-    newState.inputFields[inputKey].isValid = valid;
-    this.setState(newState);
-  }
-
-  formIsValid() {
-    const { inputFields, formIsValid } = this.state;
-    let hasInit = false;
-    let isValid = true;
-    Object.keys(inputFields).forEach((key) => {
-      const { ref } = inputFields[key];
-      if (ref === null) {
-        return 0;
-      }
-      hasInit = true;
-      isValid = isValid && inputFields[key].isValid;
-      return 0;
+  onErrorStateChange(errorDisplayData: {
+                                name: string,
+                                shouldDisplayError: boolean,
+                                previouslyDisplayedError: boolean,
+                                valid: boolean,
+                              }) {
+    const {
+      name, valid, shouldDisplayError, previouslyDisplayedError,
+    } = errorDisplayData;
+    this.setState({
+      [name]: {
+        shouldDisplayError,
+        previouslyDisplayedError,
+        valid,
+      },
     });
-    isValid = (hasInit && isValid);
-    const newState = { ...this.state, formIsValid: isValid };
-    if (formIsValid !== isValid) {
-      this.setState(newState);
-    }
-    return isValid;
   }
 
-  onEmailChanged(text) {
-    const { emailChangedAction } = this.props;
-    const newStateInput = { ...this.state };
-    newStateInput.inputFields.emailAddressInput.value = text;
-    this.setState(newStateInput);
-    emailChangedAction(text);
-    this.formIsValid();
-    this.checkForDisplayedErrors();
+  shouldDisableSubmitButton() {
+    const { submitting } = this.props;
+    const {
+      [EMAIL_INPUT_NAME]: emailInputState,
+      [PASSWORD_INPUT_NAME]: passwordInputState,
+    } = this.state;
+    return (emailInputState.shouldDisplayError || passwordInputState.shouldDisplayError)
+      || (emailInputState.previouslyDisplayedError && !emailInputState.valid)
+      || (passwordInputState.previouslyDisplayedError && !passwordInputState.valid)
+      || submitting;
   }
 
-  onPasswordChanged(text) {
-    const { passwordChangedAction } = this.props;
-    const newStateInput = { ...this.state };
-    newStateInput.inputFields.passwordInput.value = text;
-    this.setState(newStateInput);
-    passwordChangedAction(text);
-    this.formIsValid();
-    this.checkForDisplayedErrors();
-  }
-
-  setEmailRef(input) {
-    const newState = { ...this.state };
-    newState.inputFields.emailAddressInput.ref = input;
-    this.setState(newState);
-  }
-
-  setPasswordRef(input) {
-    const newState = { ...this.state };
-    newState.inputFields.passwordInput.ref = input;
-    this.setState(newState);
-  }
-
-  onPasswordErrorMessageChange(displayingMessage: boolean) {
-    const newState = { ...this.state };
-    const { displayingError } = newState.inputFields.passwordInput;
-    newState.inputFields.passwordInput.displayingError = displayingMessage;
-    if (displayingError !== displayingMessage) {
-      this.setState(newState);
-    }
-    this.checkForDisplayedErrors();
-  }
-
-  onEmailErrorMessageChange(displayingMessage: boolean) {
-    const newState = { ...this.state };
-    const { displayingError } = newState.inputFields.emailAddressInput;
-    newState.inputFields.emailAddressInput.displayingError = displayingMessage;
-    if (displayingError !== displayingMessage) {
-      this.setState(newState);
-    }
-    this.checkForDisplayedErrors();
-  }
-
-  checkForDisplayedErrors() {
-    let displayingError = false;
-    const { inputFields, submitButtonDisabled } = this.state;
-    Object.keys(inputFields).forEach((key) => {
-      const inputField = inputFields[key];
-      displayingError = (inputField.displayingError) ? (true) : (displayingError);
-    });
-    if (displayingError && submitButtonDisabled === false) {
-      this.setState({ submitButtonDisabled: true });
-    } else if (displayingError === false && submitButtonDisabled === true) {
-      this.setState({ submitButtonDisabled: false });
-    }
-    return displayingError;
-  }
-
-  displayErrorMessages(shouldDisplay: boolean) {
-    this.setState({ displayCurrentErrors: shouldDisplay });
-  }
-
-  onSubmit() {
-    const { loginUserAction, email, password } = this.props;
+  // todo not returning a promise, submitting is set from promise -- how to handle this
+  onSubmit(data) {
+    console.log('submit data', data);
+    // const { loginUserAction, email, password } = this.props;
     Keyboard.dismiss();
-    if (this.formIsValid()) {
-      loginUserAction({ email, password });
-    } else {
-      // Disable submit button if button is pushed and form is not valid
-      this.setState({ submitButtonDisabled: true });
-      this.displayErrorMessages(true);
-    }
+    // if (this.formIsValid()) {
+    //   loginUserAction({ email, password });
+    // }
   }
 }
 
@@ -257,12 +195,17 @@ const styles = {
 const mapStateToProps = (state) => {
   const { auth } = state;
   return {
-    email: auth.email,
-    password: auth.password,
+    email: selector(state, EMAIL_INPUT_NAME),
+    password: selector(state, PASSWORD_INPUT_NAME),
     error: auth.error,
     loading: auth.loading,
   };
 };
+
+const selector = formValueSelector(FORM_NAME);
+LoginForm = reduxForm({
+  form: FORM_NAME,
+})(LoginForm);
 
 export default connect(mapStateToProps, {
   emailChangedAction: emailChanged,

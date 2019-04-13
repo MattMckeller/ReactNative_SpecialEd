@@ -7,7 +7,7 @@ import { REQUIRED_ERROR_MESSAGE } from './RuleMessages';
 
 class RequiredInstance extends ValidatorBase {
   validate(): ValidatorResponse {
-    if (this._value.toString().length) {
+    if (this._value && this._value.toString().length) {
       return true;
     }
     return REQUIRED_ERROR_MESSAGE(this._fieldName || 'Field');

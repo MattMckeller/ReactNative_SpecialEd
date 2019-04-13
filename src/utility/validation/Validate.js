@@ -1,8 +1,8 @@
 // @flow
 
-export type ValidatorValue = string | number;
+export type ValidatorValue = string | number | undefined;
 export type ValidatorFieldName = string;
-export type ValidatorResponse = boolean | string[];
+export type ValidatorResponse = boolean | string;
 
 export interface Validator {
   _value: ValidatorValue;
@@ -24,7 +24,6 @@ export class ValidatorBase implements Validator {
     this._fieldName = fieldName;
   }
 
-  // flowlint-next-line class-methods-use-this:off
   validate(): ValidatorResponse {
     return true;
   }
@@ -44,7 +43,7 @@ const Validate = (
     }
   });
 
-  return (errors.length > 0) ? errors : true;
+  return (errors.length > 0) ? errors[0] : undefined;
 };
 
 export default Validate;

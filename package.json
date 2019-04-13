@@ -11,6 +11,7 @@
     "@types/node": "^11.13.0",
     "babel-plugin-transform-inline-environment-variables": "^0.4.3",
     "lodash": "^4.17.11",
+    "memoize-one": "^5.0.4",
     "native-base": "^2.12.1",
     "react": "16.8.3",
     "react-native": "0.59.2",
@@ -19,6 +20,7 @@
     "react-native-router-flux": "^4.0.6",
     "react-redux": "^6.0.1",
     "redux": "^4.0.1",
+    "redux-form": "^8.2.0",
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {

@@ -31,6 +31,7 @@
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
         "no-console": 0,
         "react/sort-comp": [0],
-        "no-underscore-dangle": "off"
+        "no-underscore-dangle": "off",
+        "no-class-assign": "off"
     }
 }

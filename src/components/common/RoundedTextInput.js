@@ -5,42 +5,32 @@ import {
   Text, TextInput, TouchableWithoutFeedback, View,
 } from 'react-native';
 import { Icon } from 'native-base';
-import type { Validator } from '../../utility/validation/Validate';
-import Validate from '../../utility/validation/Validate';
 
+// todo update types from redux form
 type Props = {
   label: string,
-  labelIcon?: string,
   value: string,
-  onChangeText?: (text: string) => void,
-  onChangeTouch?: (touched: boolean) => void,
-  onValidate?: (valid: boolean) => void,
-  onDisplayErrorMessage?: (displaying: boolean) => void,
+  shouldDisplayErrorMessage: boolean,
+  input: any,
+  meta: any,
+  labelIcon?: string,
   secureTextEntry?: boolean,
-  displayErrorMessages?: boolean,
-  displayCurrentErrors?: boolean,
-  validationRules?: Validator[],
 }
 class RoundedTextInput extends Component<Props> {
-  state = {
-    isFocused: false,
-    hasError: false,
-    touched: false,
-    errorMessages: [],
-    displayingErrorMessage: false,
-  };
-
+  // todo fix type to be from react create ref type
   textInput: TextInput;
 
   constructor() {
     super();
     this._onLabelPress = this._onLabelPress.bind(this);
-    this._onFocus = this._onFocus.bind(this);
-    this._onBlur = this._onBlur.bind(this);
     this._onChangeText = this._onChangeText.bind(this);
-    this._clearErrors = this._clearErrors.bind(this);
-    this.validate = this.validate.bind(this);
-    this.isValid = this.isValid.bind(this);
+    this._onBlur = this._onBlur.bind(this);
+    this._onFocus = this._onFocus.bind(this);
+    this.textInput = React.createRef();
+    this.state = {
+      ...this.state,
+      // + additional
+    };
   }
 
   renderIcon() {
@@ -66,25 +56,27 @@ class RoundedTextInput extends Component<Props> {
       textContainerHasIconStyle, textContainerNoIconStyle,
       labelGroupContainerStyle,
     } = containerStyle;
-    const { isFocused, hasError, errorMessages } = this.state;
+    const { meta, input } = this.props;
+    const { error, active } = meta;
+    const { value } = input;
     const {
-      label, labelIcon, value,
-      displayErrorMessages,
+      label, labelIcon, shouldDisplayErrorMessage,
     } = this.props;
 
     let fullTextStyle = (labelIcon && labelIcon.length)
       ? ({ ...textStyle, ...hasIconTextStyle }) : (textStyle);
-    fullTextStyle = (displayErrorMessages && hasError)
+    fullTextStyle = (shouldDisplayErrorMessage)
       ? ({ ...fullTextStyle, ...errorTextStyle }) : (fullTextStyle);
 
-    let fullTextContainerStyle = (isFocused || value.length || (displayErrorMessages && hasError))
-      ? focusedTextContainerStyle : defaultTextContainerStyle;
+    let fullTextContainerStyle = (
+      active || (value && value.length) || shouldDisplayErrorMessage
+    ) ? focusedTextContainerStyle : defaultTextContainerStyle;
     fullTextContainerStyle = (labelIcon && labelIcon.length)
       ? ({ ...fullTextContainerStyle, ...textContainerHasIconStyle })
       : ({ ...fullTextContainerStyle, ...textContainerNoIconStyle });
 
-    const displayedText = (displayErrorMessages && hasError && errorMessages.length)
-      ? (errorMessages[0]) : label;
+    const displayedText = (shouldDisplayErrorMessage && error)
+      ? (error) : label;
 
     return (
       <View style={labelGroupContainerStyle}>
@@ -98,24 +90,9 @@ class RoundedTextInput extends Component<Props> {
     );
   }
 
-  componentWillReceiveProps(nextProps: Readonly<P>): void {
-    const { displayCurrentErrors, value } = nextProps;
-    const {
-      displayCurrentErrors: activeDisplayCurrentErrors,
-      displayingErrorMessage,
-      value: oldValue,
-    } = this.state;
-    if (displayingErrorMessage === false
-      && displayCurrentErrors
-      && displayCurrentErrors !== activeDisplayCurrentErrors) {
-      this.validate();
-    } else if ((value || oldValue) && value !== oldValue) {
-      this.validate();
-    }
-  }
-
   render() {
-    const { value, labelIcon, secureTextEntry } = this.props;
+    const { labelIcon, secureTextEntry, input } = this.props;
+    const { value } = input;
     const { textInputStyle, containerStyle } = styles;
     const { standardTextInputStyle, withIconStyle } = textInputStyle;
     const fullTextInputStyle = (labelIcon && labelIcon.length)
@@ -123,7 +100,7 @@ class RoundedTextInput extends Component<Props> {
     return (
       <View style={containerStyle}>
         <TextInput
-          ref={(input) => { this.textInput = input; }}
+          ref={this.textInput}
           style={fullTextInputStyle}
           onFocus={this._onFocus}
           onBlur={this._onBlur}
@@ -138,100 +115,38 @@ class RoundedTextInput extends Component<Props> {
     );
   }
 
-  setTouched(updateValue: boolean) {
-    const { touched } = this.state;
-    const { onChangeTouch } = this.props;
-    if (touched !== updateValue) {
-      this.setState({ touched: updateValue });
-      if (onChangeTouch) {
-        onChangeTouch(updateValue);
-      }
-    }
-  }
-
-  validate(displayErrorMessage: boolean = true): boolean {
-    const { onValidate, onDisplayErrorMessage } = this.props;
-    const results = this.isValid();
-    const { valid, errorMessages } = results;
-    const { hasError, displayingErrorMessage } = this.state;
-    const hasChanged = (valid === hasError);
-    if (!valid && hasChanged) {
-      let newState = { hasError: true };
-      newState = (displayErrorMessage)
-        ? ({ ...newState, errorMessages, displayingErrorMessage: true })
-        : (newState);
-      this.setState(newState);
-      if (onDisplayErrorMessage && displayErrorMessage && !displayingErrorMessage) {
-        onDisplayErrorMessage(true);
-      }
-    } else if (valid && hasChanged) {
-      this._clearErrors();
-    }
-    if (hasChanged && onValidate) {
-      onValidate(valid);
-    }
-    return valid;
-  }
-
-  isValid(): { valid: boolean, errorMessages: string[] } {
-    const { validationRules, value } = this.props;
-    if (validationRules.length) {
-      const validationResults = Validate(value, validationRules);
-      return {
-        valid: (validationResults === true),
-        errorMessages: (validationResults === true) ? [] : validationResults,
-      };
-    }
-    return {
-      valid: true,
-      errorMessages: [],
-    };
-  }
-
-  _onChangeText(newText) {
-    const { onChangeText } = this.props;
-    onChangeText(newText);
-  }
-
   _onLabelPress() {
-    this.textInput.focus();
+    this.textInput.current.focus();
   }
 
   _onFocus() {
-    this.setState({ isFocused: true });
-    this._clearErrors();
+    const { input } = this.props;
+    const { onFocus } = input;
+    if (onFocus) {
+      onFocus();
+    }
   }
 
   _onBlur() {
-    this.setState({ isFocused: false });
-    this.setTouched(true);
-    this.validate();
+    const { input } = this.props;
+    const { onBlur } = input;
+    if (onBlur) {
+      onBlur();
+    }
   }
 
-  _clearErrors() {
-    const { onDisplayErrorMessage } = this.props;
-    const { displayingErrorMessage } = this.state;
-    this.setState({
-      hasError: false,
-      errorMessages: [],
-      displayingErrorMessage: false,
-    });
-    if (onDisplayErrorMessage && displayingErrorMessage) {
-      onDisplayErrorMessage(false);
+  _onChangeText(text) {
+    const { input } = this.props;
+    const { onChange } = input;
+    if (onChange) {
+      onChange(text);
     }
   }
 }
 
 RoundedTextInput.defaultProps = {
   labelIcon: null,
-  onChangeText: null,
-  onChangeTouch: null,
-  onValidate: null,
-  onDisplayErrorMessage: null,
   secureTextEntry: false,
-  displayErrorMessages: true,
-  displayCurrentErrors: false,
-  validationRules: [],
 };
 
 const styles = {
