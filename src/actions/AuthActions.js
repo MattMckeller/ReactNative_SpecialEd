@@ -1,21 +1,8 @@
 import {
-  EMAIL_CHANGED,
   LOGIN_USER_START,
   LOGIN_USER_FAIL,
-  LOGIN_USER_SUCCESS,
-  PASSWORD_CHANGED,
+  LOGIN_USER_SUCCESS, LOGIN_DID_SHOW_ERROR_TOAST,
 } from './types';
-import { Actions } from 'react-native-router-flux';
-
-export const emailChanged = text => ({
-  type: EMAIL_CHANGED,
-  payload: text,
-});
-
-export const passwordChanged = text => ({
-  type: PASSWORD_CHANGED,
-  payload: text,
-});
 
 export const loginUser = ({ email, password }) => {
   return (dispatch) => {
@@ -23,9 +10,16 @@ export const loginUser = ({ email, password }) => {
     dispatch({ type: LOGIN_USER_START });
 
     // todo implement backend calls
+    // setTimeout(() => {
+    //   loginUserSuccess(dispatch, { name: 'name val' });
+    // }, 1000);
+    console.log('auth action');
+
     setTimeout(() => {
-      loginUserSuccess(dispatch, {name: 'name val'});
-    }, 5000);
+      loginUserFail(dispatch, { authError: 'An error has occurred.' });
+    }, 1000);
+
+
   };
 };
 
@@ -35,5 +29,13 @@ const loginUserSuccess = (dispatch, user) => {
 };
 
 const loginUserFail = (dispatch) => {
-  dispatch({ type: LOGIN_USER_FAIL });
+  dispatch({
+    type: LOGIN_USER_FAIL,
+    payload: { authError: 'Error from backend.' },
+  });
 };
+
+export const didShowErrorToast = () => ({
+  type: LOGIN_DID_SHOW_ERROR_TOAST,
+  payload: null,
+});

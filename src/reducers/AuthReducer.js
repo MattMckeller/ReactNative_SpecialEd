@@ -1,30 +1,39 @@
 import {
-  EMAIL_CHANGED, LOGIN_USER_START, LOGIN_USER_FAIL, LOGIN_USER_SUCCESS, PASSWORD_CHANGED,
+  LOGIN_USER_START, LOGIN_USER_FAIL, LOGIN_USER_SUCCESS, LOGIN_DID_SHOW_ERROR_TOAST,
 } from '../actions/types';
 
+const DEFAULT_ERROR_MESSAGE = 'Authentication failed.';
 const INITIAL_STATE = {
   email: '',
   password: '',
   user: null,
-  error: '',
   loading: false,
+  authError: '',
+  shouldOpenErrorToast: false,
 };
 const AuthReducer = (state = INITIAL_STATE, action) => {
-  switch (action.type) {
-    case EMAIL_CHANGED:
-      return { ...state, email: action.payload };
-    case PASSWORD_CHANGED:
-      return { ...state, password: action.payload };
+  const { type, payload } = action;
+  switch (type) {
     case LOGIN_USER_START:
       return { ...state, loading: true, error: '' };
     case LOGIN_USER_SUCCESS:
       return {
         ...state,
         ...INITIAL_STATE,
-        user: action.payload,
+        user: payload,
       };
     case LOGIN_USER_FAIL:
-      return { ...state, loading: false, error: 'Authentication Failed.' };
+      return {
+        ...state,
+        loading: false,
+        shouldOpenErrorToast: true,
+        authError: (payload && payload.authError) ? (payload.authError) : DEFAULT_ERROR_MESSAGE,
+      };
+    case LOGIN_DID_SHOW_ERROR_TOAST:
+      return {
+        ...state,
+        shouldOpenErrorToast: false,
+      };
     default:
       return state;
   }

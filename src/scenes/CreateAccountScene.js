@@ -1,17 +1,17 @@
 // @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import {ScrollView, Text, View} from 'react-native';
-import LoginForm from '../components/forms/LoginForm';
 import AuthLayout from '../layouts/AuthLayout';
+import CreateAccountForm from '../components/forms/CreateAccountForm';
+import globalStyles from '../assets/styles/GlobalStyles';
+import styleVariables from '../assets/StyleVariables';
 import RoundedButtonOutline from '../components/common/RoundedOutlineButton';
-import globalStyles from "../assets/styles/GlobalStyles";
-import styleVariables from "../assets/StyleVariables";
 
 type Props = {
 }
-class LoginScene extends Component<Props> {
+class CreateAccountScene extends Component<Props> {
   constructor() {
     super();
   }
@@ -19,32 +19,31 @@ class LoginScene extends Component<Props> {
   render() {
     const { flexColumn } = globalStyles;
     const { containerStyle } = styles;
-    // todo move background here
     return (
       <AuthLayout>
         <View style={{ ...containerStyle, ...flexColumn }}>
-          <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
             <View style={{ width: '95%', height: '100%', justifyContent: 'center' }}>
-              <ScrollView contentContainerStyle={{ flex: 1 }} />
-              <LoginForm />
+              <CreateAccountForm />
               <View style={{ marginTop: 35 }}>
                 <RoundedButtonOutline
-                  label="Create Account"
+                  label="Back to login"
+                  onPress={CreateAccountScene.navigateToLoginScene}
+                  textColor="black"
                   height={60}
-                  onPress={LoginScene.navigateToCreateAccountScene}
                 />
               </View>
-              <ScrollView contentContainerStyle={{ flex: 1 }} />
             </View>
           </View>
+
         </View>
       </AuthLayout>
     );
   }
 
-  static navigateToCreateAccountScene() {
-    console.log('redirect create account');
-    Actions.createAccount();
+  static navigateToLoginScene() {
+    console.log('redirect login');
+    Actions.login();
   }
 }
 
@@ -58,4 +57,4 @@ const styles = {
 const mapStateToProps = state => ({});
 
 export default connect(mapStateToProps, {
-})(LoginScene);
+})(CreateAccountScene);

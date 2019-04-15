@@ -2,17 +2,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  Button, Text, TouchableHighlight, View,
+  Text, TouchableOpacity, View,
 } from 'react-native';
 import styleVariables from '../../assets/StyleVariables';
 
+// todo create/user generic button type
 type Props = {
   label: string,
   height?: number | string,
   onPress: () => {},
   disabled?: boolean,
+  textColor?: string,
+  buttonContainerStyle?: {},
 }
-class RoundedButton extends Component<Props> {
+class RoundedButtonOutline extends Component<Props> {
   constructor() {
     super();
     this._onPress = this._onPress.bind(this);
@@ -20,21 +23,30 @@ class RoundedButton extends Component<Props> {
 
   render() {
     const {
-      buttonContainerStyle, textStyle, touchableHighlightStyle, disabledStyle,
+      defaultContainerStyle,
+      textStyle,
+      touchableHighlightStyle,
+      disabledStyle,
     } = styles;
-    const { label, height, disabled } = this.props;
-    const updatedButtonContainerStyle = (disabled)
-      ? ({ ...buttonContainerStyle, ...disabledStyle }) : (buttonContainerStyle);
+    const {
+      label, height, disabled, textColor, buttonContainerStyle,
+    } = this.props;
+    let updatedButtonContainerStyle = (disabled)
+      ? ({ ...defaultContainerStyle, ...disabledStyle }) : (defaultContainerStyle);
+    updatedButtonContainerStyle = (buttonContainerStyle)
+      ? ({ ...updatedButtonContainerStyle, ...buttonContainerStyle })
+      : (updatedButtonContainerStyle);
+    const mergedTextStyle = (textColor) ? ({ ...textStyle, ...{ color: textColor } }) : (textStyle);
     return (
-      <TouchableHighlight
+      <TouchableOpacity
         onPress={this._onPress}
         style={touchableHighlightStyle}
         disabled={disabled}
       >
         <View style={{ ...updatedButtonContainerStyle, ...{ height } }}>
-          <Text style={textStyle}>{label}</Text>
+          <Text style={mergedTextStyle}>{label}</Text>
         </View>
-      </TouchableHighlight>
+      </TouchableOpacity>
     );
   }
 
@@ -44,7 +56,7 @@ class RoundedButton extends Component<Props> {
   }
 }
 
-RoundedButton.defaultProps = {
+RoundedButtonOutline.defaultProps = {
   height: 50,
   disabled: false,
 };
@@ -53,18 +65,20 @@ const styles = {
   touchableHighlightStyle: {
     borderRadius: 25,
   },
-  buttonContainerStyle: {
-    backgroundColor: 'white',
+  defaultContainerStyle: {
+    backgroundColor: 'transparent',
     width: '100%',
     borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
+    borderColor: styleVariables.outlineButtonBorderColor,
+    borderWidth: 1,
   },
   disabledStyle: {
     backgroundColor: styleVariables.disabledButtonColor,
   },
   textStyle: {
-    color: styleVariables.primaryColor,
+    color: styleVariables.outlineButtonTextColor,
     fontWeight: 'bold',
     fontSize: 20,
   },
@@ -73,4 +87,4 @@ const styles = {
 const mapStateToProps = state => ({});
 
 export default connect(mapStateToProps, {
-})(RoundedButton);
+})(RoundedButtonOutline);

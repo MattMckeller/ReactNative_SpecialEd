@@ -8,6 +8,9 @@ const globalStyles = {
     flex: 1,
     flexDirection: 'column',
   },
+  errorTextStyle: {
+    color: 'red',
+  },
 };
 
 

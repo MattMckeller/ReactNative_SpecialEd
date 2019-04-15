@@ -10,6 +10,7 @@ export type autoErrorDisplayProps = {
   onErrorStateChange?: (hasError) => void,
   clearErrorsWhenActive: boolean,
 }
+// todo create interface for wrapped component
 const autoFormErrorDisplay = WrappedComponent => {
   const WrapperComponent = class extends Component<autoErrorDisplayProps> {
     state = {

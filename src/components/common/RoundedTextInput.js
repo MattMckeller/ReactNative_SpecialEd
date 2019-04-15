@@ -5,6 +5,7 @@ import {
   Text, TextInput, TouchableWithoutFeedback, View,
 } from 'react-native';
 import { Icon } from 'native-base';
+import globalStyles from "../../assets/styles/GlobalStyles";
 
 // todo update types from redux form
 type Props = {
@@ -14,7 +15,9 @@ type Props = {
   input: any,
   meta: any,
   labelIcon?: string,
+  iconType?: string,
   secureTextEntry?: boolean,
+  forceDisplayErrorMessage?: boolean,
 }
 class RoundedTextInput extends Component<Props> {
   // todo fix type to be from react create ref type
@@ -34,13 +37,14 @@ class RoundedTextInput extends Component<Props> {
   }
 
   renderIcon() {
-    const { labelIcon } = this.props;
+    const { labelIcon, iconType } = this.props;
     const { iconStyle } = styles;
     if (labelIcon && labelIcon.length) {
       return (
         <Icon
           style={iconStyle}
           name={labelIcon}
+          type={iconType}
         />
       );
     }
@@ -49,8 +53,9 @@ class RoundedTextInput extends Component<Props> {
 
   renderLabel() {
     const {
-      containerStyle, textStyle, hasIconTextStyle, errorTextStyle,
+      containerStyle, textStyle, hasIconTextStyle,
     } = styles.labelStyle;
+    const { errorTextStyle } = globalStyles;
     const {
       focusedTextContainerStyle, defaultTextContainerStyle,
       textContainerHasIconStyle, textContainerNoIconStyle,
@@ -60,22 +65,25 @@ class RoundedTextInput extends Component<Props> {
     const { error, active } = meta;
     const { value } = input;
     const {
-      label, labelIcon, shouldDisplayErrorMessage,
+      label, labelIcon, shouldDisplayErrorMessage, forceDisplayErrorMessage,
     } = this.props;
+
+    const doDisplayErrorMessage = (shouldDisplayErrorMessage || forceDisplayErrorMessage)
+      && error;
 
     let fullTextStyle = (labelIcon && labelIcon.length)
       ? ({ ...textStyle, ...hasIconTextStyle }) : (textStyle);
-    fullTextStyle = (shouldDisplayErrorMessage)
+    fullTextStyle = (doDisplayErrorMessage)
       ? ({ ...fullTextStyle, ...errorTextStyle }) : (fullTextStyle);
 
     let fullTextContainerStyle = (
-      active || (value && value.length) || shouldDisplayErrorMessage
+      active || (value && value.length) || doDisplayErrorMessage
     ) ? focusedTextContainerStyle : defaultTextContainerStyle;
     fullTextContainerStyle = (labelIcon && labelIcon.length)
       ? ({ ...fullTextContainerStyle, ...textContainerHasIconStyle })
       : ({ ...fullTextContainerStyle, ...textContainerNoIconStyle });
 
-    const displayedText = (shouldDisplayErrorMessage && error)
+    const displayedText = (doDisplayErrorMessage)
       ? (error) : label;
 
     return (
@@ -147,6 +155,8 @@ class RoundedTextInput extends Component<Props> {
 RoundedTextInput.defaultProps = {
   labelIcon: null,
   secureTextEntry: false,
+  iconType: 'FontAwesome5',
+  forceDisplayErrorMessage: false,
 };
 
 const styles = {
@@ -178,9 +188,6 @@ const styles = {
     },
     textStyle: {
       color: 'gray',
-    },
-    errorTextStyle: {
-      color: 'red',
     },
     hasIconTextStyle: {
       paddingLeft: 16,

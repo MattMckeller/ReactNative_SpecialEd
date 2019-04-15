@@ -14,6 +14,7 @@ type Props = {
   children: any
 };
 class AuthLayout extends Component<Props> {
+  // todo change scrollview location - is preventing jumping from input to input
   render() {
     const { children } = this.props;
     const { flexRow, flexColumn } = globalStyles;
