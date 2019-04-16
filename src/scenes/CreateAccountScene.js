@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View } from 'react-native';
+import {ScrollView, View} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import AuthLayout from '../layouts/AuthLayout';
 import CreateAccountForm from '../components/forms/CreateAccountForm';
@@ -24,6 +24,7 @@ class CreateAccountScene extends Component<Props> {
         <View style={{ ...containerStyle, ...flexColumn }}>
           <View style={{ justifyContent: 'center', alignItems: 'center' }}>
             <View style={{ width: '95%', height: '100%', justifyContent: 'center' }}>
+              <ScrollView contentContainerStyle={{ flex: 1 }} />
               <CreateAccountForm />
               <View style={{ marginTop: 35 }}>
                 <RoundedButtonOutline
@@ -33,6 +34,7 @@ class CreateAccountScene extends Component<Props> {
                   height={60}
                 />
               </View>
+              <ScrollView contentContainerStyle={{ flex: 1 }} />
             </View>
           </View>
 

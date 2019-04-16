@@ -104,6 +104,7 @@ class LoginForm extends Component<Props> {
     didShowErrorToastAction();
   }
 
+  // todo disable create account button while loading
   render() {
     const {
       wrapperStyle,
@@ -214,6 +215,7 @@ const styles = {
   },
 };
 
+const selector = formValueSelector(FORM_NAME);
 const mapStateToProps = (state) => {
   const { auth } = state;
   return {
@@ -225,7 +227,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-const selector = formValueSelector(FORM_NAME);
 LoginForm = reduxForm({
   form: FORM_NAME,
 })(LoginForm);
