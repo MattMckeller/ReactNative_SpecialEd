@@ -4,8 +4,6 @@ import {
 
 const DEFAULT_ERROR_MESSAGE = 'Authentication failed.';
 const INITIAL_STATE = {
-  email: '',
-  password: '',
   user: null,
   loading: false,
   authError: '',
@@ -15,7 +13,7 @@ const AuthReducer = (state = INITIAL_STATE, action) => {
   const { type, payload } = action;
   switch (type) {
     case LOGIN_USER_START:
-      return { ...state, loading: true, error: '' };
+      return { ...state, loading: true, authError: '' };
     case LOGIN_USER_SUCCESS:
       return {
         ...state,

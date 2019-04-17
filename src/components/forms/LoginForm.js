@@ -11,7 +11,7 @@ import {
 import globalStyles from '../../assets/styles/GlobalStyles';
 import RoundedTextInput from '../common/RoundedTextInput';
 import RoundedButton from '../common/RoundedButton';
-import { didShowErrorToast, loginUser } from '../../actions';
+import { didShowLoginErrorToast, loginUser } from '../../actions';
 import CenteredSpinner from '../common/CenteredSpinner';
 import Required from '../../utility/validation/Required';
 import MinLength from '../../utility/validation/MinLength';
@@ -72,10 +72,13 @@ class LoginForm extends Component<Props> {
     this.showErrorToast = this.showErrorToast.bind(this);
   }
 
-  componentDidUpdate(): void {
-    const { shouldOpenErrorToast } = this.props;
+  componentDidUpdate(prevProps: Props): void {
+    const { shouldOpenErrorToast, loading } = this.props;
     if (shouldOpenErrorToast === true) {
       this.showErrorToast();
+    }
+    if (loading !== prevProps.loading) {
+      this.checkSubmitButtonStatus();
     }
   }
 
@@ -233,5 +236,5 @@ LoginForm = reduxForm({
 
 export default connect(mapStateToProps, {
   loginUserAction: loginUser,
-  didShowErrorToastAction: didShowErrorToast,
+  didShowErrorToastAction: didShowLoginErrorToast,
 })(LoginForm);

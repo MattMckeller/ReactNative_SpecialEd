@@ -35,7 +35,7 @@ const loginUserFail = (dispatch) => {
   });
 };
 
-export const didShowErrorToast = () => ({
+export const didShowLoginErrorToast = () => ({
   type: LOGIN_DID_SHOW_ERROR_TOAST,
   payload: null,
 });

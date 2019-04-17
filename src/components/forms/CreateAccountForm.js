@@ -19,7 +19,8 @@ import autoFormErrorDisplay from '../hoc/AutoFormErrorDisplay';
 import SubmitButtonHelper from "../../utility/helpers/SubmitButtonHelper";
 import type {SubmitButtonErrorDisplayData} from "../../utility/helpers/SubmitButtonHelper";
 import {Toast} from "native-base";
-import {createAccount} from "../../actions/CreateAccountActions";
+import {didShowCreateAccountErrorToast, doCreateAccount} from "../../actions/CreateAccountActions";
+import StringMatch from "../../utility/validation/StringMatch";
 
 const FORM_NAME = 'createAccountForm';
 const EMAIL_INPUT_NAME = 'email';
@@ -29,7 +30,8 @@ const ORGANIZATION_INPUT_NAME = 'organization';
 const InputComponent = autoFormErrorDisplay(RoundedTextInput);
 
 type Props = {
-  loginUserAction: ({email: string, password: string, organization: string}) => {},
+  doCreateAccountAction: ({email: string, password: string, organization: string}) => {},
+  createAccountError: string,
   email: string,
   password: string,
   organization: string,
@@ -40,6 +42,8 @@ class CreateAccountForm extends Component<Props> {
   state = {
     shouldDisableSubmitButton: false,
     forceDisplayErrorMessages: false,
+    [PASSWORD_INPUT_NAME]: '',
+    [PASSWORD_CONFIRMATION_INPUT_NAME]: '',
   };
 
   submitButtonHelper: SubmitButtonHelper = new SubmitButtonHelper(
@@ -60,17 +64,29 @@ class CreateAccountForm extends Component<Props> {
 
   // todo update validation rules
   passwordValidationRules = [
-    value => Validate(value, [
-      Required({ fieldName: 'Password' }),
-      MinLength({ fieldName: 'Password', length: 8 }),
-    ]),
+    (value) => {
+      return Validate(value, [
+        Required({ fieldName: 'Password' }),
+        MinLength({ fieldName: 'Password', length: 8 }),
+      ]);
+    },
   ];
 
   // todo !!important!! implement confirm password match validation
   passwordConfirmationValidationRules = [
-    value => Validate(value, [
-      Required({ fieldName: 'Password Confirmation' }),
-    ]),
+    (value) => {
+      const { [PASSWORD_INPUT_NAME]: password } = this.state;
+      const fieldName = 'Password Confirmation';
+      return Validate(value, [
+        Required({ fieldName }),
+        StringMatch({
+          fieldName,
+          secondFieldName: 'Password',
+          valueToMatch: password,
+          isValidWhenMatchIsEmpty: false,
+        }),
+      ]);
+    },
   ];
 
   organizationValidationRules = [
@@ -86,19 +102,23 @@ class CreateAccountForm extends Component<Props> {
     this.onSubmitErrorChecker = this.onSubmitErrorChecker.bind(this);
     this.onErrorStateChange = this.onErrorStateChange.bind(this);
     this.showErrorToast = this.showErrorToast.bind(this);
+    this.onFieldChange = this.onFieldChange.bind(this);
   }
 
-  componentDidUpdate(): void {
-    const { shouldOpenErrorToast } = this.props;
+  componentDidUpdate(prevProps: Props): void {
+    const { shouldOpenErrorToast, loading } = this.props;
     if (shouldOpenErrorToast === true) {
       this.showErrorToast();
+    }
+    if (loading !== prevProps.loading) {
+      this.checkSubmitButtonStatus();
     }
   }
 
   showErrorToast() {
-    const { authError, didShowErrorToastAction } = this.props;
+    const { createAccountError, didShowErrorToastAction } = this.props;
     Toast.show({
-      text: authError,
+      text: createAccountError,
       buttonText: 'Okay',
       duration: 10000,
       type: 'danger',
@@ -151,6 +171,7 @@ class CreateAccountForm extends Component<Props> {
               <Field
                 name={PASSWORD_INPUT_NAME}
                 onErrorStateChange={this.onErrorStateChange}
+                onChange={this.onFieldChange}
                 label="Password"
                 labelIcon="lock"
                 iconType="MaterialIcons"
@@ -164,6 +185,7 @@ class CreateAccountForm extends Component<Props> {
               <Field
                 name={PASSWORD_CONFIRMATION_INPUT_NAME}
                 onErrorStateChange={this.onErrorStateChange}
+                onChange={this.onFieldChange}
                 label="Confirm Password"
                 labelIcon="lock"
                 iconType="MaterialIcons"
@@ -188,7 +210,7 @@ class CreateAccountForm extends Component<Props> {
             </View>
             <View style={submitButtonContainerStyle}>
               <RoundedButton
-                onPress={this.onSubmitChecker}
+                onPress={this.onSubmitErrorChecker}
                 disabled={shouldDisableSubmitButton}
                 label="Create Account"
                 height={60}
@@ -199,6 +221,10 @@ class CreateAccountForm extends Component<Props> {
         </View>
       </View>
     );
+  }
+
+  onFieldChange(event, newValue, previousValue, name) {
+    this.setState({ [name]: newValue });
   }
 
   onErrorStateChange(errorData: SubmitButtonErrorDisplayData) {
@@ -227,11 +253,11 @@ class CreateAccountForm extends Component<Props> {
 
   onSubmit() {
     const {
-      email, password, organization, valid, createAcountAction,
+      email, password, organization, valid, doCreateAccountAction,
     } = this.props;
     Keyboard.dismiss();
     if (valid) {
-      createAcountAction({ email, password, organization });
+      doCreateAccountAction({ email, password, organization });
     }
   }
 }
@@ -258,13 +284,14 @@ const styles = {
 
 const selector = formValueSelector(FORM_NAME);
 const mapStateToProps = (state) => {
-  const { auth } = state;
+  const { createAccount } = state;
   return {
     email: selector(state, EMAIL_INPUT_NAME),
     password: selector(state, PASSWORD_INPUT_NAME),
     organization: selector(state, ORGANIZATION_INPUT_NAME),
-    error: auth.error,
-    loading: auth.loading,
+    loading: createAccount.loading,
+    createAccountError: createAccount.createAccountError,
+    shouldOpenErrorToast: createAccount.shouldOpenErrorToast,
   };
 };
 
@@ -273,5 +300,6 @@ CreateAccountForm = reduxForm({
 })(CreateAccountForm);
 
 export default connect(mapStateToProps, {
-  createAccountAction: createAccount
+  doCreateAccountAction: doCreateAccount,
+  didShowErrorToastAction: didShowCreateAccountErrorToast,
 })(CreateAccountForm);

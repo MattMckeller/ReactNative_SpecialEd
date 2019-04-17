@@ -1,9 +1,10 @@
 import {
+  CREATE_ACCOUNT_DID_SHOW_ERROR_TOAST,
   CREATE_ACCOUNT_FAIL,
   CREATE_ACCOUNT_START,
 } from './types';
 
-export const createAccount = ({ email, password, organization }) => {
+export const doCreateAccount = ({ email, password, organization }) => {
   return (dispatch) => {
     console.log('create account action', email, password, organization);
     dispatch({ type: CREATE_ACCOUNT_START });
@@ -30,11 +31,11 @@ const createAccountSuccess = (dispatch, user) => {
 const createAccountFail = (dispatch) => {
   dispatch({
     type: CREATE_ACCOUNT_FAIL,
-    payload: { authError: 'Error from backend.' },
+    payload: { createAccountError: 'Error from backend.' },
   });
 };
 
-export const didShowErrorToast = () => ({
-  type: LOGIN_DID_SHOW_ERROR_TOAST,
+export const didShowCreateAccountErrorToast = () => ({
+  type: CREATE_ACCOUNT_DID_SHOW_ERROR_TOAST,
   payload: null,
 });
