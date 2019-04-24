@@ -3,15 +3,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { ScrollView, View } from 'react-native';
-import LoginForm from '../components/forms/LoginForm';
 import AuthLayout from '../layouts/AuthLayout';
 import RoundedButtonOutline from '../components/common/RoundedOutlineButton';
 import globalStyles from '../assets/styles/GlobalStyles';
 import styleVariables from '../assets/StyleVariables';
+import ForgotPasswordForm from '../components/forms/ForgotPasswordForm';
 
 type Props = {
 }
-class LoginScene extends Component<Props> {
+class ForgotPasswordScene extends Component<Props> {
   constructor() {
     super();
   }
@@ -22,23 +22,18 @@ class LoginScene extends Component<Props> {
     // todo move background here
     return (
       <AuthLayout>
+        { /* Todo move these nested views into a component */ }
         <View style={{ ...containerStyle, ...flexColumn }}>
           <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
             <View style={{ width: '95%', height: '100%', justifyContent: 'center' }}>
               <ScrollView contentContainerStyle={{ flex: 1 }} />
-              <LoginForm />
+              <ForgotPasswordForm />
               <View style={{ marginTop: 35 }}>
                 <RoundedButtonOutline
-                  label="Create Account"
+                  label="Back to login"
+                  onPress={ForgotPasswordScene.navigateToLoginScene}
+                  textColor="black"
                   height={60}
-                  onPress={LoginScene.navigateToCreateAccountScene}
-                />
-              </View>
-              <View style={{ marginTop: 35 }}>
-                <RoundedButtonOutline
-                  label="Forgot Password"
-                  height={60}
-                  onPress={LoginScene.navigateToForgotPasswordScene}
                 />
               </View>
               <ScrollView contentContainerStyle={{ flex: 1 }} />
@@ -49,14 +44,9 @@ class LoginScene extends Component<Props> {
     );
   }
 
-  static navigateToCreateAccountScene() {
+  static navigateToLoginScene() {
     console.log('redirect create account');
-    Actions.createAccount();
-  }
-
-  static navigateToForgotPasswordScene() {
-    console.log('redirect forgot password');
-    Actions.forgotPassword();
+    Actions.login();
   }
 }
 
@@ -70,4 +60,4 @@ const styles = {
 const mapStateToProps = state => ({});
 
 export default connect(mapStateToProps, {
-})(LoginScene);
+})(ForgotPasswordScene);

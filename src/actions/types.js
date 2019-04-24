@@ -6,4 +6,7 @@ export const CREATE_ACCOUNT_START = 'create_account_start';
 export const CREATE_ACCOUNT_SUCCESS = 'create_account_success';
 export const CREATE_ACCOUNT_FAIL = 'create_account_fail';
 export const CREATE_ACCOUNT_DID_SHOW_ERROR_TOAST = 'create_account_did_show_error_toast';
-
+export const FORGOT_PASSWORD_START = 'forgot_password_start';
+export const FORGOT_PASSWORD_SUCCESS = 'forgot_password_success';
+export const FORGOT_PASSWORD_FAIL = 'forgot_password_fail';
+export const FORGOT_PASSWORD_DID_SHOW_ERROR_TOAST = 'forgot_password_did_show_error_toast';

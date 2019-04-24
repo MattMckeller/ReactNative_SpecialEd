@@ -7,6 +7,7 @@ import {
 import {
   Field, FormProps, reduxForm, formValueSelector,
 } from 'redux-form';
+import { Toast } from 'native-base';
 import globalStyles from '../../assets/styles/GlobalStyles';
 import RoundedTextInput from '../common/RoundedTextInput';
 import RoundedButton from '../common/RoundedButton';
@@ -16,11 +17,11 @@ import Required from '../../utility/validation/Required';
 import MinLength from '../../utility/validation/MinLength';
 import Validate from '../../utility/validation/Validate';
 import autoFormErrorDisplay from '../hoc/AutoFormErrorDisplay';
-import SubmitButtonHelper from "../../utility/helpers/SubmitButtonHelper";
-import type {SubmitButtonErrorDisplayData} from "../../utility/helpers/SubmitButtonHelper";
-import {Toast} from "native-base";
-import {didShowCreateAccountErrorToast, doCreateAccount} from "../../actions/CreateAccountActions";
-import StringMatch from "../../utility/validation/StringMatch";
+import SubmitButtonHelper from '../../utility/helpers/SubmitButtonHelper';
+import type { SubmitButtonErrorDisplayData } from '../../utility/helpers/SubmitButtonHelper';
+import { didShowCreateAccountErrorToast, doCreateAccount } from '../../actions/CreateAccountActions';
+import StringMatch from '../../utility/validation/StringMatch';
+import RoundedPickerInput from '../common/RoundedPickerInput';
 
 const FORM_NAME = 'createAccountForm';
 const EMAIL_INPUT_NAME = 'email';
@@ -28,6 +29,7 @@ const PASSWORD_INPUT_NAME = 'password';
 const PASSWORD_CONFIRMATION_INPUT_NAME = 'passwordConfirmation';
 const ORGANIZATION_INPUT_NAME = 'organization';
 const InputComponent = autoFormErrorDisplay(RoundedTextInput);
+const PickerInputComponent = autoFormErrorDisplay(RoundedPickerInput);
 
 type Props = {
   doCreateAccountAction: ({email: string, password: string, organization: string}) => {},
@@ -42,6 +44,7 @@ class CreateAccountForm extends Component<Props> {
   state = {
     shouldDisableSubmitButton: false,
     forceDisplayErrorMessages: false,
+    organizationOptions: [],
     [PASSWORD_INPUT_NAME]: '',
     [PASSWORD_CONFIRMATION_INPUT_NAME]: '',
   };
@@ -64,12 +67,10 @@ class CreateAccountForm extends Component<Props> {
 
   // todo update validation rules
   passwordValidationRules = [
-    (value) => {
-      return Validate(value, [
-        Required({ fieldName: 'Password' }),
-        MinLength({ fieldName: 'Password', length: 8 }),
-      ]);
-    },
+    value => Validate(value, [
+      Required({ fieldName: 'Password' }),
+      MinLength({ fieldName: 'Password', length: 8 }),
+    ]),
   ];
 
   // todo !!important!! implement confirm password match validation
@@ -103,6 +104,11 @@ class CreateAccountForm extends Component<Props> {
     this.onErrorStateChange = this.onErrorStateChange.bind(this);
     this.showErrorToast = this.showErrorToast.bind(this);
     this.onFieldChange = this.onFieldChange.bind(this);
+    this.getOrganizationNames = this.getOrganizationNames.bind(this);
+  }
+
+  componentDidMount() {
+    this.getOrganizationNames();
   }
 
   componentDidUpdate(prevProps: Props): void {
@@ -150,7 +156,9 @@ class CreateAccountForm extends Component<Props> {
       submitButtonContainerStyle,
     } = styles;
     const { flexColumn } = globalStyles;
-    const { forceDisplayErrorMessages, shouldDisableSubmitButton } = this.state;
+    const {
+      forceDisplayErrorMessages, shouldDisableSubmitButton, organizationOptions,
+    } = this.state;
     return (
       <View style={{ flexDirection: 'row' }}>
         <View style={{ ...flexColumn, ...containerStyle }}>
@@ -199,11 +207,12 @@ class CreateAccountForm extends Component<Props> {
               <Field
                 name={ORGANIZATION_INPUT_NAME}
                 onErrorStateChange={this.onErrorStateChange}
+                options={organizationOptions}
                 label="Organization"
                 labelIcon="building"
                 iconType="FontAwesome5"
                 secureTextEntry
-                component={InputComponent}
+                component={PickerInputComponent}
                 validate={this.organizationValidationRules}
                 forceDisplayErrorMessage={forceDisplayErrorMessages}
               />
@@ -259,6 +268,17 @@ class CreateAccountForm extends Component<Props> {
     if (valid) {
       doCreateAccountAction({ email, password, organization });
     }
+  }
+
+  getOrganizationNames() {
+    this.setState({
+      organizationOptions: [
+        { label: 'Organization 1', value: '1' },
+        { label: 'Organization 2', value: '2' },
+        { label: 'Organization 3', value: '3' },
+        { label: 'Organization 4', value: '4' },
+        { label: 'Organization 5', value: '5' },
+      ]});
   }
 }
 

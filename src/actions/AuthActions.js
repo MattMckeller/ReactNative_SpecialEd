@@ -31,7 +31,7 @@ const loginUserSuccess = (dispatch, user) => {
 const loginUserFail = (dispatch) => {
   dispatch({
     type: LOGIN_USER_FAIL,
-    payload: { authError: 'Error from backend.' },
+    payload: { authError: 'Error from backend.' }, // todo rename to error
   });
 };
 

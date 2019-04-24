@@ -11,7 +11,6 @@ import {
 import globalStyles from '../../assets/styles/GlobalStyles';
 import RoundedTextInput from '../common/RoundedTextInput';
 import RoundedButton from '../common/RoundedButton';
-import { didShowLoginErrorToast, loginUser } from '../../actions';
 import CenteredSpinner from '../common/CenteredSpinner';
 import Required from '../../utility/validation/Required';
 import MinLength from '../../utility/validation/MinLength';
@@ -20,29 +19,28 @@ import autoFormErrorDisplay from '../hoc/AutoFormErrorDisplay';
 import SubmitButtonHelper from '../../utility/helpers/SubmitButtonHelper';
 import type { SubmitButtonErrorDisplayData } from '../../utility/helpers/SubmitButtonHelper';
 import styleVariables from '../../assets/StyleVariables';
+import { didShowForgotPasswordToast, forgotPassword } from '../../actions/ForgotPasswordActions';
 
-const FORM_NAME = 'loginForm';
+const FORM_NAME = 'forgotPasswordForm';
 const EMAIL_INPUT_NAME = 'email';
-const PASSWORD_INPUT_NAME = 'password';
 const InputComponent = autoFormErrorDisplay(RoundedTextInput);
 
 type Props = {
-  loginUserAction: ({email: string, password: string}) => void,
+  forgotPasswordAction: ({email: string, password: string}) => void,
   didShowErrorToastAction: () => void,
   email: string,
-  password: string,
   loading: boolean,
-  authError: string,
+  error: string,
   shouldOpenErrorToast: boolean,
 } & FormProps
-class LoginForm extends Component<Props> {
+class ForgotPasswordForm extends Component<Props> {
   state = {
     shouldDisableSubmitButton: false,
     forceDisplayErrorMessages: false,
   };
 
   submitButtonHelper: SubmitButtonHelper = new SubmitButtonHelper(
-    [EMAIL_INPUT_NAME, PASSWORD_INPUT_NAME],
+    [EMAIL_INPUT_NAME],
   );
 
   // todo update validation rules
@@ -50,14 +48,6 @@ class LoginForm extends Component<Props> {
     value => Validate(value, [
       Required({ fieldName: 'Email Address' }),
       MinLength({ fieldName: 'Email Address', length: 5 }),
-    ]),
-  ];
-
-  // todo update validation rules
-  passwordValidationRules = [
-    value => Validate(value, [
-      Required({ fieldName: 'Password' }),
-      MinLength({ fieldName: 'Password', length: 5 }),
     ]),
   ];
 
@@ -92,9 +82,9 @@ class LoginForm extends Component<Props> {
   }
 
   showErrorToast() {
-    const { authError, didShowErrorToastAction } = this.props;
+    const { errorMessage, didShowErrorToastAction } = this.props;
     Toast.show({
-      text: authError,
+      text: errorMessage,
       buttonText: 'Okay',
       duration: 10000,
       type: 'danger',
@@ -132,24 +122,11 @@ class LoginForm extends Component<Props> {
                 forceDisplayErrorMessage={forceDisplayErrorMessages}
               />
             </View>
-            <View style={inputContainerStyle}>
-              <Field
-                name={PASSWORD_INPUT_NAME}
-                onErrorStateChange={this.onErrorStateChange}
-                label="Password"
-                labelIcon="lock"
-                iconType="MaterialIcons"
-                secureTextEntry
-                component={InputComponent}
-                validate={this.passwordValidationRules}
-                forceDisplayErrorMessage={forceDisplayErrorMessages}
-              />
-            </View>
             <View style={submitButtonContainerStyle}>
               <RoundedButton
                 onPress={this.onSubmitErrorChecker}
                 disabled={shouldDisableSubmitButton}
-                label="Sign In"
+                label="Send Pin"
                 height={60}
               />
             </View>
@@ -186,11 +163,11 @@ class LoginForm extends Component<Props> {
 
   onSubmit() {
     const {
-      email, password, valid, loginUserAction,
+      email, valid, forgotPasswordAction,
     } = this.props;
     Keyboard.dismiss();
     if (valid) {
-      loginUserAction({ email, password });
+      forgotPasswordAction({ email });
     }
   }
 }
@@ -218,21 +195,23 @@ const styles = {
 
 const selector = formValueSelector(FORM_NAME);
 const mapStateToProps = (state) => {
-  const { auth } = state;
+  const { forgotPassword: forgotPasswordState } = state;
+  console.log('mapStateToProps', state);
+  console.log('forgotPasswordState', forgotPasswordState);
+  console.log('forgotPasswordState', forgotPasswordState.error);
   return {
     email: selector(state, EMAIL_INPUT_NAME),
-    password: selector(state, PASSWORD_INPUT_NAME),
-    authError: auth.authError,
-    loading: auth.loading,
-    shouldOpenErrorToast: auth.shouldOpenErrorToast,
+    errorMessage: forgotPasswordState.error,
+    loading: forgotPasswordState.loading,
+    shouldOpenErrorToast: forgotPasswordState.shouldOpenErrorToast,
   };
 };
 
-LoginForm = reduxForm({
+ForgotPasswordForm = reduxForm({
   form: FORM_NAME,
-})(LoginForm);
+})(ForgotPasswordForm);
 
 export default connect(mapStateToProps, {
-  loginUserAction: loginUser,
-  didShowErrorToastAction: didShowLoginErrorToast,
-})(LoginForm);
+  forgotPasswordAction: forgotPassword,
+  didShowErrorToastAction: didShowForgotPasswordToast, // todo change this and create it
+})(ForgotPasswordForm);
