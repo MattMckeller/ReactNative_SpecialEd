@@ -9,9 +9,9 @@ import {
   Field, FormProps, reduxForm, formValueSelector,
 } from 'redux-form';
 import globalStyles from '../../assets/styles/GlobalStyles';
-import RoundedTextInput from '../common/RoundedTextInput';
-import RoundedButton from '../common/RoundedButton';
-import CenteredSpinner from '../common/CenteredSpinner';
+import RoundedTextInput from '../shared/common/RoundedTextInput';
+import RoundedButton from '../shared/common/RoundedButton';
+import CenteredSpinner from '../shared/common/CenteredSpinner';
 import Required from '../../utility/validation/Required';
 import MinLength from '../../utility/validation/MinLength';
 import Validate from '../../utility/validation/Validate';

@@ -1,3 +1,8 @@
+import styleVariables from '../StyleVariables';
+
+const {
+  lightDescriptionTextColor,
+} = styleVariables;
 
 const globalStyles = {
   flexRow: {
@@ -11,7 +16,9 @@ const globalStyles = {
   errorTextStyle: {
     color: 'red',
   },
+  lightDescriptionText: {
+    color: lightDescriptionTextColor,
+  },
 };
-
 
 export default globalStyles;

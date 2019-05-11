@@ -1,0 +1,3 @@
+// @flow
+export interface TemplateInterface {
+}

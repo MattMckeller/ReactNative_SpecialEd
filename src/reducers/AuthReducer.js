@@ -8,6 +8,7 @@ const INITIAL_STATE = {
   loading: false,
   authError: '',
   shouldOpenErrorToast: false,
+  isLoggedIn: false,
 };
 const AuthReducer = (state = INITIAL_STATE, action) => {
   const { type, payload } = action;
@@ -19,6 +20,7 @@ const AuthReducer = (state = INITIAL_STATE, action) => {
         ...state,
         ...INITIAL_STATE,
         user: payload,
+        isLoggedIn: true,
       };
     case LOGIN_USER_FAIL:
       return {

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { ScrollView, View } from 'react-native';
 import AuthLayout from '../layouts/AuthLayout';
-import RoundedButtonOutline from '../components/common/RoundedOutlineButton';
+import RoundedButtonOutline from '../components/shared/common/RoundedOutlineButton';
 import globalStyles from '../assets/styles/GlobalStyles';
 import styleVariables from '../assets/StyleVariables';
 import ForgotPasswordForm from '../components/forms/ForgotPasswordForm';

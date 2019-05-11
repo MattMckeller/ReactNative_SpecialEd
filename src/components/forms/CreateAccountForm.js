@@ -9,10 +9,10 @@ import {
 } from 'redux-form';
 import { Toast } from 'native-base';
 import globalStyles from '../../assets/styles/GlobalStyles';
-import RoundedTextInput from '../common/RoundedTextInput';
-import RoundedButton from '../common/RoundedButton';
+import RoundedTextInput from '../shared/common/RoundedTextInput';
+import RoundedButton from '../shared/common/RoundedButton';
 import styleVariables from '../../assets/StyleVariables';
-import CenteredSpinner from '../common/CenteredSpinner';
+import CenteredSpinner from '../shared/common/CenteredSpinner';
 import Required from '../../utility/validation/Required';
 import MinLength from '../../utility/validation/MinLength';
 import Validate from '../../utility/validation/Validate';
@@ -21,7 +21,7 @@ import SubmitButtonHelper from '../../utility/helpers/SubmitButtonHelper';
 import type { SubmitButtonErrorDisplayData } from '../../utility/helpers/SubmitButtonHelper';
 import { didShowCreateAccountErrorToast, doCreateAccount } from '../../actions/CreateAccountActions';
 import StringMatch from '../../utility/validation/StringMatch';
-import RoundedPickerInput from '../common/RoundedPickerInput';
+import RoundedPickerInput from '../shared/common/RoundedPickerInput';
 
 const FORM_NAME = 'createAccountForm';
 const EMAIL_INPUT_NAME = 'email';

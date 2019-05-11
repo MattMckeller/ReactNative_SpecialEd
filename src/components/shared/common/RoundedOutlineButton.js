@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import {
   Text, TouchableOpacity, View,
 } from 'react-native';
-import styleVariables from '../../assets/StyleVariables';
+import styleVariables from '../../../assets/StyleVariables';
 
 // todo create/user generic button type
 type Props = {

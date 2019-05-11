@@ -5,7 +5,7 @@ import {
   Text, View,
 } from 'react-native';
 import { Icon, Picker } from 'native-base';
-import globalStyles from '../../assets/styles/GlobalStyles';
+import globalStyles from '../../../assets/styles/GlobalStyles';
 
 // todo update types from redux form
 type Props = {

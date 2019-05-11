@@ -7,7 +7,7 @@ import AuthLayout from '../layouts/AuthLayout';
 import CreateAccountForm from '../components/forms/CreateAccountForm';
 import globalStyles from '../assets/styles/GlobalStyles';
 import styleVariables from '../assets/StyleVariables';
-import RoundedButtonOutline from '../components/common/RoundedOutlineButton';
+import RoundedButtonOutline from '../components/shared/common/RoundedOutlineButton';
 
 type Props = {
 }

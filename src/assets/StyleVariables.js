@@ -9,6 +9,8 @@ const styleVariables = {
   outlineButtonBorderColor: 'black',
   outlineButtonTextColor: 'black',
   outlineButtonUnderlayColor: 'gray',
+  actionArrowStyleColor: 'gray',
+  lightDescriptionTextColor: 'gray',
 };
 
 export default styleVariables;

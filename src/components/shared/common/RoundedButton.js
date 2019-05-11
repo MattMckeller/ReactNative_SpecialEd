@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import {
   Button, Text, TouchableHighlight, View,
 } from 'react-native';
-import styleVariables from '../../assets/StyleVariables';
+import styleVariables from '../../../assets/StyleVariables';
 
 type Props = {
   label: string,
