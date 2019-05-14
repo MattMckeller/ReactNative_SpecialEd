@@ -19,7 +19,7 @@ import Validate from '../../utility/validation/Validate';
 import autoFormErrorDisplay from '../hoc/AutoFormErrorDisplay';
 import SubmitButtonHelper from '../../utility/helpers/SubmitButtonHelper';
 import type { SubmitButtonErrorDisplayData } from '../../utility/helpers/SubmitButtonHelper';
-import { didShowCreateAccountErrorToast, doCreateAccount } from '../../actions/CreateAccountActions';
+import { didShowCreateAccountErrorToast, doCreateAccount } from '../../redux/actions/CreateAccountActions';
 import StringMatch from '../../utility/validation/StringMatch';
 import RoundedPickerInput from '../shared/common/RoundedPickerInput';
 

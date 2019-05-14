@@ -4,61 +4,54 @@ import { connect } from 'react-redux';
 import { View } from 'react-native';
 import { Icon } from 'native-base';
 import type { StudentInterface } from '../../data-models/student/Student.interface';
-import globalStyles from "../../assets/styles/GlobalStyles";
-import styleVariables from "../../assets/StyleVariables";
-import StudentLastUpdatedAt from "../shared/StudentFields/StudentLastUpdatedAt";
-import StudentID from "../shared/StudentFields/StudentID";
-import StudentName from "../shared/StudentFields/StudentName";
+import globalStyles from '../../assets/styles/GlobalStyles';
+import styleVariables from '../../assets/StyleVariables';
+import StudentLastUpdatedAt from '../shared/student-fields/StudentLastUpdatedAt';
+import StudentID from '../shared/student-fields/StudentID';
+import StudentName from '../shared/student-fields/StudentName';
 
 type Props = {
   student: StudentInterface;
 };
-class StudentCard extends Component<Props> {
-  constructor() {
-    super();
-  }
+function StudentCard(props: Props) {
+  const { student } = props;
 
-  render() {
-    const { student } = this.props;
-    console.log('student card', student);
+  const {
+    cardContainerStyle,
+    topContainerStyle,
+    bottomContainerStyle,
+    detailContainer,
+    studentIDContainerStyle,
+    lastUpdatedAtStyle,
+    arrowContainerStyle,
+    arrowIconStyle,
+  } = styles;
 
-    const {
-      cardContainerStyle,
-      topContainerStyle,
-      bottomContainerStyle,
-      detailContainer,
-      studentIDContainerStyle,
-      lastUpdatedAtStyle,
-      arrowContainerStyle,
-      arrowIconStyle,
-    } = styles;
-
-    const { lightDescriptionText } = globalStyles;
-    return (
-      <View style={cardContainerStyle}>
-        <View style={topContainerStyle}>
-          <StudentName student={student} />
-        </View>
-        <View style={bottomContainerStyle}>
-          <View style={detailContainer}>
-            <View style={studentIDContainerStyle}>
-              <StudentID style={lightDescriptionText} student={student} />
-            </View>
-            <View style={lastUpdatedAtStyle}>
-              <StudentLastUpdatedAt style={lightDescriptionText} student={student} />
-            </View>
+  const { lightDescriptionText } = globalStyles;
+  return (
+    <View style={cardContainerStyle}>
+      <View style={topContainerStyle}>
+        <StudentName student={student} />
+      </View>
+      <View style={bottomContainerStyle}>
+        <View style={detailContainer}>
+          <View style={studentIDContainerStyle}>
+            <StudentID style={lightDescriptionText} student={student} />
+          </View>
+          <View style={lastUpdatedAtStyle}>
+            <StudentLastUpdatedAt style={lightDescriptionText} student={student} />
           </View>
         </View>
-        <View style={arrowContainerStyle}>
-          <Icon
-            style={arrowIconStyle}
-            name="angle-right"
-            type="FontAwesome5"
-          />
-        </View>
       </View>
-    );
-  }
+      <View style={arrowContainerStyle}>
+        <Icon
+          style={arrowIconStyle}
+          name="angle-right"
+          type="FontAwesome5"
+        />
+      </View>
+    </View>
+  );
 }
 
 const styles = {
@@ -104,7 +97,4 @@ const styles = {
   },
 };
 
-const mapStateToProps = state => ({});
-
-export default connect(mapStateToProps, {
-})(StudentCard);
+export default StudentCard;

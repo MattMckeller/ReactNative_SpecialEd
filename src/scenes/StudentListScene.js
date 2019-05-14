@@ -1,30 +1,40 @@
 // @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import globalStyles from '../assets/styles/GlobalStyles';
 import styleVariables from '../assets/StyleVariables';
 import MainLayout from '../layouts/MainLayout';
 import StudentList from '../components/display/StudentList';
+import { configureMainFab } from '../redux/actions';
+import FabOption from '../components/shared/common/FabOption';
 
 type Props = {
+  configureMainFabAction: () => any,
 }
 class StudentListScene extends Component<Props> {
-  constructor() {
-    super();
+  componentDidMount(): void {
+    const { configureMainFabAction } = this.props;
+    configureMainFabAction({
+      buttons: [
+        StudentListScene.getActionFabs(),
+      ],
+    });
   }
 
   render() {
     const { flexColumn } = globalStyles;
     const { containerStyle } = styles;
     // todo move background here
-    console.log('student list scene');
     return (
       <MainLayout>
         {/* todo maybe combine these multiple views into a single component */}
-        <View style={{ ...containerStyle, ...flexColumn, ...{backgroundColor: 'blue'} }}>
+        <View style={{ ...containerStyle, ...flexColumn, ...{ backgroundColor: 'blue' } }}>
           <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-            <View style={{ width: '95%', height: '100%', justifyContent: 'center', backgroundColor: 'brown' }}>
+            <View style={{
+              width: '95%', height: '100%', justifyContent: 'center', backgroundColor: 'brown',
+            }}
+            >
               <StudentList students={[
                 {
                   firstName: 'Bob',
@@ -89,6 +99,25 @@ class StudentListScene extends Component<Props> {
       </MainLayout>
     );
   }
+
+  static getActionFabs(): React.Component[] {
+    return [
+      <FabOption
+        label="Add Student"
+        onPress={() => {
+          console.log('pressed add student');
+        }}
+        iconName="user-plus"
+      />,
+      <FabOption
+        label="Export all to PDF"
+        onPress={() => {
+          console.log('pressed export to pdf');
+        }}
+        iconName="file-export"
+      />,
+    ];
+  }
 }
 
 const styles = {
@@ -101,4 +130,5 @@ const styles = {
 const mapStateToProps = state => ({});
 
 export default connect(mapStateToProps, {
+  configureMainFabAction: configureMainFab,
 })(StudentListScene);

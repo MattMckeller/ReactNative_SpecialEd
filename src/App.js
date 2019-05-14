@@ -11,7 +11,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { Root } from 'native-base';
 import ReduxThunk from 'redux-thunk';
-import combineReducers from './reducers';
+import combineReducers from './redux/reducers';
 import RouterComponent from './router';
 
 type Props = {};

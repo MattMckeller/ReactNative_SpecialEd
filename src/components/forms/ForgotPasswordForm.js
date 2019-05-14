@@ -19,7 +19,7 @@ import autoFormErrorDisplay from '../hoc/AutoFormErrorDisplay';
 import SubmitButtonHelper from '../../utility/helpers/SubmitButtonHelper';
 import type { SubmitButtonErrorDisplayData } from '../../utility/helpers/SubmitButtonHelper';
 import styleVariables from '../../assets/StyleVariables';
-import { didShowForgotPasswordToast, forgotPassword } from '../../actions/ForgotPasswordActions';
+import { didShowForgotPasswordToast, forgotPassword } from '../../redux/actions/ForgotPasswordActions';
 
 const FORM_NAME = 'forgotPasswordForm';
 const EMAIL_INPUT_NAME = 'email';

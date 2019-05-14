@@ -32,6 +32,7 @@
         "no-console": 0,
         "react/sort-comp": [0],
         "no-underscore-dangle": "off",
-        "no-class-assign": "off"
+        "no-class-assign": "off",
+        "import/prefer-default-export": "off"
     }
 }

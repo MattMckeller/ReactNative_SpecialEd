@@ -1,6 +1,5 @@
 // @flow
 import React from 'react';
-import { connect } from 'react-redux';
 import { Text } from 'react-native';
 import type { StudentInterface } from '../../../data-models/student/Student.interface';
 
@@ -20,8 +19,4 @@ StudentLastUpdatedAt.defaultProps = {
   style: {},
 };
 
-
-const mapStateToProps = state => ({});
-
-export default connect(mapStateToProps, {
-})(StudentLastUpdatedAt);
+export default StudentLastUpdatedAt;

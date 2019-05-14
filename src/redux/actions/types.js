@@ -10,3 +10,5 @@ export const FORGOT_PASSWORD_START = 'forgot_password_start';
 export const FORGOT_PASSWORD_SUCCESS = 'forgot_password_success';
 export const FORGOT_PASSWORD_FAIL = 'forgot_password_fail';
 export const FORGOT_PASSWORD_DID_SHOW_ERROR_TOAST = 'forgot_password_did_show_error_toast';
+export const MAIN_FAB_CONFIGURE = 'main_fab_configure';
+export const MAIN_FAB_TOGGLE = 'main_fab_toggle';

@@ -11,7 +11,7 @@ import {
 import globalStyles from '../../assets/styles/GlobalStyles';
 import RoundedTextInput from '../shared/common/RoundedTextInput';
 import RoundedButton from '../shared/common/RoundedButton';
-import { didShowLoginErrorToast, loginUser } from '../../actions';
+import { didShowLoginErrorToast, loginUser } from '../../redux/actions';
 import CenteredSpinner from '../shared/common/CenteredSpinner';
 import Required from '../../utility/validation/Required';
 import MinLength from '../../utility/validation/MinLength';
