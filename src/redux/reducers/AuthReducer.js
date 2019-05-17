@@ -2,6 +2,7 @@ import {
   LOGIN_USER_START, LOGIN_USER_FAIL, LOGIN_USER_SUCCESS, LOGIN_DID_SHOW_ERROR_TOAST,
 } from '../actions/types';
 
+// Move default messages to error config
 const DEFAULT_ERROR_MESSAGE = 'Authentication failed.';
 const INITIAL_STATE = {
   user: null,

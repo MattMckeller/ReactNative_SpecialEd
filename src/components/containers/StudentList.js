@@ -42,7 +42,7 @@ class StudentList extends Component<Props> {
 const styles = {
   cardContainer: {
     marginBottom: 10,
-  }
+  },
 };
 
 const mapStateToProps = state => ({});

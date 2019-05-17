@@ -13,9 +13,11 @@ import {
 } from 'native-base';
 import globalStyles from '../assets/styles/GlobalStyles';
 import MainFab from '../components/buttons/MainFab';
+import CenteredSpinner from "../components/shared/common/CenteredSpinner";
 
 type Props = {
-  children: any
+  children: any,
+  loading?: boolean,
 };
 class MainLayout extends Component<Props> {
   render() {
@@ -55,11 +57,27 @@ class MainLayout extends Component<Props> {
               <MainFab />
             </View>
           </Container>
+          {this.renderSpinner()}
         </View>
       </View>
     );
   }
+
+  renderSpinner() {
+    const { loading } = this.props;
+    console.log('render spinner main layout', loading);
+    if (loading === true) {
+      return (
+        <CenteredSpinner />
+      );
+    }
+    return null;
+  }
 }
+
+MainLayout.defaultProps = {
+  loading: false,
+};
 
 const styles = {
   contentContainerStyle: {
