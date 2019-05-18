@@ -1,7 +1,6 @@
 // @flow
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { View } from 'react-native';
+import React from 'react';
+import { TouchableHighlight, View } from 'react-native';
 import { Icon } from 'native-base';
 import type { StudentInterface } from '../../data-models/student/Student.interface';
 import globalStyles from '../../assets/styles/GlobalStyles';
@@ -12,9 +11,10 @@ import StudentName from '../shared/student-fields/StudentName';
 
 type Props = {
   student: StudentInterface;
+  onPress: (student: StudentInterface) => any,
 };
 function StudentCard(props: Props) {
-  const { student } = props;
+  const { student, onPress } = props;
 
   const {
     cardContainerStyle,
@@ -28,6 +28,11 @@ function StudentCard(props: Props) {
   } = styles;
 
   const { lightDescriptionText } = globalStyles;
+
+  const _onPress = () => {
+    onPress(student);
+  };
+
   return (
     <View style={cardContainerStyle}>
       <View style={topContainerStyle}>
@@ -43,13 +48,13 @@ function StudentCard(props: Props) {
           </View>
         </View>
       </View>
-      <View style={arrowContainerStyle}>
+      <TouchableHighlight onPress={_onPress} style={arrowContainerStyle}>
         <Icon
           style={arrowIconStyle}
           name="angle-right"
           type="FontAwesome5"
         />
-      </View>
+      </TouchableHighlight>
     </View>
   );
 }
@@ -89,6 +94,12 @@ const styles = {
   arrowContainerStyle: {
     position: 'absolute',
     right: 20,
+    width: 100,
+    height: '100%',
+    backgroundColor: 'black',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   arrowIconStyle: {
     fontSize: 20,

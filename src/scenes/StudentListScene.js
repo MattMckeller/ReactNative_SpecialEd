@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View } from 'react-native';
+import { Toast } from 'native-base';
 import globalStyles from '../assets/styles/GlobalStyles';
 import styleVariables from '../assets/StyleVariables';
 import MainLayout from '../layouts/MainLayout';
@@ -9,8 +10,8 @@ import StudentList from '../components/containers/StudentList';
 import { configureMainFab } from '../redux/actions';
 import FabOption from '../components/shared/common/FabOption';
 import type { StudentInterface } from '../data-models/student/Student.interface';
-import {didShowStudentListErrorToast, retrieveStudents} from "../redux/actions/StudentActions";
-import {Toast} from "native-base";
+import { didShowStudentListErrorToast, retrieveStudents } from '../redux/actions/StudentActions';
+import CenteredWrapper from "../components/containers/CenteredWrapper";
 
 type Props = {
   configureMainFabAction: () => any,
@@ -52,16 +53,9 @@ class StudentListScene extends Component<Props> {
     return (
       <MainLayout loading={loading}>
         {/* todo maybe combine these multiple views into a single component */}
-        <View style={{ ...containerStyle, ...flexColumn, ...{ backgroundColor: 'blue' } }}>
-          <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-            <View style={{
-              width: '95%', height: '100%', justifyContent: 'center', backgroundColor: 'brown',
-            }}
-            >
-              <StudentList students={students} />
-            </View>
-          </View>
-        </View>
+        <CenteredWrapper>
+          <StudentList students={students} />
+        </CenteredWrapper>
       </MainLayout>
     );
   }
@@ -100,12 +94,7 @@ class StudentListScene extends Component<Props> {
   }
 }
 
-const styles = {
-  containerStyle: {
-    backgroundColor: styleVariables.primaryColor,
-    height: '100%',
-  },
-};
+const styles = {};
 
 const mapStateToProps = (state) => {
   const { studentState } = state;

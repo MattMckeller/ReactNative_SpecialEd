@@ -16,16 +16,21 @@ import {
   DELETE_STUDENT_FAIL,
   SELECTED_STUDENT,
   STUDENT_LIST_DID_DISPLAY_ERROR_TOAST,
-  STUDENT_PROFILE_DID_DISPLAY_ERROR_TOAST,
+  STUDENT_PROFILE_DID_DISPLAY_ERROR_TOAST, SELECTED_STUDENT_FROM_LIST,
 } from '../actions/types';
 import { ERROR_CODES, ERROR_CONFIG } from '../../config/errors.config';
 
 const INITIAL_STATE = {
   students: [],
-  retrieveStudentsProcessing: false,
   selectedStudent: null,
-  retrieveStudentsError: '',
   shouldOpenStudentListErrorToast: false,
+  shouldOpenStudentProfileNotesErrorToast: false,
+  retrieveNotesProcessing: false,
+  retrieveStudentsProcessing: false,
+  retrieveStudentProcessing: false,
+  retrieveStudentsError: '',
+  retrieveStudentError: '',
+  retrieveNotesError: '',
 };
 const StudentsReducer = (state = INITIAL_STATE, action) => {
   const { type, payload } = action;
@@ -51,6 +56,11 @@ const StudentsReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         shouldOpenStudentListErrorToast: false,
+      };
+    case SELECTED_STUDENT_FROM_LIST:
+      return {
+        ...state,
+        selectedStudent: payload,
       };
     default:
       return state;

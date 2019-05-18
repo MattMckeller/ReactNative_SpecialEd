@@ -1,3 +1,4 @@
+// @flow
 import {
   RETRIEVE_STUDENTS_START,
   RETRIEVE_STUDENTS_SUCCESS,
@@ -14,12 +15,13 @@ import {
   DELETE_STUDENT_START,
   DELETE_STUDENT_SUCCESS,
   DELETE_STUDENT_FAIL,
-  SELECTED_STUDENT,
+  SELECTED_STUDENT_FROM_LIST,
   STUDENT_LIST_DID_DISPLAY_ERROR_TOAST,
-  STUDENT_PROFILE_DID_DISPLAY_ERROR_TOAST,
+  STUDENT_PROFILE_DID_DISPLAY_ERROR_TOAST, LOGIN_USER_SUCCESS,
 } from './types';
 import { STUDENT_LIST_TEST_DATA } from '../../../extra/testData/students';
-import { disableErrorDisplay, enableErrorDisplay } from './ErrorActions';
+import type {StudentInterface} from "../../data-models/student/Student.interface";
+import {Actions} from "react-native-router-flux";
 
 // todo based on current authenticated user
 export const retrieveStudents = () => (dispatch) => {
@@ -27,20 +29,24 @@ export const retrieveStudents = () => (dispatch) => {
   dispatch({ type: RETRIEVE_STUDENTS_START });
 
   // todo implement backend calls
-  // setTimeout(() => {
-  //   retrieveStudentsSuccess(dispatch, STUDENT_LIST_TEST_DATA);
-  // }, 5000);
+  setTimeout(() => {
+    retrieveStudentsSuccess(dispatch, STUDENT_LIST_TEST_DATA);
+  }, 1000);
   console.log('auth action');
 
-  setTimeout(() => {
-    retrieveStudentsFail(dispatch, { error: 'An error has occurred.' });
-  }, 5000);
+  // setTimeout(() => {
+  //   retrieveStudentsFail(dispatch, { error: 'An error has occurred.' });
+  // }, 1000);
+};
+
+export const selectedStudentFromList = (student: StudentInterface) => (dispatch) => {
+  console.log('selected student from list', student);
+  dispatch({ type: SELECTED_STUDENT_FROM_LIST, payload: student });
+  Actions.studentProfileNotes();
 };
 
 const retrieveStudentsSuccess = (dispatch, students) => {
   dispatch({ type: RETRIEVE_STUDENTS_SUCCESS, payload: students });
-  // todo decide if this should be in the action or in the component
-  disableErrorDisplay();
 };
 
 const retrieveStudentsFail = (dispatch) => {
@@ -48,7 +54,6 @@ const retrieveStudentsFail = (dispatch) => {
     type: RETRIEVE_STUDENTS_FAIL,
     payload: { error: 'Error from backend.' },
   });
-  enableErrorDisplay();
 };
 
 export const didShowStudentListErrorToast = () => ({

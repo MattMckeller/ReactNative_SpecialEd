@@ -7,7 +7,7 @@ import {
 const DEFAULT_ERROR_MESSAGE = 'Authentication failed.';
 const INITIAL_STATE = {
   loading: false,
-  createAccountError: '',
+  createAccountError: '', // todo update to just error
   shouldOpenErrorToast: false,
 };
 const CreateAccountReducer = (state = INITIAL_STATE, action) => {

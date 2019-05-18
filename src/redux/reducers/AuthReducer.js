@@ -7,7 +7,7 @@ const DEFAULT_ERROR_MESSAGE = 'Authentication failed.';
 const INITIAL_STATE = {
   user: null,
   loading: false,
-  authError: '',
+  authError: '', // todo update to just error
   shouldOpenErrorToast: false,
   isLoggedIn: false,
 };
