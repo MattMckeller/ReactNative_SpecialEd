@@ -104,11 +104,11 @@ export const retrieveSingleStudentPdf = (student: StudentInterface) => (dispatch
 
   // todo implement backend calls
   setTimeout(() => {
-    retrieveStudentAttendanceRecordsSuccess(dispatch, STUDENT_ATTENDANCE_RECORD_TEST_DATA);
+    retrieveSingleStudentPdfSuccess(dispatch, STUDENT_ATTENDANCE_RECORD_TEST_DATA);
   }, 10);
 
   // setTimeout(() => {
-  //   retrieveStudentAttendanceRecordsFail(dispatch, { error: 'An error has occurred.' });
+  //   retrieveSingleStudentPdfFail(dispatch, { error: 'An error has occurred.' });
   // }, 10);
 };
 
@@ -117,11 +117,11 @@ export const retrieveMultipleStudentsPdf = (student: StudentInterface) => (dispa
 
   // todo implement backend calls
   setTimeout(() => {
-    retrieveStudentAttendanceRecordsSuccess(dispatch, STUDENT_ATTENDANCE_RECORD_TEST_DATA);
+    retrieveMultipleStudentPdfSuccess(dispatch, STUDENT_ATTENDANCE_RECORD_TEST_DATA);
   }, 10);
 
   // setTimeout(() => {
-  //   retrieveStudentAttendanceRecordsFail(dispatch, { error: 'An error has occurred.' });
+  //   retrieveMultipleStudentPdfFail(dispatch, { error: 'An error has occurred.' });
   // }, 10);
 };
 
