@@ -1,4 +1,7 @@
-export const STUDENT_LIST_TEST_DATA = [
+// @flow
+import type { StudentInterface } from '../../src/data-models/student/Student.interface';
+
+export const STUDENT_LIST_TEST_DATA: StudentInterface[] = [
   {
     firstName: 'Bob',
     lastName: 'Smith',

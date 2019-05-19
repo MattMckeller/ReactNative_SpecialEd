@@ -1,5 +1,8 @@
+// @flow
 
-export const MY_USER_TEST_DATA = {
+import type { UserInterface } from '../../src/data-models/user/User.interface';
+
+export const MY_USER_TEST_DATA: UserInterface = {
   firstName: 'Jim',
   lastName: 'Carrey',
   email: 'jimcarrey@gmail.com',
@@ -8,7 +11,7 @@ export const MY_USER_TEST_DATA = {
   roles: [],
 };
 
-export const USER_1_TEST_DATA = {
+export const USER_1_TEST_DATA: UserInterface = {
   firstName: 'Seth',
   lastName: 'Rogen',
   email: 'sethrogen@gmail.com',
@@ -17,7 +20,7 @@ export const USER_1_TEST_DATA = {
   roles: [],
 };
 
-export const USER_2_TEST_DATA = {
+export const USER_2_TEST_DATA: UserInterface = {
   firstName: 'Will',
   lastName: 'Smith',
   email: 'willsmith@gmail.com',
@@ -25,5 +28,3 @@ export const USER_2_TEST_DATA = {
   schools: [],
   roles: [],
 };
-
-

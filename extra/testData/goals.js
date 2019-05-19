@@ -1,6 +1,8 @@
+// @flow
 import { MY_USER_TEST_DATA } from './users';
+import type { GoalInterface } from '../../src/data-models/goal/Goal.interface';
 
-export const STUDENT_GOAL_TEST_DATA = [
+export const STUDENT_GOAL_TEST_DATA: GoalInterface[] = [
   {
     goalNumber: 1,
     goal: 'This is a goal 1',

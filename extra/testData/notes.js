@@ -1,6 +1,8 @@
+// @flow
 import { MY_USER_TEST_DATA, USER_1_TEST_DATA, USER_2_TEST_DATA } from './users';
+import type { NoteInterface } from '../../src/data-models/note/Note.interface';
 
-export const MY_STUDENT_NOTES_TEST_DATA = [
+export const MY_STUDENT_NOTES_TEST_DATA: NoteInterface[] = [
   {
     name: 'My Note Title 1',
     date: '01/01/2019',
@@ -73,7 +75,7 @@ export const MY_STUDENT_NOTES_TEST_DATA = [
   },
 ];
 
-export const ALL_STUDENT_NOTES_TEST_DATA = [
+export const ALL_STUDENT_NOTES_TEST_DATA: NoteInterface[] = [
   {
     name: 'All Notes Title 1',
     date: '01/01/2019',
