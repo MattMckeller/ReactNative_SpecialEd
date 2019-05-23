@@ -4,7 +4,9 @@ import type { UserInterface } from '../user/User.interface';
 import type { GoalInterface } from '../goal/Goal.interface';
 
 export interface NoteInterface {
+  id: number,
   name: string;
+  text: string;
   date: string; // date
   minutes: number | string;
   student: StudentInterface;

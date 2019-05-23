@@ -4,6 +4,7 @@ import type { UserInterface } from '../user/User.interface';
 import type { NoteInterface } from '../note/Note.interface';
 
 export interface GoalInterface {
+  id: number | string;
   goalNumber: number | string;
   goal: string;
   createdAt: string; // timestamp

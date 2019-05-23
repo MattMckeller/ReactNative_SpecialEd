@@ -1,7 +1,6 @@
 // @flow
 import React from 'react';
-import { connect } from 'react-redux';
-import { Text, View } from 'react-native';
+import { Text } from 'react-native';
 
 type Props = {
   test: any;
@@ -17,7 +16,4 @@ function FunctionalTemplate(props: Props) {
 
 FunctionalTemplate.defaultProps = {};
 
-const mapStateToProps = () => ({});
-
-export default connect(mapStateToProps, {
-})(FunctionalTemplate);
+export default FunctionalTemplate;
