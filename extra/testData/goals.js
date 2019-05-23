@@ -4,6 +4,7 @@ import type { GoalInterface } from '../../src/data-models/goal/Goal.interface';
 
 export const STUDENT_GOAL_TEST_DATA: GoalInterface[] = [
   {
+    id: 1,
     goalNumber: 1,
     goal: 'This is a goal 1',
     createdAt: '01/01/2019',
@@ -13,6 +14,7 @@ export const STUDENT_GOAL_TEST_DATA: GoalInterface[] = [
     notes: [],
   },
   {
+    id: 2,
     goalNumber: 2,
     goal: 'This is a goal 2 with long text with long text with long text with long text with long text with long text with long text with long text with long text',
     createdAt: '01/02/2019',
@@ -22,6 +24,7 @@ export const STUDENT_GOAL_TEST_DATA: GoalInterface[] = [
     notes: [],
   },
   {
+    id: 3,
     goalNumber: 3,
     goal: 'This is a goal 3',
     createdAt: '01/03/2019',
@@ -31,6 +34,7 @@ export const STUDENT_GOAL_TEST_DATA: GoalInterface[] = [
     notes: [],
   },
   {
+    id: 4,
     goalNumber: 4,
     goal: 'This is a goal 4',
     createdAt: '01/04/2019',

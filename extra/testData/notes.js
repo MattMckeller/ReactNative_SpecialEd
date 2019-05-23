@@ -4,7 +4,9 @@ import type { NoteInterface } from '../../src/data-models/note/Note.interface';
 
 export const MY_STUDENT_NOTES_TEST_DATA: NoteInterface[] = [
   {
+    id: 1,
     name: 'My Note Title 1',
+    text: 'My Note Text 1 long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text',
     date: '01/01/2019',
     minutes: 25,
     user: MY_USER_TEST_DATA,
@@ -14,7 +16,9 @@ export const MY_STUDENT_NOTES_TEST_DATA: NoteInterface[] = [
     updatedAt: '12:20 pm',
   },
   {
+    id: 2,
     name: 'My Note Title 2 with long text with long text with long text with long text with long text with long text with long text with long text with long text with long text',
+    text: 'My Note Text 2',
     date: '01/02/2019',
     minutes: 16,
     user: MY_USER_TEST_DATA,
@@ -24,7 +28,9 @@ export const MY_STUDENT_NOTES_TEST_DATA: NoteInterface[] = [
     updatedAt: '12:20 pm',
   },
   {
+    id: 3,
     name: 'My Note Title 3',
+    text: 'My Note Text 3',
     date: '01/03/2019',
     minutes: 20,
     user: MY_USER_TEST_DATA,
@@ -34,7 +40,9 @@ export const MY_STUDENT_NOTES_TEST_DATA: NoteInterface[] = [
     updatedAt: '12:20 pm',
   },
   {
+    id: 4,
     name: 'My Note Title 4',
+    text: 'My Note Text 4',
     date: '01/04/2019',
     minutes: 50,
     user: MY_USER_TEST_DATA,
@@ -44,7 +52,9 @@ export const MY_STUDENT_NOTES_TEST_DATA: NoteInterface[] = [
     updatedAt: '12:20 pm',
   },
   {
+    id: 5,
     name: 'My Note Title 4 with long text with long text with long text with long text with long text with long text with long text with long text with long text with long text with long text with long text with long text with long text with long text with long text',
+    text: 'My Note Text 4  with long text with long text with long text with long text with long text with long text with long text with long text with long text with long text with long text with long text with long text with long text with long text with long text',
     date: '01/05/2019',
     minutes: 70,
     user: MY_USER_TEST_DATA,
@@ -54,7 +64,9 @@ export const MY_STUDENT_NOTES_TEST_DATA: NoteInterface[] = [
     updatedAt: '12:20 pm',
   },
   {
+    id: 6,
     name: 'My Note Title 5',
+    text: 'My Note Text 5',
     date: '01/06/2019',
     minutes: 5,
     user: MY_USER_TEST_DATA,
@@ -64,7 +76,9 @@ export const MY_STUDENT_NOTES_TEST_DATA: NoteInterface[] = [
     updatedAt: '12:20 pm',
   },
   {
+    id: 7,
     name: 'My Note Title 6',
+    text: 'My Note Text 6',
     date: '01/07/2019',
     minutes: 50,
     user: MY_USER_TEST_DATA,
@@ -77,6 +91,7 @@ export const MY_STUDENT_NOTES_TEST_DATA: NoteInterface[] = [
 
 export const ALL_STUDENT_NOTES_TEST_DATA: NoteInterface[] = [
   {
+    id: 8,
     name: 'All Notes Title 1',
     date: '01/01/2019',
     minutes: 50,
@@ -87,6 +102,7 @@ export const ALL_STUDENT_NOTES_TEST_DATA: NoteInterface[] = [
     updatedAt: '12:20 pm',
   },
   {
+    id: 9,
     name: 'All Notes Title 2',
     date: '01/02/2019',
     minutes: 50,
@@ -97,6 +113,7 @@ export const ALL_STUDENT_NOTES_TEST_DATA: NoteInterface[] = [
     updatedAt: '12:20 pm',
   },
   {
+    id: 10,
     name: 'All Notes Title 3',
     date: '01/03/2019',
     minutes: 50,
@@ -107,6 +124,7 @@ export const ALL_STUDENT_NOTES_TEST_DATA: NoteInterface[] = [
     updatedAt: '12:20 pm',
   },
   {
+    id: 11,
     name: 'All Notes Title 4',
     date: '01/04/2019',
     minutes: 50,
@@ -117,6 +135,7 @@ export const ALL_STUDENT_NOTES_TEST_DATA: NoteInterface[] = [
     updatedAt: '12:20 pm',
   },
   {
+    id: 12,
     name: 'All Notes Title 5',
     date: '01/05/2019',
     minutes: 50,
@@ -127,6 +146,7 @@ export const ALL_STUDENT_NOTES_TEST_DATA: NoteInterface[] = [
     updatedAt: '12:20 pm',
   },
   {
+    id: 13,
     name: 'All Notes Title 6',
     date: '01/06/2019',
     minutes: 50,
@@ -137,6 +157,7 @@ export const ALL_STUDENT_NOTES_TEST_DATA: NoteInterface[] = [
     updatedAt: '12:20 pm',
   },
   {
+    id: 14,
     name: 'All Notes Title 7',
     date: '01/07/2019',
     minutes: 50,
