@@ -1,28 +1,41 @@
 // @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View } from 'react-native';
 import { Toast } from 'native-base';
-import globalStyles from '../assets/styles/GlobalStyles';
 import styleVariables from '../assets/StyleVariables';
 import MainLayout from '../layouts/MainLayout';
 import StudentList from '../components/containers/StudentList';
-import { configureMainFab } from '../redux/actions';
+import {
+  configureMainFab,
+  didShowStudentListErrorToast,
+  selectedStudentFromList,
+} from '../redux/actions';
 import FabOption from '../components/shared/common/FabOption';
 import type { StudentInterface } from '../data-models/student/Student.interface';
-import { didShowStudentListErrorToast, retrieveStudents } from '../redux/actions/StudentActions';
-import CenteredWrapper from "../components/containers/CenteredWrapper";
+import {
+  retrieveStudents,
+} from '../redux/actions/StudentActions';
+import CenteredWrapper from '../components/containers/CenteredWrapper';
 
 type Props = {
   configureMainFabAction: () => any,
   retrieveStudentsAction: () => any,
+  selectedStudentFromListAction: (student: StudentInterface) => any,
   didShowStudentListErrorToastAction: () => any,
   students: StudentInterface[],
   loading: boolean,
   retrieveStudentsError: boolean,
   shouldOpenStudentListErrorToast: boolean,
 }
+
 class StudentListScene extends Component<Props> {
+
+  constructor() {
+    super();
+    this.onSelectStudent = this.onSelectStudent.bind(this);
+    this.showStudentListErrorToast = this.showStudentListErrorToast.bind(this);
+  }
+
   componentDidMount(): void {
     const {
       configureMainFabAction,
@@ -46,15 +59,12 @@ class StudentListScene extends Component<Props> {
   }
 
   render() {
-    const { flexColumn } = globalStyles;
-    const { containerStyle } = styles;
     const { students, loading } = this.props;
     // todo move background here
     return (
       <MainLayout loading={loading}>
-        {/* todo maybe combine these multiple views into a single component */}
         <CenteredWrapper>
-          <StudentList students={students} />
+          <StudentList students={students} onSelectStudent={this.onSelectStudent}/>
         </CenteredWrapper>
       </MainLayout>
     );
@@ -79,6 +89,12 @@ class StudentListScene extends Component<Props> {
     ];
   }
 
+  onSelectStudent(student: StudentInterface) {
+    const { selectedStudentFromListAction } = this.props;
+    console.log('selected student', student);
+    selectedStudentFromListAction(student);
+  }
+
   showStudentListErrorToast() {
     const { retrieveStudentsError, didShowStudentListErrorToastAction } = this.props;
     Toast.show({
@@ -97,12 +113,21 @@ class StudentListScene extends Component<Props> {
 const styles = {};
 
 const mapStateToProps = (state) => {
-  const { studentState } = state;
+  const {
+    studentState: {
+      students,
+      shouldOpenStudentListErrorToast,
+      retrieveStudentsError,
+    },
+    loadingState: {
+      loading,
+    },
+  } = state;
   return {
-    students: studentState.students,
-    loading: studentState.retrieveStudentsProcessing,
-    shouldOpenStudentListErrorToast: studentState.shouldOpenStudentListErrorToast,
-    retrieveStudentsError: studentState.retrieveStudentsError,
+    loading,
+    students,
+    shouldOpenStudentListErrorToast,
+    retrieveStudentsError,
   };
 };
 
@@ -110,4 +135,5 @@ export default connect(mapStateToProps, {
   configureMainFabAction: configureMainFab,
   retrieveStudentsAction: retrieveStudents,
   didShowStudentListErrorToastAction: didShowStudentListErrorToast,
+  selectedStudentFromListAction: selectedStudentFromList,
 })(StudentListScene);

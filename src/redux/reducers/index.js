@@ -5,6 +5,7 @@ import CreateAccountReducer from './CreateAccountReducer';
 import ForgotPasswordReducer from './ForgotPasswordReducer';
 import MainFabReducer from './MainFabReducer';
 import StudentsReducer from './StudentsReducer';
+import LoadingReducer from './LoadingReducer';
 
 // todo create interface(s) for reference
 export default combineReducers({
@@ -14,4 +15,5 @@ export default combineReducers({
   form: formReducer,
   mainFab: MainFabReducer,
   studentState: StudentsReducer,
+  loadingState: LoadingReducer,
 });

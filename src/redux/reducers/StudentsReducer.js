@@ -20,14 +20,12 @@ import {
 } from '../actions/types';
 import { ERROR_CODES, ERROR_CONFIG } from '../../config/errors.config';
 
+// todo maybe break this up into separate vars
 const INITIAL_STATE = {
   students: [],
   selectedStudent: null,
   shouldOpenStudentListErrorToast: false,
   shouldOpenStudentProfileNotesErrorToast: false,
-  retrieveNotesProcessing: false,
-  retrieveStudentsProcessing: false,
-  retrieveStudentProcessing: false,
   retrieveStudentsError: '',
   retrieveStudentError: '',
   retrieveNotesError: '',
@@ -36,17 +34,17 @@ const StudentsReducer = (state = INITIAL_STATE, action) => {
   const { type, payload } = action;
   switch (type) {
     case RETRIEVE_STUDENTS_START:
-      return { ...state, retrieveStudentsProcessing: true, error: '' };
+      return { ...state, retrieveStudentsError: '' };
     case RETRIEVE_STUDENTS_SUCCESS:
       return {
         ...state,
-        ...INITIAL_STATE,
+        retrieveStudentsError: '',
+        // ...INITIAL_STATE, // todo determine if things need to be reset
         students: payload,
       };
     case RETRIEVE_STUDENTS_FAIL:
       return {
         ...state,
-        loading: false,
         shouldOpenStudentListErrorToast: true,
         retrieveStudentsError: (payload && payload.error)
           ? (payload.error)
@@ -58,6 +56,12 @@ const StudentsReducer = (state = INITIAL_STATE, action) => {
         shouldOpenStudentListErrorToast: false,
       };
     case SELECTED_STUDENT_FROM_LIST:
+      return {
+        ...state,
+        selectedStudent: payload,
+      };
+    case RETRIEVE_STUDENT_DETAILS_SUCCESS:
+      // todo add other events for details
       return {
         ...state,
         selectedStudent: payload,

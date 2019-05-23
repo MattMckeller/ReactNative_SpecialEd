@@ -24,17 +24,26 @@ import {
   RETRIEVE_SINGLE_STUDENT_PDF_FAIL,
   RETRIEVE_SINGLE_STUDENT_PDF_SUCCESS,
   RETRIEVE_MULTIPLE_STUDENT_PDF_SUCCESS,
+  RETRIEVE_STUDENT_DETAILS_START,
+  RETRIEVE_STUDENT_DETAILS_SUCCESS,
+  RETRIEVE_STUDENT_DETAILS_FAIL,
 } from './types';
 import { STUDENT_LIST_TEST_DATA } from '../../../extra/testData/students';
 import type { StudentInterface } from '../../data-models/student/Student.interface';
-import { ALL_STUDENT_NOTES_TEST_DATA, MY_STUDENT_NOTES_TEST_DATA } from '../../../extra/testData/notes';
+import {
+  ALL_STUDENT_NOTES_TEST_DATA,
+  MY_STUDENT_NOTES_TEST_DATA,
+} from '../../../extra/testData/notes';
 import { STUDENT_GOAL_TEST_DATA } from '../../../extra/testData/goals';
 import { STUDENT_ATTENDANCE_RECORD_TEST_DATA } from '../../../extra/testData/attendanceRecords';
 
 // todo based on current authenticated user
 export const retrieveStudents = () => (dispatch) => {
   console.log('retrieve students start');
-  dispatch({ type: RETRIEVE_STUDENTS_START });
+  dispatch({
+    type: RETRIEVE_STUDENTS_START,
+    meta: { beginAsyncRequest: true },
+  });
 
   // todo implement backend calls
   setTimeout(() => {
@@ -46,61 +55,35 @@ export const retrieveStudents = () => (dispatch) => {
   // }, 10);
 };
 
-// todo based on current authenticated user
-export const retrieveMyStudentNotes = () => (dispatch) => {
-  console.log('retrieve students start');
-  dispatch({ type: RETRIEVE_MY_STUDENT_NOTES_START });
+export const retrieveStudentDetails = (student: StudentInterface) => (dispatch) => {
+  console.log('retrieve student details start');
+  dispatch({
+    type: RETRIEVE_STUDENT_DETAILS_START,
+    meta: { beginAsyncRequest: true },
+  });
+
+  // get details data
+  const foundStudent = STUDENT_LIST_TEST_DATA.find(item => item.id === student.id);
+  foundStudent.notes = ALL_STUDENT_NOTES_TEST_DATA;
+  foundStudent.goals = STUDENT_GOAL_TEST_DATA;
+  foundStudent.attendanceRecords = STUDENT_ATTENDANCE_RECORD_TEST_DATA;
 
   // todo implement backend calls
   setTimeout(() => {
-    retrieveMyStudentNotesSuccess(dispatch, MY_STUDENT_NOTES_TEST_DATA);
+    retrieveStudentDetailsSuccess(dispatch, foundStudent);
   }, 10);
 
   // setTimeout(() => {
-  //   retrieveMyStudentNotesFail(dispatch, { error: 'An error has occurred.' });
-  // }, 10);
-};
-
-export const retrieveAllStudentNotes = (student: StudentInterface) => (dispatch) => {
-  dispatch({ type: RETRIEVE_ALL_STUDENT_NOTES_START, payload: student });
-  // todo implement backend calls
-  setTimeout(() => {
-    retrieveAllStudentNotesSuccess(dispatch, ALL_STUDENT_NOTES_TEST_DATA);
-  }, 10);
-
-  // setTimeout(() => {
-  //   retrieveAllStudentNotesFail(dispatch, { error: 'An error has occurred.' });
-  // }, 10);
-};
-
-export const retrieveStudentGoals = (student: StudentInterface) => (dispatch) => {
-  dispatch({ type: RETRIEVE_STUDENT_GOALS_START, payload: student });
-
-  // todo implement backend calls
-  setTimeout(() => {
-    retrieveStudentGoalsSuccess(dispatch, STUDENT_GOAL_TEST_DATA);
-  }, 10);
-
-  // setTimeout(() => {
-  //   retrieveStudentGoalsFail(dispatch, { error: 'An error has occurred.' });
-  // }, 10);
-};
-
-export const retrieveStudentAttendanceRecords = (student: StudentInterface) => (dispatch) => {
-  dispatch({ type: RETRIEVE_STUDENT_ATTENDANCE_START, payload: student });
-
-  // todo implement backend calls
-  setTimeout(() => {
-    retrieveStudentAttendanceRecordsSuccess(dispatch, STUDENT_ATTENDANCE_RECORD_TEST_DATA);
-  }, 10);
-
-  // setTimeout(() => {
-  //   retrieveStudentAttendanceRecordsFail(dispatch, { error: 'An error has occurred.' });
+  //   retrieveStudentDetailsFail(dispatch, { error: 'An error has occurred.' });
   // }, 10);
 };
 
 export const retrieveSingleStudentPdf = (student: StudentInterface) => (dispatch) => {
-  dispatch({ type: RETRIEVE_SINGLE_STUDENT_PDF_START, payload: student });
+  dispatch({
+    type: RETRIEVE_SINGLE_STUDENT_PDF_START,
+    payload: student,
+    meta: { beginAsyncRequest: true },
+  });
 
   // todo implement backend calls
   setTimeout(() => {
@@ -113,7 +96,11 @@ export const retrieveSingleStudentPdf = (student: StudentInterface) => (dispatch
 };
 
 export const retrieveMultipleStudentsPdf = (student: StudentInterface) => (dispatch) => {
-  dispatch({ type: RETRIEVE_MULTIPLE_STUDENT_PDF_START, payload: student });
+  dispatch({
+    type: RETRIEVE_MULTIPLE_STUDENT_PDF_START,
+    payload: student,
+    meta: { beginAsyncRequest: true },
+  });
 
   // todo implement backend calls
   setTimeout(() => {
@@ -125,47 +112,35 @@ export const retrieveMultipleStudentsPdf = (student: StudentInterface) => (dispa
   // }, 10);
 };
 
-export
-
 const retrieveStudentsSuccess = (dispatch, students) => {
-  dispatch({ type: RETRIEVE_STUDENTS_SUCCESS, payload: students });
-};
-
-const retrieveMyStudentNotesSuccess = (dispatch, students) => {
-  dispatch({ type: RETRIEVE_MY_STUDENT_NOTES_SUCCESS, payload: students });
-};
-
-const retrieveAllStudentNotesSuccess = (dispatch, students) => {
-  dispatch({ type: RETRIEVE_ALL_STUDENT_NOTES_SUCCESS, payload: students });
-};
-
-const retrieveStudentGoalsSuccess = (dispatch, goals) => {
-  dispatch({ type: RETRIEVE_STUDENT_GOALS_SUCCESS, payload: goals });
-};
-
-const retrieveStudentAttendanceRecordsSuccess = (dispatch, goals) => {
-  dispatch({ type: RETRIEVE_STUDENT_ATTENDANCE_SUCCESS, payload: goals });
-};
-
-const retrieveSingleStudentPdfSuccess = (dispatch, pdfData) => {
-  dispatch({ type: RETRIEVE_SINGLE_STUDENT_PDF_SUCCESS, payload: pdfData });
-};
-
-const retrieveMultipleStudentPdfSuccess = (dispatch, pdfData) => {
-  dispatch({ type: RETRIEVE_MULTIPLE_STUDENT_PDF_SUCCESS, payload: pdfData });
-};
-
-const retrieveMyStudentNotesFail = (dispatch) => {
   dispatch({
-    type: RETRIEVE_MY_STUDENT_NOTES_FAIL,
-    payload: { error: 'Error from backend.' },
+    type: RETRIEVE_STUDENTS_SUCCESS,
+    payload: students,
+    meta: { finishAsyncRequest: true },
   });
 };
 
-const retrieveAllStudentNotesFail = (dispatch) => {
+const retrieveStudentDetailsSuccess = (dispatch, student) => {
   dispatch({
-    type: RETRIEVE_ALL_STUDENT_NOTES_FAIL,
-    payload: { error: 'Error from backend.' },
+    type: RETRIEVE_STUDENT_DETAILS_SUCCESS,
+    payload: student,
+    meta: { finishAsyncRequest: true },
+  });
+};
+
+const retrieveSingleStudentPdfSuccess = (dispatch, pdfData) => {
+  dispatch({
+    type: RETRIEVE_SINGLE_STUDENT_PDF_SUCCESS,
+    payload: pdfData,
+    meta: { finishAsyncRequest: true },
+  });
+};
+
+const retrieveMultipleStudentPdfSuccess = (dispatch, pdfData) => {
+  dispatch({
+    type: RETRIEVE_MULTIPLE_STUDENT_PDF_SUCCESS,
+    payload: pdfData,
+    meta: { finishAsyncRequest: true },
   });
 };
 
@@ -173,20 +148,15 @@ const retrieveStudentsFail = (dispatch) => {
   dispatch({
     type: RETRIEVE_STUDENTS_FAIL,
     payload: { error: 'Error from backend.' },
+    meta: { finishAsyncRequest: true },
   });
 };
 
-const retrieveStudentGoalsFail = (dispatch) => {
+const retrieveStudentDetailsFail = (dispatch) => {
   dispatch({
-    type: RETRIEVE_STUDENT_GOALS_FAIL,
+    type: RETRIEVE_STUDENT_DETAILS_FAIL,
     payload: { error: 'Error from backend.' },
-  });
-};
-
-const retrieveStudentAttendanceRecordsFail = (dispatch) => {
-  dispatch({
-    type: RETRIEVE_STUDENT_ATTENDANCE_FAIL,
-    payload: { error: 'Error from backend.' },
+    meta: { finishAsyncRequest: true },
   });
 };
 
@@ -194,6 +164,7 @@ const retrieveSingleStudentPdfFail = (dispatch) => {
   dispatch({
     type: RETRIEVE_SINGLE_STUDENT_PDF_FAIL,
     payload: { error: 'Error from backend.' },
+    meta: { finishAsyncRequest: true },
   });
 };
 
@@ -201,5 +172,6 @@ const retrieveMultipleStudentPdfFail = (dispatch) => {
   dispatch({
     type: RETRIEVE_MULTIPLE_STUDENT_PDF_FAIL,
     payload: { error: 'Error from backend.' },
+    meta: { finishAsyncRequest: true },
   });
 };
