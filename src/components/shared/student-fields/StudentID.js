@@ -9,9 +9,10 @@ type Props = {
 }
 function StudentID(props: Props) {
   const { student, style } = props;
+  /* eslint-disable */
   return (
     <Text style={{ fontSize: 12, ...style }}>
-      {`#${student.studentId}`}
+      {`${student.studentId ? '#' + student.studentId : ''}`}
     </Text>
   );
 }

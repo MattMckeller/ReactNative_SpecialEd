@@ -7,16 +7,17 @@ type Props = {
   student: StudentInterface,
   style?: object,
 }
-function StudentLastUpdatedAt(props: Props) {
+function StudentDOB(props: Props) {
   const { student, style } = props;
   return (
     <Text style={{ fontSize: 12, ...style }}>
-      {student.updatedAt ? student.updatedAt : ''}
+      {student.birthDate ? student.birthDate : ''}
     </Text>
   );
 }
-StudentLastUpdatedAt.defaultProps = {
+
+StudentDOB.defaultProps = {
   style: {},
 };
 
-export default StudentLastUpdatedAt;
+export default StudentDOB;

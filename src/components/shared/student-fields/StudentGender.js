@@ -7,16 +7,17 @@ type Props = {
   student: StudentInterface,
   style?: object,
 }
-function StudentLastUpdatedAt(props: Props) {
+function StudentGender(props: Props) {
   const { student, style } = props;
   return (
     <Text style={{ fontSize: 12, ...style }}>
-      {student.updatedAt ? student.updatedAt : ''}
+      {student.gender ? student.gender : ''}
     </Text>
   );
 }
-StudentLastUpdatedAt.defaultProps = {
+
+StudentGender.defaultProps = {
   style: {},
 };
 
-export default StudentLastUpdatedAt;
+export default StudentGender;
