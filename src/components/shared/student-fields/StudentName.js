@@ -9,9 +9,12 @@ type Props = {
 }
 function StudentName(props: Props) {
   const { student, style } = props;
+  const name = (student && (student.firstName.length || student.lastName.length))
+    ? `${student.firstName.toLocaleUpperCase()} ${student.lastName.toLocaleUpperCase()}`.trim()
+    : 'Unknown';
   return (
     <Text style={{ fontSize: 12, ...style }}>
-      {`${student.firstName.toLocaleUpperCase()} ${student.lastName.toLocaleUpperCase()}`}
+      {name}
     </Text>
   );
 }

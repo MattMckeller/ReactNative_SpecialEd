@@ -11,7 +11,7 @@ function NoteName(props: Props) {
   const { note, style } = props;
   return (
     <Text style={{ fontSize: 12, ...style }}>
-      {note.name}
+      {note.name || 'No Name'}
     </Text>
   );
 }
