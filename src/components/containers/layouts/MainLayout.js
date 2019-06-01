@@ -38,8 +38,6 @@ class MainLayout extends Component<Props> {
       fabContainer,
     } = styles;
 
-    console.log('main layout');
-    console.log({ footer, header });
     const { flexRow, flexColumn } = globalStyles;
     return (
       <View style={flexColumn}>
@@ -62,7 +60,6 @@ class MainLayout extends Component<Props> {
 
   renderSpinner() {
     const { loading } = this.props;
-    console.log('render spinner main layout', loading);
     if (loading === true) {
       return (
         <CenteredSpinner/>
