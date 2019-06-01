@@ -10,12 +10,13 @@ import {
   didShowStudentListErrorToast,
   selectedStudentFromList,
 } from '../redux/actions';
-import FabOption from '../components/shared/common/FabOption';
 import type { StudentInterface } from '../data-models/student/Student.interface';
 import {
   retrieveStudents,
 } from '../redux/actions/StudentActions';
 import CenteredWrapper from '../components/containers/CenteredWrapper';
+import ExportAllToPdfButton from '../components/buttons/ExportAllToPdfButton';
+import AddStudentButton from '../components/buttons/AddStudentButton';
 
 type Props = {
   configureMainFabAction: () => any,
@@ -72,19 +73,15 @@ class StudentListScene extends Component<Props> {
 
   static getActionFabs(): React.Component[] {
     return [
-      <FabOption
-        label="Add Student"
+      <AddStudentButton
         onPress={() => {
           console.log('pressed add student');
         }}
-        iconName="user-plus"
       />,
-      <FabOption
-        label="Export all to PDF"
+      <ExportAllToPdfButton
         onPress={() => {
           console.log('pressed export to pdf');
         }}
-        iconName="file-export"
       />,
     ];
   }

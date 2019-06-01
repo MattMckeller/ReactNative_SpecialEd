@@ -11,6 +11,11 @@ const styleVariables = {
   outlineButtonUnderlayColor: 'gray',
   actionArrowStyleColor: 'gray',
   lightDescriptionTextColor: 'gray',
+  // buttons
+  addStudentButtonColor: 'black',
+  exportAllToPdfButtonColor: 'black',
+  editNoteActionButtonColor: '#707070',
+  deleteNoteActionButtonColor: '#FA0026',
 };
 
 export default styleVariables;
