@@ -6,15 +6,16 @@ import styleVariables from '../../assets/StyleVariables';
 type Props = {
   onPress: () => any,
 }
+
 function AddStudentButton(props: Props) {
   const { onPress } = props;
-  const { editNoteActionButtonColor } = styleVariables;
+  const { addStudentButtonColor } = styleVariables;
   return (
     <ActionButton
       onPress={onPress}
-      iconColor={editNoteActionButtonColor}
-      iconName="comment-dots"
-      label="Edit Note"
+      iconColor={addStudentButtonColor}
+      iconName="user-plus"
+      label="Add Student"
     />
   );
 }
