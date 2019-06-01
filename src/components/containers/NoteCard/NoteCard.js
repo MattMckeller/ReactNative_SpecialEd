@@ -1,94 +1,55 @@
 // @flow
 import React from 'react';
 import { View } from 'react-native';
-import globalStyles from '../../../assets/styles/GlobalStyles';
-import styleVariables from '../../../assets/StyleVariables';
 import type { NoteInterface } from '../../../data-models/note/Note.interface';
 import ExpandableCard from '../../shared/common/ExpandableCard';
+import NoteCardHeader from './NoteCardHeader';
+import NoteCardFooter from './NoteCardFooter';
+import EditNoteButton from '../../buttons/EditNoteButton';
+import DeleteNoteButton from '../../buttons/DeleteNoteButton';
 
 type Props = {
   note: NoteInterface;
-  noteIndex: number,
   onEditNotePress: (note: NoteInterface) => any,
   onDeleteNotePress: (note: NoteInterface) => any,
 };
+
 function NoteCard(props: Props) {
   // todo, all
   const {
     note,
-    noteIndex,
     onEditNotePress,
     onDeleteNotePress,
   } = props;
 
   const {
-    cardContainerStyle,
-    topContainerStyle,
-    bottomContainerStyle,
-    detailContainer,
-    studentIDContainerStyle,
-    lastUpdatedAtStyle,
-    arrowContainerStyle,
-    arrowIconStyle,
+    noteCardContainerStyle,
   } = styles;
 
-  const { lightDescriptionText } = globalStyles;
-
   return (
-    <View style={cardContainerStyle}>
+    <View style={noteCardContainerStyle}>
       <ExpandableCard
         bodyText={note.text}
+        header={<NoteCardHeader note={note}/>}
+        footer={<NoteCardFooter note={note}/>}
+        actionButtons={[
+          <DeleteNoteButton onPress={onDeleteNotePress} key="delete-note-button"/>,
+          <EditNoteButton onPress={onEditNotePress} key="edit-note-button"/>,
+        ]}
       />
     </View>
   );
 }
 
 const styles = {
-  cardContainerStyle: {
+  noteCardContainerStyle: {
     width: '100%',
-    height: 100,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'red',
+    backgroundColor: '#31fcff',
     borderWidth: 1,
     borderColor: 'black',
-    paddingLeft: 20,
-    paddingRight: 40,
-  },
-  topContainerStyle: {
-    width: '100%',
-    height: '50%',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    backgroundColor: 'green',
-  },
-  bottomContainerStyle: {
-    width: '100%',
-    height: '50%',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    backgroundColor: 'orange',
-  },
-  detailContainer: {
-    width: '50%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  arrowContainerStyle: {
-    position: 'absolute',
-    right: 20,
-    width: 100,
-    height: '100%',
-    backgroundColor: 'black',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  arrowIconStyle: {
-    fontSize: 20,
-    width: 20,
-    color: styleVariables.actionArrowStyleColor,
   },
 };
 

@@ -9,10 +9,9 @@ type Props = {
   iconName: string,
   iconType?: string,
   iconColor?: string,
-  key?: string | number, // defaults to provided name
 }
-function FabOption(props: Props) {
-  let { key } = props;
+
+function ActionButton(props: Props) {
   const {
     iconName,
     iconType,
@@ -20,7 +19,6 @@ function FabOption(props: Props) {
     label,
     onPress,
   } = props;
-  key = (key !== null && key.length) ? key : iconName;
   const {
     containerStyle,
     labelStyle,
@@ -30,7 +28,7 @@ function FabOption(props: Props) {
     labelContainerStyle,
   } = styles;
   return (
-    <Button key={key} style={{ ...dimensions, ...buttonStyle }} onPress={onPress}>
+    <Button style={{ ...dimensions, ...buttonStyle }} onPress={onPress}>
       <View style={{ ...containerStyle, ...dimensions }}>
         <View style={iconContainerStyle}>
           <Icon
@@ -81,10 +79,9 @@ const styles = {
   },
 };
 
-FabOption.defaultProps = {
-  key: null,
+ActionButton.defaultProps = {
   iconType: 'FontAwesome5',
   iconColor: 'black',
 };
 
-export default FabOption;
+export default ActionButton;

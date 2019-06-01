@@ -1,7 +1,8 @@
 // @flow
 import React, { Component } from 'react';
-import { Button, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import ExpandOrCollapseButton from './ExpandOrCollapseButton';
+import type { ActionButtonInterface } from './ActionButton.interface';
 
 type Props = {
   header?: React.Element;
@@ -9,7 +10,7 @@ type Props = {
   expandedBodyTextStyle?: {};
   collapsedBodyTextStyle?: {};
   footer?: React.Element;
-  actionButtons?: Button[]; // todo determine type
+  actionButtons?: ActionButtonInterface[]; // todo determine type
 }
 
 class ExpandableCard extends Component<Props> {
@@ -73,11 +74,12 @@ class ExpandableCard extends Component<Props> {
 
   renderActionPanel() {
     const { actionButtons } = this.props;
+    const { isExpanded } = this.state;
     const { actionPanelContainerStyle } = styles;
-    return actionButtons.length > 0
+    return (actionButtons.length > 0 && isExpanded === true)
       ? (
         <View style={actionPanelContainerStyle}>
-          {actionButtons.forEach(button => button)}
+          {actionButtons}
         </View>
       )
       : null;
@@ -159,7 +161,10 @@ const styles = {
   actionPanelContainerStyle: {
     width: '100%',
     minHeight: 50,
-    borderTop: 1,
+    paddingTop: 5,
+    paddingBottom: 5,
+    marginTop: 10,
+    borderTopWidth: 1,
     borderColor: 'black',
     flexDirection: 'row',
     justifyContent: 'space-evenly',

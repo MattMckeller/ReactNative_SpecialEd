@@ -2,7 +2,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import type { NoteInterface } from '../../../data-models/note/Note.interface';
-import HistoryIcon from '../icons/HistoryIcon';
+import HistoryIcon from '../../shared/icons/HistoryIcon';
 
 type Props = {
   note: NoteInterface,

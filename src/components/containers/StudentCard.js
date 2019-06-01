@@ -5,9 +5,9 @@ import { Icon } from 'native-base';
 import type { StudentInterface } from '../../data-models/student/Student.interface';
 import globalStyles from '../../assets/styles/GlobalStyles';
 import styleVariables from '../../assets/StyleVariables';
-import StudentLastUpdatedAt from '../shared/student-fields/StudentLastUpdatedAt';
-import StudentID from '../shared/student-fields/StudentID';
-import StudentName from '../shared/student-fields/StudentName';
+import StudentLastUpdatedAt from '../fields/student-fields/StudentLastUpdatedAt';
+import StudentID from '../fields/student-fields/StudentID';
+import StudentName from '../fields/student-fields/StudentName';
 
 type Props = {
   student: StudentInterface;
@@ -96,7 +96,7 @@ const styles = {
     right: 20,
     width: 100,
     height: '100%',
-    backgroundColor: 'black',
+    backgroundColor: '#f9ee73',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',

@@ -1,54 +1,45 @@
 // @flow
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import {FlatList, ListView, View} from 'react-native';
+import React from 'react';
+import { FlatList, View } from 'react-native';
 import type { StudentInterface } from '../../data-models/student/Student.interface';
 import StudentCard from './StudentCard';
-import {selectedStudentFromList} from "../../redux/actions/StudentActions";
 
 type Props = {
   students: StudentInterface[];
-  selectedStudentFromListAction: (student: StudentInterface) => any;
+  onSelectStudent: (student: StudentInterface) => any;
 }
-class StudentList extends Component<Props> {
 
-  constructor() {
-    super();
-    this.onCardPress = this.onCardPress.bind(this);
-    this.renderRow = this.renderRow.bind(this);
-  }
+/**
+ * @return {null}
+ */
+function StudentList(props: Props) {
+  const {
+    students,
+    onSelectStudent,
+  } = props;
 
-  render() {
-    const { students } = this.props;
-    return (students && students.length > 0)
-      ? (
-        <FlatList
-          data={students}
-          renderItem={this.renderRow}
-          keyExtractor={StudentList.studentKeyExtractor}
-          style={{ backgroundColor: 'pink', width: '100%' }}
-        />
-      ) : null;
-  }
-
-  renderRow({ item }) {
+  // eslint-disable-next-line
+  const renderRow = ({ item }) => {
     const { cardContainer } = styles;
     return (
       <View style={cardContainer}>
-        <StudentCard student={item} onPress={this.onCardPress} />
+        <StudentCard student={item} onPress={onSelectStudent} />
       </View>
     );
-  }
+  };
 
-  static studentKeyExtractor(item: StudentInterface, index: number) {
-    return item.studentId && item.studentId.length ? item.studentId : index;
-  }
+  // eslint-disable-next-line
+  const keyExtractor = (item: StudentInterface, index: number) => (item.studentId && item.studentId.length ? item.studentId : index);
 
-  onCardPress(student: StudentInterface) {
-    const { selectedStudentFromListAction } = this.props;
-    console.log('card press', student);
-    selectedStudentFromListAction(student);
-  }
+  return (students && students.length > 0)
+    ? (
+      <FlatList
+        data={students}
+        renderItem={renderRow}
+        keyExtractor={keyExtractor}
+        style={{ backgroundColor: 'pink', width: '100%' }}
+      />
+    ) : null;
 }
 
 const styles = {
@@ -57,8 +48,4 @@ const styles = {
   },
 };
 
-const mapStateToProps = state => ({});
-
-export default connect(mapStateToProps, {
-  selectedStudentFromListAction: selectedStudentFromList,
-})(StudentList);
+export default StudentList;

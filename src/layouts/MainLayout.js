@@ -18,20 +18,24 @@ import CenteredSpinner from "../components/shared/common/CenteredSpinner";
 type Props = {
   children: any,
   loading?: boolean,
+  contentContainerStyle?: {},
 };
 class MainLayout extends Component<Props> {
   render() {
-    const { children } = this.props;
     const {
+      children,
       contentContainerStyle,
-      containerStyle,
+    } = this.props;
+    const {
+      nbContainerStyle,
       fabContainer,
     } = styles;
+
     const { flexRow, flexColumn } = globalStyles;
     return (
       <View style={flexColumn}>
         <View style={flexRow}>
-          <Container style={containerStyle}>
+          <Container style={nbContainerStyle}>
             <Header>
               <Left>
                 <Button transparent>
@@ -77,16 +81,16 @@ class MainLayout extends Component<Props> {
 
 MainLayout.defaultProps = {
   loading: false,
-};
-
-const styles = {
   contentContainerStyle: {
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
     flexDirection: 'row',
   },
-  containerStyle: {
+};
+
+const styles = {
+  nbContainerStyle: {
     flex: 1,
   },
   fabContainer: {
