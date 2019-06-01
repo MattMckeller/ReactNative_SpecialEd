@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
-import ActionButton from '../shared/common/ActionButton';
-import styleVariables from '../../assets/StyleVariables';
+import ActionButton from '../../shared/common/ActionButton';
+import styleVariables from '../../../assets/StyleVariables';
 
 type Props = {
   onPress: () => any,

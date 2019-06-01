@@ -5,8 +5,8 @@ import type { NoteInterface } from '../../../data-models/note/Note.interface';
 import ExpandableCard from '../../shared/common/ExpandableCard';
 import NoteCardHeader from './NoteCardHeader';
 import NoteCardFooter from './NoteCardFooter';
-import EditNoteButton from '../../buttons/EditNoteButton';
-import DeleteNoteButton from '../../buttons/DeleteNoteButton';
+import EditNoteButton from '../../buttons/ActionButtons/EditNoteButton';
+import DeleteNoteButton from '../../buttons/ActionButtons/DeleteNoteButton';
 
 type Props = {
   note: NoteInterface;
@@ -15,7 +15,6 @@ type Props = {
 };
 
 function NoteCard(props: Props) {
-  // todo, all
   const {
     note,
     onEditNotePress,

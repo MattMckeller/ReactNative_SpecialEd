@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { ScrollView, View } from 'react-native';
-import AuthLayout from '../layouts/AuthLayout';
+import AuthLayout from '../components/containers/layouts/AuthLayout';
 import RoundedButtonOutline from '../components/shared/common/RoundedOutlineButton';
 import globalStyles from '../assets/styles/GlobalStyles';
 import styleVariables from '../assets/StyleVariables';

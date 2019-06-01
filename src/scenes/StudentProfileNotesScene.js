@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View } from 'react-native';
 import type { StudentInterface } from '../data-models/student/Student.interface';
-import MainLayout from '../layouts/MainLayout';
+import MainLayout from '../components/containers/layouts/MainLayout';
 import StudentAttributeOverview from '../components/containers/StudentAttributeOverview';
 import StudentNotesList from '../components/containers/StudentNoteList';
 import type { NoteInterface } from '../data-models/note/Note.interface';

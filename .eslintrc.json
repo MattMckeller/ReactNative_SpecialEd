@@ -33,6 +33,7 @@
         "react/sort-comp": [0],
         "no-underscore-dangle": "off",
         "no-class-assign": "off",
-        "import/prefer-default-export": "off"
+        "import/prefer-default-export": "off",
+        "react/jsx-tag-spacing": "off"
     }
 }

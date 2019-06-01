@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Toast } from 'native-base';
 import styleVariables from '../assets/StyleVariables';
-import MainLayout from '../layouts/MainLayout';
+import MainLayout from '../components/containers/layouts/MainLayout';
 import StudentList from '../components/containers/StudentList';
 import {
   configureMainFab,
@@ -15,8 +15,8 @@ import {
   retrieveStudents,
 } from '../redux/actions/StudentActions';
 import CenteredWrapper from '../components/containers/CenteredWrapper';
-import ExportAllToPdfButton from '../components/buttons/ExportAllToPdfButton';
-import AddStudentButton from '../components/buttons/AddStudentButton';
+import ExportAllToPdfButton from '../components/buttons/ActionButtons/ExportAllToPdfButton';
+import AddStudentButton from '../components/buttons/ActionButtons/AddStudentButton';
 
 type Props = {
   configureMainFabAction: () => any,

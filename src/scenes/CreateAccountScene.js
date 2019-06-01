@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {ScrollView, View} from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import AuthLayout from '../layouts/AuthLayout';
+import AuthLayout from '../components/containers/layouts/AuthLayout';
 import CreateAccountForm from '../components/forms/CreateAccountForm';
 import globalStyles from '../assets/styles/GlobalStyles';
 import styleVariables from '../assets/StyleVariables';

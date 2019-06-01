@@ -9,56 +9,49 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import {
-  Body, Button, Container, Content, Footer, FooterTab, Header, Icon, Left, Right, Text, Title,
+  Container, Content,
 } from 'native-base';
-import globalStyles from '../assets/styles/GlobalStyles';
-import MainFab from '../components/buttons/MainFab';
-import CenteredSpinner from "../components/shared/common/CenteredSpinner";
+import globalStyles from '../../../assets/styles/GlobalStyles';
+import MainFab from '../../buttons/MainFab';
+import CenteredSpinner from '../../shared/common/CenteredSpinner';
+import DefaultHeader from './headers/DefaultHeader';
+import DefaultFooter from './footers/DefaultFooter';
 
 type Props = {
   children: any,
+  header?: React.Element,
+  footer?: React.Element,
   loading?: boolean,
   contentContainerStyle?: {},
 };
+
 class MainLayout extends Component<Props> {
   render() {
     const {
       children,
       contentContainerStyle,
+      header,
+      footer,
     } = this.props;
     const {
       nbContainerStyle,
       fabContainer,
     } = styles;
 
+    console.log('main layout');
+    console.log({ footer, header });
     const { flexRow, flexColumn } = globalStyles;
     return (
       <View style={flexColumn}>
         <View style={flexRow}>
           <Container style={nbContainerStyle}>
-            <Header>
-              <Left>
-                <Button transparent>
-                  <Icon name="menu" />
-                </Button>
-              </Left>
-              <Body>
-                <Title>Header</Title>
-              </Body>
-              <Right />
-            </Header>
+            {header}
             <Content contentContainerStyle={contentContainerStyle}>
               {children}
             </Content>
-            <Footer>
-              <FooterTab>
-                <Button full>
-                  <Text>Footer</Text>
-                </Button>
-              </FooterTab>
-            </Footer>
+            {footer}
             <View style={fabContainer}>
-              <MainFab />
+              <MainFab/>
             </View>
           </Container>
           {this.renderSpinner()}
@@ -72,7 +65,7 @@ class MainLayout extends Component<Props> {
     console.log('render spinner main layout', loading);
     if (loading === true) {
       return (
-        <CenteredSpinner />
+        <CenteredSpinner/>
       );
     }
     return null;
@@ -87,6 +80,8 @@ MainLayout.defaultProps = {
     flex: 1,
     flexDirection: 'row',
   },
+  header: DefaultHeader(),
+  footer: DefaultFooter(),
 };
 
 const styles = {

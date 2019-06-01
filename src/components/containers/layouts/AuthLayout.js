@@ -8,7 +8,7 @@
 
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import globalStyles from '../assets/styles/GlobalStyles';
+import globalStyles from '../../../assets/styles/GlobalStyles';
 
 type Props = {
   children: any
