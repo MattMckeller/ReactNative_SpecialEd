@@ -80,8 +80,8 @@ MainLayout.defaultProps = {
     flex: 1,
     flexDirection: 'row',
   },
-  header: DefaultHeader(),
-  footer: DefaultFooter(),
+  header: <DefaultHeader/>,
+  footer: <DefaultFooter/>,
 };
 
 const styles = {
