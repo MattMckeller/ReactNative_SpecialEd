@@ -9,7 +9,7 @@ import GoalsNavigationButton from '../../../buttons/navigation-buttons/GoalsNavi
 import AttendanceNavigationButton
   from '../../../buttons/navigation-buttons/AttendanceNavigationButton';
 import styleVariables from '../../../../assets/StyleVariables';
-import { RouteKeys } from '../../../../route-keys';
+import { RouterHelpers } from '../../../../router-helpers';
 
 type Props = {
   navigation: NavigationScreenProp<NavigationRoute<Params>, Params>,
@@ -19,13 +19,13 @@ type Props = {
 function StudentProfileFooter(props: Props) {
   const { navigation, currentRoute } = props;
   const onNotesButtonPress = () => {
-    navigation.navigate(RouteKeys.studentProfileNotes, { transition: 'none' });
+    navigation.navigate(RouterHelpers.studentProfileNotes, { transition: 'none' });
   };
   const onGoalsButtonPress = () => {
-    navigation.navigate(RouteKeys.studentProfileGoals, { transition: 'none' });
+    navigation.navigate(RouterHelpers.studentProfileGoals, { transition: 'none' });
   };
   const onAttendanceButtonPress = () => {
-    navigation.navigate(RouteKeys.studentProfileAttendance, { transition: 'none' });
+    navigation.navigate(RouterHelpers.studentProfileAttendance, { transition: 'none' });
   };
 
   const {
@@ -40,9 +40,9 @@ function StudentProfileFooter(props: Props) {
 
 
   // Determine active scene
-  const notesPageActive = currentRoute === RouteKeys.studentProfileNotes;
-  const goalsPageActive = currentRoute === RouteKeys.studentProfileGoals;
-  const attendancePageActive = currentRoute === RouteKeys.studentProfileAttendance;
+  const notesPageActive = currentRoute === RouterHelpers.studentProfileNotes;
+  const goalsPageActive = currentRoute === RouterHelpers.studentProfileGoals;
+  const attendancePageActive = currentRoute === RouterHelpers.studentProfileAttendance;
 
   return (
     <View style={containerStyle}>

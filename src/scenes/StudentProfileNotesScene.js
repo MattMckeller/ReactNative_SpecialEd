@@ -1,35 +1,32 @@
 // @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import type { StudentInterface } from '../data-models/student/Student.interface';
+import { NavigationScreenProps } from 'react-navigation';
 import StudentNotesList from '../components/containers/StudentNoteList';
 import type { NoteInterface } from '../data-models/note/Note.interface';
 import StudentProfileScenesController from './StudentProfileScenesController';
-import { NavigationScreenProps } from "react-navigation";
 
 type Props = NavigationScreenProps & {
-  selectedStudent: StudentInterface,
+  notes: NoteInterface[],
   retrieveNotesError: string, // todo handle errors
   retrieveStudentError: string,
 }
 
 class StudentProfileNotesScene extends Component<Props> {
   constructor() {
-    console.log('student profile notes scene construct');
     super();
     this.onDeleteNote = this.onDeleteNote.bind(this);
     this.onEditNote = this.onEditNote.bind(this);
   }
 
   render() {
-    const { selectedStudent, navigation } = this.props;
+    const { notes, navigation } = this.props;
     return (
       <StudentProfileScenesController navigation={navigation}>
         <StudentNotesList
-          notes={selectedStudent.notes}
+          notes={notes}
           onDeleteNotePress={this.onDeleteNote}
           onEditNotePress={this.onEditNote}
-          navigation={navigation}
         />
       </StudentProfileScenesController>
     );
@@ -48,13 +45,14 @@ class StudentProfileNotesScene extends Component<Props> {
 const mapStateToProps = (state) => {
   const {
     retrieveNotesError,
-    selectedStudent,
+    selectedStudent: {
+      notes,
+    },
   } = state.studentState;
   return {
-    selectedStudent,
+    notes,
     retrieveNotesError,
   };
 };
 
-export default connect(mapStateToProps, {
-})(StudentProfileNotesScene);
+export default connect(mapStateToProps, {})(StudentProfileNotesScene);

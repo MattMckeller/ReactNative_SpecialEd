@@ -21,11 +21,8 @@ const MainFabReducer = (state = INITIAL_STATE, action) => {
   const { type, payload } = action;
   switch (type) {
     case MAIN_FAB_CONFIGURE:
-      console.log('main fab configure - ', { ...state, ...payload });
       return { ...state, ...payload };
     case MAIN_FAB_TOGGLE:
-      console.log('main fab toggle payload- ', payload);
-      console.log('new active state', (payload !== undefined && payload !== null) ? !!payload : !state.active);
       return {
         ...state,
         active: (payload !== undefined && payload !== null) ? !!payload : !state.active,

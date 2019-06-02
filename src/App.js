@@ -31,7 +31,6 @@ const getCurrentRouteName = (navState) => {
   if (navState.index) {
     getCurrentRouteName(navState.routes[navState.index]);
   } else {
-    console.log('Current Route Name:', navState.routeName);
     AppStoreInstance.dispatch({ type: NAVIGATION_STATE_CHANGE, payload: navState.routeName });
   }
 };

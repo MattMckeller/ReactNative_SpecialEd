@@ -5,7 +5,7 @@ import { NavigationScreenProps } from 'react-navigation';
 import AuthLayout from '../components/containers/layouts/AuthLayout';
 import CreateAccountForm from '../components/forms/CreateAccountForm';
 import RoundedOutlineButton from '../components/shared/common/RoundedOutlineButton';
-import { RouteKeys } from '../route-keys';
+import { RouterHelpers } from '../router-helpers';
 import CenteredWrapper from '../components/containers/CenteredWrapper';
 
 type Props = NavigationScreenProps & {
@@ -14,7 +14,7 @@ const CreateAccountScene = (props: Props) => {
   const navigateToLoginScene = () => {
     console.log('redirect login');
     const { navigation } = props;
-    navigation.navigate(RouteKeys.login);
+    navigation.navigate(RouterHelpers.login);
   };
   return (
     <AuthLayout>

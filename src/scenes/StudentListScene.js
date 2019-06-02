@@ -18,7 +18,7 @@ import {
 import CenteredWrapper from '../components/containers/CenteredWrapper';
 import ExportAllToPdfButton from '../components/buttons/action-buttons/ExportAllToPdfButton';
 import AddStudentButton from '../components/buttons/action-buttons/AddStudentButton';
-import { RouteKeys } from '../route-keys';
+import { RouterHelpers } from '../router-helpers';
 
 type Props = NavigationScreenProps & {
   configureMainFabAction: () => any,
@@ -62,9 +62,7 @@ class StudentListScene extends Component<Props> {
   }
 
   render() {
-    console.log('navigation', this.props.navigation);
     const { students, loading } = this.props;
-    // todo move background here
     return (
       <MainLayout loading={loading}>
         <CenteredWrapper>
@@ -93,7 +91,7 @@ class StudentListScene extends Component<Props> {
     const { selectedStudentFromListAction, navigation: { navigate } } = this.props;
     console.log('selected student', student);
     selectedStudentFromListAction(student);
-    navigate(RouteKeys.studentProfileNotes);
+    navigate(RouterHelpers.studentProfileNotes);
   }
 
   showStudentListErrorToast() {
