@@ -2,7 +2,7 @@
 import React from 'react';
 import { FlatList, View } from 'react-native';
 import type { NoteInterface } from '../../data-models/note/Note.interface';
-import NoteCard from './NoteCard/NoteCard';
+import NoteCard from './note-card/NoteCard';
 
 type Props = {
   notes: NoteInterface[];

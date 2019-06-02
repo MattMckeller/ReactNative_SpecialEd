@@ -1,5 +1,5 @@
 {
-  "name": "specialEducation",
+  "name": "special-education",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -18,7 +18,8 @@
     "react-native": "0.59.2",
     "react-native-communications": "^2.2.1",
     "react-native-config": "^0.11.7",
-    "react-native-router-flux": "^4.0.6",
+    "react-native-gesture-handler": "^1.3.0",
+    "react-navigation": "^3.11.0",
     "react-redux": "^6.0.1",
     "redux": "^4.0.1",
     "redux-form": "^8.2.0",

@@ -1,5 +1,6 @@
 
 const styleVariables = {
+  // standard colors
   primaryColor: '#0E83C9',
   secondaryColor: '#e4f1fd',
   errorColor: '#c90e27',
@@ -16,6 +17,11 @@ const styleVariables = {
   exportAllToPdfButtonColor: 'black',
   editNoteActionButtonColor: '#707070',
   deleteNoteActionButtonColor: '#FA0026',
+  // navigation
+  activeNavigationTabBackgroundColor: '#5876F2',
+  defaultNavigationTabBackgroundColor: 'white',
+  defaultNavigationTabContentColor: 'black',
+  activeNavigationTabContentColor: 'white',
 };
 
 export default styleVariables;

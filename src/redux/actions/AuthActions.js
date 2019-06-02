@@ -25,7 +25,7 @@ export const loginUser = ({ email, password }) => {
 
 const loginUserSuccess = (dispatch, user) => {
   dispatch({ type: LOGIN_USER_SUCCESS, payload: user });
-  // Actions.main();
+  // redirect
 };
 
 const loginUserFail = (dispatch) => {

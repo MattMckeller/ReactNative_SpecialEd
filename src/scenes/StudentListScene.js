@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Toast } from 'native-base';
+import { NavigationScreenProps } from 'react-navigation';
 import styleVariables from '../assets/StyleVariables';
 import MainLayout from '../components/containers/layouts/MainLayout';
 import StudentList from '../components/containers/StudentList';
@@ -15,10 +16,11 @@ import {
   retrieveStudents,
 } from '../redux/actions/StudentActions';
 import CenteredWrapper from '../components/containers/CenteredWrapper';
-import ExportAllToPdfButton from '../components/buttons/ActionButtons/ExportAllToPdfButton';
-import AddStudentButton from '../components/buttons/ActionButtons/AddStudentButton';
+import ExportAllToPdfButton from '../components/buttons/action-buttons/ExportAllToPdfButton';
+import AddStudentButton from '../components/buttons/action-buttons/AddStudentButton';
+import { RouteKeys } from '../route-keys';
 
-type Props = {
+type Props = NavigationScreenProps & {
   configureMainFabAction: () => any,
   retrieveStudentsAction: () => any,
   selectedStudentFromListAction: (student: StudentInterface) => any,
@@ -27,10 +29,10 @@ type Props = {
   loading: boolean,
   retrieveStudentsError: boolean,
   shouldOpenStudentListErrorToast: boolean,
+  navigation: NavigationScreenProps
 }
 
 class StudentListScene extends Component<Props> {
-
   constructor() {
     super();
     this.onSelectStudent = this.onSelectStudent.bind(this);
@@ -60,6 +62,7 @@ class StudentListScene extends Component<Props> {
   }
 
   render() {
+    console.log('navigation', this.props.navigation);
     const { students, loading } = this.props;
     // todo move background here
     return (
@@ -87,9 +90,10 @@ class StudentListScene extends Component<Props> {
   }
 
   onSelectStudent(student: StudentInterface) {
-    const { selectedStudentFromListAction } = this.props;
+    const { selectedStudentFromListAction, navigation: { navigate } } = this.props;
     console.log('selected student', student);
     selectedStudentFromListAction(student);
+    navigate(RouteKeys.studentProfileNotes);
   }
 
   showStudentListErrorToast() {
@@ -106,8 +110,6 @@ class StudentListScene extends Component<Props> {
     didShowStudentListErrorToastAction();
   }
 }
-
-const styles = {};
 
 const mapStateToProps = (state) => {
   const {

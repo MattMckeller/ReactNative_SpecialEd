@@ -73,3 +73,4 @@ export const RETRIEVE_SINGLE_STUDENT_PDF_FAIL = 'retrieve_single_student_pdf_fai
 export const RETRIEVE_MULTIPLE_STUDENT_PDF_START = 'retrieve_multiple_student_pdf_start';
 export const RETRIEVE_MULTIPLE_STUDENT_PDF_SUCCESS = 'retrieve_multiple_student_pdf_success';
 export const RETRIEVE_MULTIPLE_STUDENT_PDF_FAIL = 'retrieve_multiple_student_pdf_fail';
+export const NAVIGATION_STATE_CHANGE = 'navigation_state_change';

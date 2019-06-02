@@ -1,6 +1,5 @@
 // @flow
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 import {
   Text, TouchableOpacity, View,
 } from 'react-native';
@@ -15,48 +14,36 @@ type Props = {
   textColor?: string,
   buttonContainerStyle?: {},
 }
-class RoundedButtonOutline extends Component<Props> {
-  constructor() {
-    super();
-    this._onPress = this._onPress.bind(this);
-  }
+const RoundedOutlineButton = (props: Props) => {
+  const {
+    defaultContainerStyle,
+    textStyle,
+    touchableHighlightStyle,
+    disabledStyle,
+  } = styles;
+  const {
+    label, height, disabled, textColor, buttonContainerStyle, onPress,
+  } = props;
+  let updatedButtonContainerStyle = (disabled)
+    ? ({ ...defaultContainerStyle, ...disabledStyle }) : (defaultContainerStyle);
+  updatedButtonContainerStyle = (buttonContainerStyle)
+    ? ({ ...updatedButtonContainerStyle, ...buttonContainerStyle })
+    : (updatedButtonContainerStyle);
+  const mergedTextStyle = (textColor) ? ({ ...textStyle, ...{ color: textColor } }) : (textStyle);
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      style={touchableHighlightStyle}
+      disabled={disabled}
+    >
+      <View style={{ ...updatedButtonContainerStyle, ...{ height } }}>
+        <Text style={mergedTextStyle}>{label}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
 
-  render() {
-    const {
-      defaultContainerStyle,
-      textStyle,
-      touchableHighlightStyle,
-      disabledStyle,
-    } = styles;
-    const {
-      label, height, disabled, textColor, buttonContainerStyle,
-    } = this.props;
-    let updatedButtonContainerStyle = (disabled)
-      ? ({ ...defaultContainerStyle, ...disabledStyle }) : (defaultContainerStyle);
-    updatedButtonContainerStyle = (buttonContainerStyle)
-      ? ({ ...updatedButtonContainerStyle, ...buttonContainerStyle })
-      : (updatedButtonContainerStyle);
-    const mergedTextStyle = (textColor) ? ({ ...textStyle, ...{ color: textColor } }) : (textStyle);
-    return (
-      <TouchableOpacity
-        onPress={this._onPress}
-        style={touchableHighlightStyle}
-        disabled={disabled}
-      >
-        <View style={{ ...updatedButtonContainerStyle, ...{ height } }}>
-          <Text style={mergedTextStyle}>{label}</Text>
-        </View>
-      </TouchableOpacity>
-    );
-  }
-
-  _onPress() {
-    const { onPress } = this.props;
-    onPress();
-  }
-}
-
-RoundedButtonOutline.defaultProps = {
+RoundedOutlineButton.defaultProps = {
   height: 50,
   disabled: false,
 };
@@ -84,7 +71,4 @@ const styles = {
   },
 };
 
-const mapStateToProps = state => ({});
-
-export default connect(mapStateToProps, {
-})(RoundedButtonOutline);
+export default RoundedOutlineButton;

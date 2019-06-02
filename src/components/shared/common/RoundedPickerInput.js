@@ -20,7 +20,6 @@ type Props = {
   forceDisplayErrorMessage?: boolean,
 }
 class RoundedPickerInput extends Component<Props> {
-  // todo fix type to be from react create ref type
   pickerInput: Picker;
 
   constructor() {

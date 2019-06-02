@@ -9,6 +9,7 @@ type Props = {
   iconName: string,
   iconType?: string,
   iconColor?: string,
+  labelColor?: string,
 }
 
 function ActionButton(props: Props) {
@@ -16,6 +17,7 @@ function ActionButton(props: Props) {
     iconName,
     iconType,
     iconColor,
+    labelColor,
     label,
     onPress,
   } = props;
@@ -39,7 +41,7 @@ function ActionButton(props: Props) {
           />
         </View>
         <View style={{ ...labelContainerStyle }}>
-          <Text style={labelStyle}>{label}</Text>
+          <Text style={{ ...labelStyle, color: labelColor }}>{label}</Text>
         </View>
       </View>
     </Button>
@@ -62,7 +64,6 @@ const styles = {
   },
   labelStyle: {
     fontSize: 10,
-    color: 'black',
     textAlign: 'center',
   },
   labelContainerStyle: {
@@ -82,6 +83,7 @@ const styles = {
 ActionButton.defaultProps = {
   iconType: 'FontAwesome5',
   iconColor: 'black',
+  labelColor: 'black',
 };
 
 export default ActionButton;

@@ -24,6 +24,7 @@ import { ERROR_CODES, ERROR_CONFIG } from '../../config/errors.config';
 const INITIAL_STATE = {
   students: [],
   selectedStudent: null,
+  lastFetchedStudentId: null,
   shouldOpenStudentListErrorToast: false,
   shouldOpenStudentProfileNotesErrorToast: false,
   retrieveStudentsError: '',
@@ -65,6 +66,7 @@ const StudentsReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         selectedStudent: payload,
+        lastFetchedStudentId: (payload && payload.id) ? payload.id : null,
       };
     default:
       return state;

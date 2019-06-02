@@ -1,73 +1,51 @@
 // @flow
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Actions } from 'react-native-router-flux';
+import React from 'react';
 import { ScrollView, View } from 'react-native';
+import { NavigationScreenProps } from 'react-navigation';
 import LoginForm from '../components/forms/LoginForm';
 import AuthLayout from '../components/containers/layouts/AuthLayout';
-import RoundedButtonOutline from '../components/shared/common/RoundedOutlineButton';
-import globalStyles from '../assets/styles/GlobalStyles';
-import styleVariables from '../assets/StyleVariables';
+import RoundedOutlineButton from '../components/shared/common/RoundedOutlineButton';
+import { RouteKeys } from '../route-keys';
+import CenteredWrapper from '../components/containers/CenteredWrapper';
 
-type Props = {
-}
-class LoginScene extends Component<Props> {
-  constructor() {
-    super();
-  }
+type Props = NavigationScreenProps & {}
 
-  render() {
-    const { flexColumn } = globalStyles;
-    const { containerStyle } = styles;
-    // todo move background here
-    return (
-      <AuthLayout>
-        <View style={{ ...containerStyle, ...flexColumn }}>
-          <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-            <View style={{ width: '95%', height: '100%', justifyContent: 'center' }}>
-              <ScrollView contentContainerStyle={{ flex: 1 }} />
-              <LoginForm />
-              <View style={{ marginTop: 35 }}>
-                <RoundedButtonOutline
-                  label="Create Account"
-                  height={60}
-                  onPress={LoginScene.navigateToCreateAccountScene}
-                />
-              </View>
-              <View style={{ marginTop: 35 }}>
-                <RoundedButtonOutline
-                  label="Forgot Password"
-                  height={60}
-                  onPress={LoginScene.navigateToForgotPasswordScene}
-                />
-              </View>
-              <ScrollView contentContainerStyle={{ flex: 1 }} />
-            </View>
-          </View>
-        </View>
-      </AuthLayout>
-    );
-  }
-
-  static navigateToCreateAccountScene() {
+const LoginScene = (props: Props) => {
+  const navigateToCreateAccountScene = () => {
+    const { navigation } = props;
     console.log('redirect create account');
-    Actions.createAccount();
-  }
+    navigation.navigate(RouteKeys.createAccount);
+  };
 
-  static navigateToForgotPasswordScene() {
+  const navigateToForgotPasswordScene = () => {
+    const { navigation } = props;
     console.log('redirect forgot password');
-    Actions.forgotPassword();
-  }
-}
+    navigation.navigate(RouteKeys.forgotPassword);
+  };
 
-const styles = {
-  containerStyle: {
-    backgroundColor: styleVariables.primaryColor,
-    height: '100%',
-  },
+  return (
+    <AuthLayout>
+      <CenteredWrapper>
+        <ScrollView contentContainerStyle={{ flex: 1 }}/>
+        <LoginForm/>
+        <View style={{ marginTop: 35 }}>
+          <RoundedOutlineButton
+            label="Create Account"
+            height={60}
+            onPress={navigateToCreateAccountScene}
+          />
+        </View>
+        <View style={{ marginTop: 35 }}>
+          <RoundedOutlineButton
+            label="Forgot Password"
+            height={60}
+            onPress={navigateToForgotPasswordScene}
+          />
+        </View>
+        <ScrollView contentContainerStyle={{ flex: 1 }}/>
+      </CenteredWrapper>
+    </AuthLayout>
+  );
 };
 
-const mapStateToProps = state => ({});
-
-export default connect(mapStateToProps, {
-})(LoginScene);
+export default LoginScene;

@@ -12,37 +12,27 @@ type Props = {
   onPress: () => {},
   disabled?: boolean,
 }
-class RoundedButton extends Component<Props> {
-  constructor() {
-    super();
-    this._onPress = this._onPress.bind(this);
-  }
-
-  render() {
-    const {
-      buttonContainerStyle, textStyle, touchableHighlightStyle, disabledStyle,
-    } = styles;
-    const { label, height, disabled } = this.props;
-    const updatedButtonContainerStyle = (disabled)
-      ? ({ ...buttonContainerStyle, ...disabledStyle }) : (buttonContainerStyle);
-    return (
-      <TouchableHighlight
-        onPress={this._onPress}
-        style={touchableHighlightStyle}
-        disabled={disabled}
-      >
-        <View style={{ ...updatedButtonContainerStyle, ...{ height } }}>
-          <Text style={textStyle}>{label}</Text>
-        </View>
-      </TouchableHighlight>
-    );
-  }
-
-  _onPress() {
-    const { onPress } = this.props;
-    onPress();
-  }
-}
+const RoundedButton = (props: Props) => {
+  const {
+    buttonContainerStyle, textStyle, touchableHighlightStyle, disabledStyle,
+  } = styles;
+  const {
+    label, height, disabled, onPress,
+  } = props;
+  const updatedButtonContainerStyle = (disabled)
+    ? ({ ...buttonContainerStyle, ...disabledStyle }) : (buttonContainerStyle);
+  return (
+    <TouchableHighlight
+      onPress={onPress}
+      style={touchableHighlightStyle}
+      disabled={disabled}
+    >
+      <View style={{ ...updatedButtonContainerStyle, ...{ height } }}>
+        <Text style={textStyle}>{label}</Text>
+      </View>
+    </TouchableHighlight>
+  );
+};
 
 RoundedButton.defaultProps = {
   height: 50,
@@ -70,7 +60,5 @@ const styles = {
   },
 };
 
-const mapStateToProps = state => ({});
 
-export default connect(mapStateToProps, {
-})(RoundedButton);
+export default RoundedButton;

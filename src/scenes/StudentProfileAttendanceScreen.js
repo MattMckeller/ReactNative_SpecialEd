@@ -1,8 +1,8 @@
 // @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Text } from 'react-native';
 import type { StudentInterface } from '../data-models/student/Student.interface';
-import StudentNotesList from '../components/containers/StudentNoteList';
 import type { NoteInterface } from '../data-models/note/Note.interface';
 import StudentProfileScenesController from './StudentProfileScenesController';
 import { NavigationScreenProps } from "react-navigation";
@@ -13,9 +13,9 @@ type Props = NavigationScreenProps & {
   retrieveStudentError: string,
 }
 
-class StudentProfileNotesScene extends Component<Props> {
+class StudentProfileAttendanceScene extends Component<Props> {
   constructor() {
-    console.log('student profile notes scene construct');
+    console.log('student profile attendance scene construct');
     super();
     this.onDeleteNote = this.onDeleteNote.bind(this);
     this.onEditNote = this.onEditNote.bind(this);
@@ -25,12 +25,7 @@ class StudentProfileNotesScene extends Component<Props> {
     const { selectedStudent, navigation } = this.props;
     return (
       <StudentProfileScenesController navigation={navigation}>
-        <StudentNotesList
-          notes={selectedStudent.notes}
-          onDeleteNotePress={this.onDeleteNote}
-          onEditNotePress={this.onEditNote}
-          navigation={navigation}
-        />
+        <Text>Attendance Scene</Text>
       </StudentProfileScenesController>
     );
   }
@@ -56,5 +51,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, {
-})(StudentProfileNotesScene);
+export default connect(mapStateToProps, {})(StudentProfileAttendanceScene);

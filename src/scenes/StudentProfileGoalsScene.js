@@ -1,5 +1,6 @@
 // @flow
 import React, { Component } from 'react';
+import { Text } from 'react-native';
 import { connect } from 'react-redux';
 import type { StudentInterface } from '../data-models/student/Student.interface';
 import StudentNotesList from '../components/containers/StudentNoteList';
@@ -13,9 +14,9 @@ type Props = NavigationScreenProps & {
   retrieveStudentError: string,
 }
 
-class StudentProfileNotesScene extends Component<Props> {
+class StudentProfileGoalsScene extends Component<Props> {
   constructor() {
-    console.log('student profile notes scene construct');
+    console.log('student profile goals scene construct');
     super();
     this.onDeleteNote = this.onDeleteNote.bind(this);
     this.onEditNote = this.onEditNote.bind(this);
@@ -25,12 +26,7 @@ class StudentProfileNotesScene extends Component<Props> {
     const { selectedStudent, navigation } = this.props;
     return (
       <StudentProfileScenesController navigation={navigation}>
-        <StudentNotesList
-          notes={selectedStudent.notes}
-          onDeleteNotePress={this.onDeleteNote}
-          onEditNotePress={this.onEditNote}
-          navigation={navigation}
-        />
+        <Text>goals scene</Text>
       </StudentProfileScenesController>
     );
   }
@@ -56,5 +52,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, {
-})(StudentProfileNotesScene);
+export default connect(mapStateToProps, {})(StudentProfileGoalsScene);

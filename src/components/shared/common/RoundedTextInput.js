@@ -20,7 +20,6 @@ type Props = {
   forceDisplayErrorMessage?: boolean,
 }
 class RoundedTextInput extends Component<Props> {
-  // todo fix type to be from react create ref type
   textInput: TextInput;
 
   constructor() {
@@ -216,7 +215,5 @@ const styles = {
   },
 };
 
-const mapStateToProps = state => ({});
 
-export default connect(mapStateToProps, {
-})(RoundedTextInput);
+export default RoundedTextInput;

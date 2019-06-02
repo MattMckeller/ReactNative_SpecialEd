@@ -24,7 +24,7 @@ export const forgotPassword = ({ email }) => {
 
 const success = (dispatch, payload) => {
   dispatch({ type: FORGOT_PASSWORD_SUCCESS, payload });
-  // Actions.main();
+  // redirect
 };
 
 const error = (dispatch) => {

@@ -1,5 +1,4 @@
 // @flow
-import { Actions } from 'react-native-router-flux';
 import {
   RETRIEVE_MY_STUDENT_NOTES_START,
   RETRIEVE_MY_STUDENT_NOTES_SUCCESS,
@@ -42,7 +41,9 @@ import {
   CLICK_DELETE_STUDENT_GOAL,
   CLICK_RECORD_STUDENT_ATTENDANCE,
   CLICK_DELETE_STUDENT_ATTENDANCE,
-  STUDENT_PROFILE_DID_DISPLAY_ERROR_TOAST, SELECTED_STUDENT_FROM_LIST, STUDENT_LIST_DID_DISPLAY_ERROR_TOAST,
+  STUDENT_PROFILE_DID_DISPLAY_ERROR_TOAST,
+  SELECTED_STUDENT_FROM_LIST,
+  STUDENT_LIST_DID_DISPLAY_ERROR_TOAST,
 } from './types';
 import { MY_STUDENT_NOTES_TEST_DATA } from '../../../extra/testData/notes';
 import type { StudentInterface } from '../../data-models/student/Student.interface';
@@ -50,7 +51,6 @@ import type { StudentInterface } from '../../data-models/student/Student.interfa
 export const selectedStudentFromList = (student: StudentInterface) => (dispatch) => {
   console.log('selected student from list', student);
   dispatch({ type: SELECTED_STUDENT_FROM_LIST, payload: student });
-  Actions.studentProfileNotes();
 };
 
 export const didShowStudentListErrorToast = () => ({

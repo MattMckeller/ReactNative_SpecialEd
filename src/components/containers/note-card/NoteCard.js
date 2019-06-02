@@ -5,8 +5,8 @@ import type { NoteInterface } from '../../../data-models/note/Note.interface';
 import ExpandableCard from '../../shared/common/ExpandableCard';
 import NoteCardHeader from './NoteCardHeader';
 import NoteCardFooter from './NoteCardFooter';
-import EditNoteButton from '../../buttons/ActionButtons/EditNoteButton';
-import DeleteNoteButton from '../../buttons/ActionButtons/DeleteNoteButton';
+import EditNoteButton from '../../buttons/action-buttons/EditNoteButton';
+import DeleteNoteButton from '../../buttons/action-buttons/DeleteNoteButton';
 
 type Props = {
   note: NoteInterface;

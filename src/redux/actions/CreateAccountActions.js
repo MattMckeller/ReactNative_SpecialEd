@@ -25,7 +25,7 @@ export const doCreateAccount = ({ email, password, organization }) => {
 
 const createAccountSuccess = (dispatch, user) => {
   dispatch({ type: CREATE_ACCOUNT_START, payload: user });
-  // Actions.main();
+  // redirect
 };
 
 const createAccountFail = (dispatch) => {

@@ -31,7 +31,6 @@ class MainLayout extends Component<Props> {
       children,
       contentContainerStyle,
       header,
-      footer,
     } = this.props;
     const {
       nbContainerStyle,
@@ -47,7 +46,7 @@ class MainLayout extends Component<Props> {
             <Content contentContainerStyle={contentContainerStyle}>
               {children}
             </Content>
-            {footer}
+            {this.renderFooter()}
             <View style={fabContainer}>
               <MainFab/>
             </View>
@@ -66,6 +65,11 @@ class MainLayout extends Component<Props> {
       );
     }
     return null;
+  }
+
+  renderFooter() {
+    const { footer } = this.props;
+    return footer;
   }
 }
 
