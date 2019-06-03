@@ -14,9 +14,14 @@ const styleVariables = {
   lightDescriptionTextColor: 'gray',
   // buttons
   addStudentButtonColor: 'black',
-  exportAllToPdfButtonColor: 'black',
+  exportAllToPdfActionButtonColor: 'black',
+  exportStudentToPdfActionButtonColor: 'black',
   editNoteActionButtonColor: '#707070',
   deleteNoteActionButtonColor: '#FA0026',
+  deleteStudentActionButtonColor: 'black',
+  recordAttendanceActionButtonColor: 'black',
+  addNoteActionButtonColor: 'black',
+  addGoalActionButtonColor: 'black',
   // navigation
   activeNavigationTabBackgroundColor: '#5876F2',
   defaultNavigationTabBackgroundColor: 'white',

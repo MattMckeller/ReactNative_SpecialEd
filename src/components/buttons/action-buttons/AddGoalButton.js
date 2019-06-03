@@ -6,19 +6,20 @@ import styleVariables from '../../../assets/StyleVariables';
 type Props = {
   onPress: () => any,
 }
-function ExportAllToPdfButton(props: Props) {
+
+function AddGoalButton(props: Props) {
   const { onPress } = props;
-  const { exportAllToPdfActionButtonColor } = styleVariables;
+  const { addGoalActionButtonColor } = styleVariables;
   return (
     <ActionButton
       onPress={onPress}
-      iconColor={exportAllToPdfActionButtonColor}
-      iconName="file-export"
-      label="Export all to PDF"
+      iconColor={addGoalActionButtonColor}
+      iconName="bullseye"
+      label="Add Goal"
     />
   );
 }
 
-ExportAllToPdfButton.defaultProps = {};
+AddGoalButton.defaultProps = {};
 
-export default ExportAllToPdfButton;
+export default AddGoalButton;

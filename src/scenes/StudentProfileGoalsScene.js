@@ -2,33 +2,53 @@
 import React, { Component } from 'react';
 import { Text } from 'react-native';
 import { connect } from 'react-redux';
-import type { StudentInterface } from '../data-models/student/Student.interface';
-import StudentNotesList from '../components/containers/StudentNoteList';
+import { NavigationScreenProps } from 'react-navigation';
 import type { NoteInterface } from '../data-models/note/Note.interface';
 import StudentProfileScenesController from './StudentProfileScenesController';
-import { NavigationScreenProps } from "react-navigation";
+import { configureMainFab } from '../redux/actions';
+import type { GoalInterface } from '../data-models/goal/Goal.interface';
+import AddGoalButton from '../components/buttons/action-buttons/AddGoalButton';
 
 type Props = NavigationScreenProps & {
-  selectedStudent: StudentInterface,
+  configureMainFabAction: () => any,
+  goals: GoalInterface[],
   retrieveNotesError: string, // todo handle errors
   retrieveStudentError: string,
 }
 
 class StudentProfileGoalsScene extends Component<Props> {
+  navigationSubscription: null;
+
   constructor() {
-    console.log('student profile goals scene construct');
     super();
-    this.onDeleteNote = this.onDeleteNote.bind(this);
+    this.onAddGoal = this.onAddGoal.bind(this);
     this.onEditNote = this.onEditNote.bind(this);
+    this.configureFab = this.configureFab.bind(this);
+  }
+
+  componentDidMount(): void {
+    const { navigation } = this.props;
+    this.navigationSubscription = navigation.addListener(
+      'didFocus',
+      this.configureFab,
+    );
+  }
+
+  componentWillUnmount(): void {
+    this.navigationSubscription.remove();
   }
 
   render() {
-    const { selectedStudent, navigation } = this.props;
+    const { navigation } = this.props;
     return (
       <StudentProfileScenesController navigation={navigation}>
         <Text>goals scene</Text>
       </StudentProfileScenesController>
     );
+  }
+
+  onAddGoal() {
+    console.log('add goal');
   }
 
   onEditNote(note: NoteInterface) {
@@ -38,18 +58,45 @@ class StudentProfileGoalsScene extends Component<Props> {
   onDeleteNote(note: NoteInterface) {
     console.log('delete note', note);
   }
+
+  configureFab() {
+    const {
+      configureMainFabAction,
+    } = this.props;
+
+    configureMainFabAction({
+      buttons: [
+        StudentProfileGoalsScene.getActionFabs(),
+      ],
+    });
+  }
+
+  static getActionFabs(): React.Component[] {
+    return [
+      <AddGoalButton
+        onPress={() => {
+          console.log('pressed add goal');
+        }}
+      />,
+      ...StudentProfileScenesController.getActionFabs(),
+    ];
+  }
 }
 
 
 const mapStateToProps = (state) => {
   const {
     retrieveNotesError,
-    selectedStudent,
+    selectedStudent: {
+      goals,
+    },
   } = state.studentState;
   return {
-    selectedStudent,
+    goals,
     retrieveNotesError,
   };
 };
 
-export default connect(mapStateToProps, {})(StudentProfileGoalsScene);
+export default connect(mapStateToProps, {
+  configureMainFabAction: configureMainFab,
+})(StudentProfileGoalsScene);

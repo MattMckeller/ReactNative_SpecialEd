@@ -2,12 +2,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View } from 'react-native';
-import { NavigationRoute, NavigationScreenProp} from 'react-navigation';
+import { NavigationRoute, NavigationScreenProp } from 'react-navigation';
 import type { StudentInterface } from '../data-models/student/Student.interface';
 import MainLayout from '../components/containers/layouts/MainLayout';
 import StudentAttributeOverview from '../components/containers/StudentAttributeOverview';
 import { retrieveStudentDetails } from '../redux/actions';
 import StudentProfileFooter from '../components/containers/layouts/footers/StudentProfileFooter';
+import DeleteStudentButton from '../components/buttons/action-buttons/DeleteStudentButton';
+import ExportStudentToPdfButton
+  from '../components/buttons/action-buttons/ExportStudentToPdfButton';
 
 type Props = {
   navigation: NavigationScreenProp<NavigationRoute<Params>, Params>,
@@ -22,9 +25,6 @@ type Props = {
 class StudentProfileScenesController extends Component<Props> {
   constructor() {
     super();
-    this.onAddNote = this.onAddNote.bind(this);
-    this.onAddGoal = this.onAddGoal.bind(this);
-    this.onRecordAttendance = this.onRecordAttendance.bind(this);
     this.onStudentExport = this.onStudentExport.bind(this);
     this.onDeleteStudent = this.onDeleteStudent.bind(this);
   }
@@ -70,20 +70,23 @@ class StudentProfileScenesController extends Component<Props> {
     console.log('export student');
   }
 
-  onAddNote() {
-    console.log('add note');
-  }
-
-  onAddGoal() {
-    console.log('add goal');
-  }
-
-  onRecordAttendance() {
-    console.log('record attendance');
-  }
-
   onDeleteStudent() {
     console.log('delete student');
+  }
+
+  static getActionFabs(): React.Component[] {
+    return [
+      <DeleteStudentButton
+        onPress={() => {
+          console.log('pressed delete student');
+        }}
+      />,
+      <ExportStudentToPdfButton
+        onPress={() => {
+          console.log('pressed export student to pdf');
+        }}
+      />,
+    ];
   }
 }
 

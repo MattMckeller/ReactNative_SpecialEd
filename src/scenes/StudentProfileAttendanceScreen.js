@@ -2,27 +2,43 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Text } from 'react-native';
-import type { StudentInterface } from '../data-models/student/Student.interface';
-import type { NoteInterface } from '../data-models/note/Note.interface';
+import { NavigationScreenProps } from 'react-navigation';
 import StudentProfileScenesController from './StudentProfileScenesController';
-import { NavigationScreenProps } from "react-navigation";
+import type { AttendanceRecordInterface } from '../data-models/attendance-record/AttendanceRecord.interface';
+import RecordAttendanceButton from '../components/buttons/action-buttons/RecordAttendanceButton';
+import { configureMainFab } from '../redux/actions';
 
 type Props = NavigationScreenProps & {
-  selectedStudent: StudentInterface,
+  configureMainFabAction: () => any,
+  attendanceRecords: AttendanceRecordInterface[],
   retrieveNotesError: string, // todo handle errors
   retrieveStudentError: string,
 }
 
 class StudentProfileAttendanceScene extends Component<Props> {
+  navigationSubscription: null;
+
   constructor() {
     console.log('student profile attendance scene construct');
     super();
-    this.onDeleteNote = this.onDeleteNote.bind(this);
-    this.onEditNote = this.onEditNote.bind(this);
+    this.onRecordAttendance = this.onRecordAttendance.bind(this);
+    this.configureFab = this.configureFab.bind(this);
+  }
+
+  componentDidMount(): void {
+    const { navigation } = this.props;
+    this.navigationSubscription = navigation.addListener(
+      'didFocus',
+      this.configureFab,
+    );
+  }
+
+  componentWillUnmount(): void {
+    this.navigationSubscription.remove();
   }
 
   render() {
-    const { selectedStudent, navigation } = this.props;
+    const { navigation } = this.props;
     return (
       <StudentProfileScenesController navigation={navigation}>
         <Text>Attendance Scene</Text>
@@ -30,12 +46,31 @@ class StudentProfileAttendanceScene extends Component<Props> {
     );
   }
 
-  onEditNote(note: NoteInterface) {
-    console.log('edit note', note);
+  onRecordAttendance() {
+    console.log('record attendance');
   }
 
-  onDeleteNote(note: NoteInterface) {
-    console.log('delete note', note);
+  configureFab() {
+    const {
+      configureMainFabAction,
+    } = this.props;
+
+    configureMainFabAction({
+      buttons: [
+        StudentProfileAttendanceScene.getActionFabs(),
+      ],
+    });
+  }
+
+  static getActionFabs(): React.Component[] {
+    return [
+      <RecordAttendanceButton
+        onPress={() => {
+          console.log('pressed record attendance');
+        }}
+      />,
+      ...StudentProfileScenesController.getActionFabs(),
+    ];
   }
 }
 
@@ -43,12 +78,16 @@ class StudentProfileAttendanceScene extends Component<Props> {
 const mapStateToProps = (state) => {
   const {
     retrieveNotesError,
-    selectedStudent,
+    selectedStudent: {
+      attendanceRecords,
+    },
   } = state.studentState;
   return {
-    selectedStudent,
+    attendanceRecords,
     retrieveNotesError,
   };
 };
 
-export default connect(mapStateToProps, {})(StudentProfileAttendanceScene);
+export default connect(mapStateToProps, {
+  configureMainFabAction: configureMainFab,
+})(StudentProfileAttendanceScene);

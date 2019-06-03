@@ -6,19 +6,20 @@ import styleVariables from '../../../assets/StyleVariables';
 type Props = {
   onPress: () => any,
 }
-function ExportAllToPdfButton(props: Props) {
+
+function AddNoteButton(props: Props) {
   const { onPress } = props;
-  const { exportAllToPdfActionButtonColor } = styleVariables;
+  const { addNoteActionButtonColor } = styleVariables;
   return (
     <ActionButton
       onPress={onPress}
-      iconColor={exportAllToPdfActionButtonColor}
-      iconName="file-export"
-      label="Export all to PDF"
+      iconColor={addNoteActionButtonColor}
+      iconName="comments" // todo comment-medical not working
+      label="Add Note"
     />
   );
 }
 
-ExportAllToPdfButton.defaultProps = {};
+AddNoteButton.defaultProps = {};
 
-export default ExportAllToPdfButton;
+export default AddNoteButton;
