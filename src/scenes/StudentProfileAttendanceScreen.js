@@ -16,6 +16,9 @@ type Props = NavigationScreenProps & {
 }
 
 class StudentProfileAttendanceScene extends Component<Props> {
+  static navigationOptions = {
+    title: 'Student Profile',
+  };
   navigationSubscription: null;
 
   constructor() {

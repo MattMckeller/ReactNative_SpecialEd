@@ -33,6 +33,10 @@ type Props = NavigationScreenProps & {
 }
 
 class StudentListScene extends Component<Props> {
+  static navigationOptions = {
+    title: 'Students',
+  };
+
   constructor() {
     super();
     this.onSelectStudent = this.onSelectStudent.bind(this);

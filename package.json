@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@types/node": "^11.13.0",
+    "@types/react-navigation": "^3.0.7",
     "babel-plugin-transform-inline-environment-variables": "^0.4.3",
     "lodash": "^4.17.11",
     "memoize-one": "^5.0.4",

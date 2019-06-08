@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View } from 'react-native';
-import { NavigationRoute, NavigationScreenProp } from 'react-navigation';
 import type { StudentInterface } from '../data-models/student/Student.interface';
 import MainLayout from '../components/containers/layouts/MainLayout';
 import StudentAttributeOverview from '../components/containers/StudentAttributeOverview';
@@ -13,7 +12,6 @@ import ExportStudentToPdfButton
   from '../components/buttons/action-buttons/ExportStudentToPdfButton';
 
 type Props = {
-  navigation: NavigationScreenProp<NavigationRoute<Params>, Params>,
   selectedStudent: StudentInterface,
   lastFetchedStudentId: number,
   retrieveStudentError: string, // todo handle errors
@@ -36,14 +34,15 @@ class StudentProfileScenesController extends Component<Props> {
       lastFetchedStudentId,
     } = this.props;
     // Only fetch data if it has not already been fetched
-    if (!lastFetchedStudentId || lastFetchedStudentId !== selectedStudent.id) {
+    if (!lastFetchedStudentId
+      || (selectedStudent && lastFetchedStudentId !== selectedStudent.id)) {
       retrieveStudentDetailsAction(selectedStudent);
     }
   }
 
   render() {
     const {
-      selectedStudent, loading, children, navigation,
+      selectedStudent, loading, children,
     } = this.props;
     const {
       layoutContainerStyle,
@@ -54,7 +53,7 @@ class StudentProfileScenesController extends Component<Props> {
       <MainLayout
         loading={loading}
         contentContainerStyle={layoutContainerStyle}
-        footer={<StudentProfileFooter navigation={navigation}/>}
+        footer={<StudentProfileFooter/>}
       >
         <View style={studentAttributeContainerStyle}>
           <StudentAttributeOverview student={selectedStudent}/>
@@ -99,8 +98,7 @@ const styles = {
     width: '100%',
   },
   bodyContainerStyle: {
-    height: 500,
-    minHeight: 500,
+    flex: 1,
     width: '100%',
     backgroundColor: 'maroon',
   },

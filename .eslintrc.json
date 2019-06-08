@@ -34,6 +34,7 @@
         "no-underscore-dangle": "off",
         "no-class-assign": "off",
         "import/prefer-default-export": "off",
-        "react/jsx-tag-spacing": "off"
+        "react/jsx-tag-spacing": "off",
+        "lines-between-class-members": "off"
     }
 }

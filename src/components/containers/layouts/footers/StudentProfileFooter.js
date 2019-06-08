@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { View } from 'react-native';
-import { NavigationRoute, NavigationScreenProp } from 'react-navigation';
+import { NavigationScreenProps, withNavigation } from 'react-navigation';
 import NavigationTab from '../../../shared/common/NavigationTab';
 import NotesNavigationButton from '../../../buttons/navigation-buttons/NotesNavigationButton';
 import GoalsNavigationButton from '../../../buttons/navigation-buttons/GoalsNavigationButton';
@@ -11,8 +11,7 @@ import AttendanceNavigationButton
 import styleVariables from '../../../../assets/StyleVariables';
 import { RouterHelpers } from '../../../../router-helpers';
 
-type Props = {
-  navigation: NavigationScreenProp<NavigationRoute<Params>, Params>,
+type Props = NavigationScreenProps & {
   currentRoute: string,
 }
 
@@ -52,8 +51,8 @@ function StudentProfileFooter(props: Props) {
             onPress={onNotesButtonPress}
             color={
               (notesPageActive
-                  ? activeNavigationTabContentColor
-                  : defaultNavigationTabContentColor
+                ? activeNavigationTabContentColor
+                : defaultNavigationTabContentColor
               )}
           />
         </NavigationTab>
@@ -64,8 +63,8 @@ function StudentProfileFooter(props: Props) {
             onPress={onGoalsButtonPress}
             color={
               (goalsPageActive
-                  ? activeNavigationTabContentColor
-                  : defaultNavigationTabContentColor
+                ? activeNavigationTabContentColor
+                : defaultNavigationTabContentColor
               )}
           />
         </NavigationTab>
@@ -76,8 +75,8 @@ function StudentProfileFooter(props: Props) {
             onPress={onAttendanceButtonPress}
             color={
               (attendancePageActive
-                  ? activeNavigationTabContentColor
-                  : defaultNavigationTabContentColor
+                ? activeNavigationTabContentColor
+                : defaultNavigationTabContentColor
               )}
           />
         </NavigationTab>
@@ -109,4 +108,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, {})(StudentProfileFooter);
+export default connect(mapStateToProps, {})(withNavigation(StudentProfileFooter));

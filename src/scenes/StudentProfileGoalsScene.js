@@ -17,6 +17,9 @@ type Props = NavigationScreenProps & {
 }
 
 class StudentProfileGoalsScene extends Component<Props> {
+  static navigationOptions = {
+    title: 'Student Profile',
+  };
   navigationSubscription: null;
 
   constructor() {
@@ -39,9 +42,8 @@ class StudentProfileGoalsScene extends Component<Props> {
   }
 
   render() {
-    const { navigation } = this.props;
     return (
-      <StudentProfileScenesController navigation={navigation}>
+      <StudentProfileScenesController>
         <Text>goals scene</Text>
       </StudentProfileScenesController>
     );

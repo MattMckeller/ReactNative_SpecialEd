@@ -16,6 +16,9 @@ type Props = NavigationScreenProps & {
 }
 
 class StudentProfileNotesScene extends Component<Props> {
+  static navigationOptions = {
+    title: 'Student Profile',
+  };
   navigationSubscription: null;
 
   constructor() {
@@ -38,9 +41,9 @@ class StudentProfileNotesScene extends Component<Props> {
   }
 
   render() {
-    const { notes, navigation } = this.props;
+    const { notes } = this.props;
     return (
-      <StudentProfileScenesController navigation={navigation}>
+      <StudentProfileScenesController>
         <StudentNotesList
           notes={notes}
           onDeleteNotePress={this.onDeleteNote}

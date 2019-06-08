@@ -7,54 +7,70 @@
  */
 
 import React, { Component } from 'react';
-import { View } from 'react-native';
-import {
-  Container, Content,
-} from 'native-base';
+import { LayoutChangeEvent, View } from 'react-native';
 import globalStyles from '../../../assets/styles/GlobalStyles';
 import MainFab from '../../buttons/MainFab';
 import CenteredSpinner from '../../shared/common/CenteredSpinner';
-import DefaultHeader from './headers/DefaultHeader';
-import DefaultFooter from './footers/DefaultFooter';
 
 type Props = {
   children: any,
-  header?: React.Element,
   footer?: React.Element,
   loading?: boolean,
   contentContainerStyle?: {},
+  fabContainerStyle?: {},
+  footerContainerStyle?: {},
+  includeFooterMargin?: boolean,
 };
 
 class MainLayout extends Component<Props> {
+  state = {
+    footerHeight: 0,
+  };
+
+  constructor() {
+    super();
+    this.onFooterLayout = this.onFooterLayout.bind(this);
+  }
+
   render() {
     const {
       children,
-      contentContainerStyle,
-      header,
+      fabContainerStyle,
+      includeFooterMargin,
     } = this.props;
-    const {
-      nbContainerStyle,
-      fabContainer,
-    } = styles;
+    const { footerHeight } = this.state;
+    let { contentContainerStyle } = this.props;
+    contentContainerStyle = (includeFooterMargin)
+      ? { ...contentContainerStyle, marginBottom: footerHeight }
+      : contentContainerStyle;
 
     const { flexRow, flexColumn } = globalStyles;
     return (
-      <View style={flexColumn}>
+      <View style={{ ...flexColumn, borderWidth: 0 }}>
         <View style={flexRow}>
-          <Container style={nbContainerStyle}>
-            {header}
-            <Content contentContainerStyle={contentContainerStyle}>
-              {children}
-            </Content>
-            {this.renderFooter()}
-            <View style={fabContainer}>
-              <MainFab/>
-            </View>
-          </Container>
+          <View style={contentContainerStyle}>
+            {children}
+          </View>
+          {this.renderFooter()}
+          <View style={fabContainerStyle}>
+            <MainFab/>
+          </View>
           {this.renderSpinner()}
         </View>
       </View>
     );
+  }
+
+  renderFooter() {
+    const { footer, footerContainerStyle } = this.props;
+    return (footer) ? (
+      <View
+        onLayout={this.onFooterLayout}
+        style={footerContainerStyle}
+      >
+        {footer}
+      </View>
+    ) : null;
   }
 
   renderSpinner() {
@@ -67,9 +83,9 @@ class MainLayout extends Component<Props> {
     return null;
   }
 
-  renderFooter() {
-    const { footer } = this.props;
-    return footer;
+  onFooterLayout(event: LayoutChangeEvent) {
+    const { height } = event.nativeEvent.layout;
+    this.setState({ footerHeight: height });
   }
 }
 
@@ -81,18 +97,18 @@ MainLayout.defaultProps = {
     flex: 1,
     flexDirection: 'row',
   },
-  header: <DefaultHeader/>,
-  footer: <DefaultFooter/>,
-};
-
-const styles = {
-  nbContainerStyle: {
-    flex: 1,
+  footerContainerStyle: {
+    position: 'absolute',
+    width: '100%',
+    bottom: 0,
   },
-  fabContainer: {
+  fabContainerStyle: {
     position: 'absolute',
     bottom: 20,
     right: 20,
   },
+  footer: null,
+  includeFooterMargin: true,
 };
+
 export default MainLayout;

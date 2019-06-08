@@ -37,5 +37,4 @@ CenteredWrapper.defaultProps = {};
 
 const mapStateToProps = () => ({});
 
-export default connect(mapStateToProps, {
-})(CenteredWrapper);
+export default connect(mapStateToProps, {})(CenteredWrapper);

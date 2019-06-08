@@ -34,6 +34,14 @@ const AppNavigator = createStackNavigator({
 {
   initialRouteName: RouterHelpers.studentList,
   transitionConfig: TransitionConfiguration,
-  headerMode: 'none',
+  defaultNavigationOptions: {
+    headerStyle: {
+      backgroundColor: '#f4511e',
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+    },
+  },
 });
 export default createAppContainer(AppNavigator);
