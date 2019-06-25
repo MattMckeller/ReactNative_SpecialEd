@@ -1,11 +1,10 @@
 // @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  View, Icon,
-} from 'native-base';
 import { toggleMainFab } from '../../redux/actions';
 import { CustomFab } from './CustomFab';
+import MultiTypeIcon from '../shared/icons/MultiTypeIcon';
+import { View } from 'react-native';
 
 // todo, merge with action creator options once I figure out how to do type mappings in flow
 type Props = {
@@ -22,6 +21,7 @@ type Props = {
   buttons: React.Component[],
   toggleMainFabAction: () => void,
 }
+
 class MainFab extends Component<Props> {
   constructor() {
     super();
@@ -53,7 +53,7 @@ class MainFab extends Component<Props> {
           position={position}
           onPress={this.onPress}
         >
-          <Icon name={iconName} type={iconType} style={{ color: iconColor }} />
+          <MultiTypeIcon name={iconName} multiIconType={iconType} style={{ color: iconColor }}/>
           {buttons}
         </CustomFab>
       </View>
@@ -101,4 +101,6 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   toggleMainFabAction: toggleMainFab,
+  iconType: MultiTypeIcon.FontAwesome5,
+
 })(MainFab);

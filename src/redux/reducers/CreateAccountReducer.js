@@ -3,7 +3,7 @@ import {
   CREATE_ACCOUNT_SUCCESS, CREATE_ACCOUNT_FAIL, CREATE_ACCOUNT_DID_SHOW_ERROR_TOAST,
 } from '../actions/types';
 
-// Move default messages to error config
+// Move default messages to error config.js
 const DEFAULT_ERROR_MESSAGE = 'Authentication failed.';
 const INITIAL_STATE = {
   loading: false,

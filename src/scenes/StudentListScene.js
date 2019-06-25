@@ -15,15 +15,18 @@ import type { StudentInterface } from '../data-models/student/Student.interface'
 import {
   retrieveStudents,
 } from '../redux/actions/StudentActions';
-import CenteredWrapper from '../components/containers/CenteredWrapper';
+import CenteredWrapper from '../components/containers/layouts/wrappers/CenteredWrapper';
 import ExportAllToPdfButton from '../components/buttons/action-buttons/ExportAllToPdfButton';
 import AddStudentButton from '../components/buttons/action-buttons/AddStudentButton';
-import { RouterHelpers } from '../router-helpers';
+import { RouterHelpers } from '../navigation/router-helpers';
+import { hideBottomCard, showBottomCard } from '../redux/actions/BottomSlidingCardActions';
 
 type Props = NavigationScreenProps & {
   configureMainFabAction: () => any,
   retrieveStudentsAction: () => any,
   selectedStudentFromListAction: (student: StudentInterface) => any,
+  showBottomCardAction: (node: React.ReactNode) => any,
+  hideBottomCardAction: (node: React.ReactNode) => any,
   didShowStudentListErrorToastAction: () => any,
   students: StudentInterface[],
   loading: boolean,
@@ -41,6 +44,8 @@ class StudentListScene extends Component<Props> {
     super();
     this.onSelectStudent = this.onSelectStudent.bind(this);
     this.showStudentListErrorToast = this.showStudentListErrorToast.bind(this);
+    this.onAddStudent = this.onAddStudent.bind(this);
+    this.onExportPdf = this.onExportPdf.bind(this);
   }
 
   componentDidMount(): void {
@@ -51,7 +56,7 @@ class StudentListScene extends Component<Props> {
 
     configureMainFabAction({
       buttons: [
-        StudentListScene.getActionFabs(),
+        this.getActionFabs(),
       ],
     });
 
@@ -76,19 +81,29 @@ class StudentListScene extends Component<Props> {
     );
   }
 
-  static getActionFabs(): React.Component[] {
+  getActionFabs(): React.Component[] {
     return [
       <AddStudentButton
-        onPress={() => {
-          console.log('pressed add student');
-        }}
+        onPress={this.onAddStudent}
       />,
       <ExportAllToPdfButton
-        onPress={() => {
-          console.log('pressed export to pdf');
-        }}
+        onPress={this.onExportPdf}
       />,
     ];
+  }
+
+  onAddStudent() {
+    console.log('pressed add student');
+    const {
+      showBottomCardAction,
+      hideBottomCardAction,
+    } = this.props;
+    // todo
+    // showBottomCardAction()
+  }
+
+  onExportPdf() {
+    console.log('pressed export to pdf');
   }
 
   onSelectStudent(student: StudentInterface) {
@@ -137,4 +152,6 @@ export default connect(mapStateToProps, {
   retrieveStudentsAction: retrieveStudents,
   didShowStudentListErrorToastAction: didShowStudentListErrorToast,
   selectedStudentFromListAction: selectedStudentFromList,
+  showBottomCardAction: showBottomCard,
+  hideBottomCardAction: showBottomCard,
 })(StudentListScene);

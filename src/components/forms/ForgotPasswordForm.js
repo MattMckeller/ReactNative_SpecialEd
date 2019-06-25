@@ -15,33 +15,39 @@ import CenteredSpinner from '../shared/common/CenteredSpinner';
 import Required from '../../utility/validation/Required';
 import MinLength from '../../utility/validation/MinLength';
 import Validate from '../../utility/validation/Validate';
-import autoFormErrorDisplay from '../hoc/AutoFormErrorDisplay';
+import autoFormErrorDisplay from './hoc/AutoFormErrorDisplay';
 import SubmitButtonHelper from '../../utility/helpers/SubmitButtonHelper';
 import type { SubmitButtonErrorDisplayData } from '../../utility/helpers/SubmitButtonHelper';
 import styleVariables from '../../assets/StyleVariables';
-import { didShowForgotPasswordToast, forgotPassword } from '../../redux/actions/ForgotPasswordActions';
+import {
+  didShowForgotPasswordToast,
+  forgotPassword,
+} from '../../redux/actions/ForgotPasswordActions';
 
 const FORM_NAME = 'forgotPasswordForm';
 const EMAIL_INPUT_NAME = 'email';
 const InputComponent = autoFormErrorDisplay(RoundedTextInput);
 
 type Props = {
-  forgotPasswordAction: ({email: string, password: string}) => void,
+  forgotPasswordAction: ({ email: string, password: string }) => void,
   didShowErrorToastAction: () => void,
   email: string,
   loading: boolean,
   error: string,
   shouldOpenErrorToast: boolean,
 } & FormProps
+
 class ForgotPasswordForm extends Component<Props> {
   state = {
-    shouldDisableSubmitButton: false,
-    forceDisplayErrorMessages: false,
+    disableSubmitButton: false,
+    forceErrorDisplays: false,
   };
 
   submitButtonHelper: SubmitButtonHelper = new SubmitButtonHelper(
     [EMAIL_INPUT_NAME],
   );
+
+  // todo remove validation rules definitions from this component
 
   // todo update validation rules
   emailValidationRules = [
@@ -75,7 +81,7 @@ class ForgotPasswordForm extends Component<Props> {
     const { loading } = this.props;
     if (loading === true) {
       return (
-        <CenteredSpinner />
+        <CenteredSpinner/>
       );
     }
     return null;
@@ -103,7 +109,7 @@ class ForgotPasswordForm extends Component<Props> {
       submitButtonContainerStyle,
     } = styles;
     const { flexColumn } = globalStyles;
-    const { shouldDisableSubmitButton, forceDisplayErrorMessages } = this.state;
+    const { disableSubmitButton, forceErrorDisplays } = this.state;
     // todo do I even need the first view
     // todo fix focusing of inputs
     return (
@@ -119,13 +125,13 @@ class ForgotPasswordForm extends Component<Props> {
                 labelIcon="person"
                 iconType="MaterialIcons"
                 validate={this.emailValidationRules}
-                forceDisplayErrorMessage={forceDisplayErrorMessages}
+                forceErrorDisplay={forceErrorDisplays}
               />
             </View>
             <View style={submitButtonContainerStyle}>
               <RoundedButton
                 onPress={this.onSubmitErrorChecker}
-                disabled={shouldDisableSubmitButton}
+                disabled={disableSubmitButton}
                 label="Send Pin"
                 height={60}
               />
@@ -144,18 +150,18 @@ class ForgotPasswordForm extends Component<Props> {
 
   checkSubmitButtonStatus() {
     const { loading, valid } = this.props;
-    const { shouldDisableSubmitButton, forceDisplayErrorMessages } = this.state;
-    const updatedDisableSubmitState = this.submitButtonHelper.shouldDisableSubmitButton()
-      || loading || (forceDisplayErrorMessages && !valid);
-    if (updatedDisableSubmitState !== shouldDisableSubmitButton) {
-      this.setState({ shouldDisableSubmitButton: updatedDisableSubmitState });
+    const { disableSubmitButton: currentStatus, forceErrorDisplays } = this.state;
+    const disableSubmitButton = this.submitButtonHelper.shouldDisableSubmitButton()
+      || loading || (forceErrorDisplays && !valid);
+    if (disableSubmitButton !== currentStatus) {
+      this.setState({ disableSubmitButton });
     }
   }
 
   onSubmitErrorChecker() {
     const { valid } = this.props;
     if (!valid) {
-      this.setState({ forceDisplayErrorMessages: true });
+      this.setState({ forceErrorDisplays: true });
     } else {
       this.onSubmit();
     }

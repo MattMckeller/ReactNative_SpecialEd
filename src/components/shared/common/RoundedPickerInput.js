@@ -1,24 +1,24 @@
 // @flow
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import {
   Text, View,
 } from 'react-native';
-import { Icon, Picker } from 'native-base';
+import { Picker } from 'native-base';
+import { FontAwesome5 } from '@expo/vector-icons';
 import globalStyles from '../../../assets/styles/GlobalStyles';
 
 // todo update types from redux form
 type Props = {
   label: string,
-  value: string,
   options: { label: string, value: string, key: string },
   shouldDisplayErrorMessage: boolean,
   input: any,
   meta: any,
   labelIcon?: string,
   iconType?: string,
-  forceDisplayErrorMessage?: boolean,
+  forceErrorDisplay?: boolean,
 }
+
 class RoundedPickerInput extends Component<Props> {
   pickerInput: Picker;
 
@@ -28,10 +28,6 @@ class RoundedPickerInput extends Component<Props> {
     this._onBlur = this._onBlur.bind(this);
     this._onFocus = this._onFocus.bind(this);
     this.pickerInput = React.createRef();
-    this.state = {
-      ...this.state,
-      // + additional
-    };
   }
 
   renderLabelIcon() {
@@ -39,10 +35,10 @@ class RoundedPickerInput extends Component<Props> {
     const { labelIconStyle } = styles;
     if (labelIcon && labelIcon.length) {
       return (
-        <Icon
+        <FontAwesome5
           style={labelIconStyle}
           name={labelIcon}
-          type={iconType}
+          // type={iconType}
         />
       );
     }
@@ -53,10 +49,10 @@ class RoundedPickerInput extends Component<Props> {
     // todo update icon to be arrow
     const { dropdownIconStyle } = styles;
     return (
-      <Icon
+      <FontAwesome5
         style={dropdownIconStyle}
         name="chevron-circle-down"
-        type="FontAwesome5"
+        // type="FontAwesome5"
       />
     );
   }
@@ -75,10 +71,10 @@ class RoundedPickerInput extends Component<Props> {
     const { error, active } = meta;
     const { value } = input;
     const {
-      label, labelIcon, shouldDisplayErrorMessage, forceDisplayErrorMessage,
+      label, labelIcon, shouldDisplayErrorMessage, forceErrorDisplay,
     } = this.props;
 
-    const doDisplayErrorMessage = (shouldDisplayErrorMessage || forceDisplayErrorMessage)
+    const doDisplayErrorMessage = (shouldDisplayErrorMessage || forceErrorDisplay)
       && error;
 
     let fullTextStyle = (labelIcon && labelIcon.length)
@@ -122,30 +118,37 @@ class RoundedPickerInput extends Component<Props> {
   }
 
   render() {
-    const { labelIcon, input } = this.props;
-    const { value } = input;
-    const { textInputStyle, containerStyle, dropdownIconContainerStyle } = styles;
-    const { standardTextInputStyle, withIconStyle, pickerTextStyle } = textInputStyle;
+    const {
+      labelIcon,
+      input: {
+        value,
+      },
+    } = this.props;
+    const {
+      textInputStyle: {
+        standardTextInputStyle,
+        withIconStyle,
+        pickerTextStyle,
+      },
+      containerStyle,
+      dropdownIconContainerStyle,
+    } = styles;
     const fullTextInputStyle = (labelIcon && labelIcon.length)
       ? ({ ...standardTextInputStyle, ...withIconStyle }) : (standardTextInputStyle);
-    const temp = { ...{ width: '100%' } };
-    console.log('full text input style', fullTextInputStyle);
-    console.log('container style', containerStyle);
-    console.log('temp style', temp);
     return (
-      <View style={temp}>
+      <View style={containerStyle}>
         <Picker
           ref={this.pickerInput}
           note
           mode="dropdown"
-          style={ { ...fullTextInputStyle, width: '100%' } }
+          style={fullTextInputStyle}
           selectedValue={value}
           onValueChange={this._onChangeText}
           textStyle={pickerTextStyle}
         >
           {this.renderPickerItems()}
         </Picker>
-        <View pointerEvents="none" style={{ position: 'absolute', left: 0, }}>
+        <View pointerEvents="none" style={{ position: 'absolute', left: 0 }}>
           {this.renderLabel()}
         </View>
         <View pointerEvents="none" style={dropdownIconContainerStyle}>
@@ -182,9 +185,8 @@ class RoundedPickerInput extends Component<Props> {
 
 RoundedPickerInput.defaultProps = {
   labelIcon: null,
-  secureTextEntry: false,
   iconType: 'FontAwesome5',
-  forceDisplayErrorMessage: false,
+  forceErrorDisplay: false,
 };
 
 const styles = {
@@ -227,6 +229,7 @@ const styles = {
       height: 50,
       borderRadius: 25,
       paddingLeft: 15,
+      width: '100%',
     },
     withIconStyle: {
       paddingLeft: 29,
@@ -258,7 +261,4 @@ const styles = {
   },
 };
 
-const mapStateToProps = state => ({});
-
-export default connect(mapStateToProps, {
-})(RoundedPickerInput);
+export default RoundedPickerInput;

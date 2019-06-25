@@ -19,6 +19,14 @@ const globalStyles = {
   lightDescriptionText: {
     color: lightDescriptionTextColor,
   },
+  defaultInputContainerStyle: {
+    width: '100%',
+    marginBottom: 20,
+  },
+  defaultSubmitContainerStyle: {
+    marginTop: 15,
+    width: '100%',
+  },
 };
 
 export default globalStyles;

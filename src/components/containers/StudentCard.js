@@ -1,18 +1,19 @@
 // @flow
 import React from 'react';
 import { TouchableHighlight, View } from 'react-native';
-import { Icon } from 'native-base';
 import type { StudentInterface } from '../../data-models/student/Student.interface';
 import globalStyles from '../../assets/styles/GlobalStyles';
 import styleVariables from '../../assets/StyleVariables';
 import StudentLastUpdatedAt from '../fields/student-fields/StudentLastUpdatedAt';
 import StudentID from '../fields/student-fields/StudentID';
 import StudentName from '../fields/student-fields/StudentName';
+import MultiTypeIcon from '../shared/icons/MultiTypeIcon';
 
 type Props = {
   student: StudentInterface;
   onPress: (student: StudentInterface) => any,
 };
+
 function StudentCard(props: Props) {
   const { student, onPress } = props;
 
@@ -36,23 +37,22 @@ function StudentCard(props: Props) {
   return (
     <View style={cardContainerStyle}>
       <View style={topContainerStyle}>
-        <StudentName student={student} />
+        <StudentName student={student}/>
       </View>
       <View style={bottomContainerStyle}>
         <View style={detailContainer}>
           <View style={studentIDContainerStyle}>
-            <StudentID style={lightDescriptionText} student={student} />
+            <StudentID style={lightDescriptionText} student={student}/>
           </View>
           <View style={lastUpdatedAtStyle}>
-            <StudentLastUpdatedAt style={lightDescriptionText} student={student} />
+            <StudentLastUpdatedAt style={lightDescriptionText} student={student}/>
           </View>
         </View>
       </View>
       <TouchableHighlight onPress={_onPress} style={arrowContainerStyle}>
-        <Icon
+        <MultiTypeIcon
           style={arrowIconStyle}
           name="angle-right"
-          type="FontAwesome5"
         />
       </TouchableHighlight>
     </View>

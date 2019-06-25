@@ -15,7 +15,6 @@ function CollapseIcon(props: Props) {
     <View style={{ height, width, ...rootContainerStyle }}>
       <Icon
         name="chevron-up"
-        type="FontAwesome5"
         style={iconStyle}
       />
     </View>

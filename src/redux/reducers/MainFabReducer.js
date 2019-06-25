@@ -3,10 +3,11 @@ import {
   MAIN_FAB_CONFIGURE, MAIN_FAB_TOGGLE,
 } from '../actions/types';
 import type { MainFabConfigurationOptions } from '../actions/MainFabActions';
+import { MultiTypeIconTypes } from '../../components/shared/icons/MultiTypeIcon';
 
 const INITIAL_STATE: MainFabConfigurationOptions = {
   iconName: 'plus',
-  iconType: 'FontAwesome5',
+  iconType: MultiTypeIconTypes.FontAwesome5,
   height: 50,
   width: 50,
   backgroundColor: 'blue',

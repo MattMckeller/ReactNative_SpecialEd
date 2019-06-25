@@ -26,7 +26,7 @@ import {
   RETRIEVE_MULTIPLE_STUDENT_PDF_SUCCESS,
   RETRIEVE_STUDENT_DETAILS_START,
   RETRIEVE_STUDENT_DETAILS_SUCCESS,
-  RETRIEVE_STUDENT_DETAILS_FAIL,
+  RETRIEVE_STUDENT_DETAILS_FAIL, ADD_STUDENT_SUCCESS, ADD_STUDENT_FAIL, ADD_STUDENT_START,
 } from './types';
 import { STUDENT_LIST_TEST_DATA } from '../../../extra/testData/students';
 import type { StudentInterface } from '../../data-models/student/Student.interface';
@@ -109,6 +109,32 @@ export const retrieveMultipleStudentsPdf = (student: StudentInterface) => (dispa
 
   // setTimeout(() => {
   //   retrieveMultipleStudentPdfFail(dispatch, { error: 'An error has occurred.' });
+  // }, 10);
+};
+
+
+export const doAddStudent = (student: StudentInterface) => (dispatch) => {
+  console.log('retrieve student details start');
+  dispatch({
+    type: ADD_STUDENT_START,
+    meta: { beginAsyncRequest: true },
+  });
+
+  // todo implement backend calls
+  setTimeout(() => {
+    dispatch({
+      type: ADD_STUDENT_SUCCESS,
+      payload: student,
+      meta: { finishAsyncRequest: true },
+    });
+  }, 10);
+
+  // setTimeout(() => {
+  //   dispatch({
+  //     type: ADD_STUDENT_FAIL,
+  //     payload: { error: 'Error from backend.' },
+  //     meta: { finishAsyncRequest: true },
+  //   });
   // }, 10);
 };
 

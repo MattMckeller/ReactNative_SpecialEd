@@ -5,8 +5,8 @@ import { NavigationScreenProps } from 'react-navigation';
 import AuthLayout from '../components/containers/layouts/AuthLayout';
 import CreateAccountForm from '../components/forms/CreateAccountForm';
 import RoundedOutlineButton from '../components/shared/common/RoundedOutlineButton';
-import { RouterHelpers } from '../router-helpers';
-import CenteredWrapper from '../components/containers/CenteredWrapper';
+import { RouterHelpers } from '../navigation/router-helpers';
+import CenteredWrapper from '../components/containers/layouts/wrappers/CenteredWrapper';
 
 type Props = NavigationScreenProps & {
 }

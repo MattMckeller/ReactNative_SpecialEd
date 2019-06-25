@@ -14,7 +14,6 @@ function StudentProfileIcon(props: Props) {
     <View style={{ height, width, ...rootContainerStyle }}>
       <Icon
         name="user-alt"
-        type="FontAwesome5"
         style={iconStyle}
       />
     </View>

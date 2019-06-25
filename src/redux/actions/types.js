@@ -1,3 +1,4 @@
+// todo split up this file
 export const LOGIN_USER_START = 'login_user_start';
 export const LOGIN_USER_SUCCESS = 'login_user_success';
 export const LOGIN_USER_FAIL = 'login_user_fail';
@@ -74,3 +75,5 @@ export const RETRIEVE_MULTIPLE_STUDENT_PDF_START = 'retrieve_multiple_student_pd
 export const RETRIEVE_MULTIPLE_STUDENT_PDF_SUCCESS = 'retrieve_multiple_student_pdf_success';
 export const RETRIEVE_MULTIPLE_STUDENT_PDF_FAIL = 'retrieve_multiple_student_pdf_fail';
 export const NAVIGATION_STATE_CHANGE = 'navigation_state_change';
+export const SHOW_BOTTOM_SLIDING_CARD = 'show_bottom_sliding_card';
+export const HIDE_BOTTOM_SLIDING_CARD = 'hide_bottom_sliding_card';

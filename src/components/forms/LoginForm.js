@@ -16,7 +16,7 @@ import CenteredSpinner from '../shared/common/CenteredSpinner';
 import Required from '../../utility/validation/Required';
 import MinLength from '../../utility/validation/MinLength';
 import Validate from '../../utility/validation/Validate';
-import autoFormErrorDisplay from '../hoc/AutoFormErrorDisplay';
+import autoFormErrorDisplay from './hoc/AutoFormErrorDisplay';
 import SubmitButtonHelper from '../../utility/helpers/SubmitButtonHelper';
 import type { SubmitButtonErrorDisplayData } from '../../utility/helpers/SubmitButtonHelper';
 import styleVariables from '../../assets/StyleVariables';
@@ -27,7 +27,7 @@ const PASSWORD_INPUT_NAME = 'password';
 const InputComponent = autoFormErrorDisplay(RoundedTextInput);
 
 type Props = {
-  loginUserAction: ({email: string, password: string}) => void,
+  loginUserAction: ({ email: string, password: string }) => void,
   didShowErrorToastAction: () => void,
   email: string,
   password: string,
@@ -35,15 +35,18 @@ type Props = {
   authError: string,
   shouldOpenErrorToast: boolean,
 } & FormProps
+
 class LoginForm extends Component<Props> {
   state = {
-    shouldDisableSubmitButton: false,
-    forceDisplayErrorMessages: false,
+    disableSubmitButton: false,
+    forceErrorDisplays: false,
   };
 
   submitButtonHelper: SubmitButtonHelper = new SubmitButtonHelper(
     [EMAIL_INPUT_NAME, PASSWORD_INPUT_NAME],
   );
+
+  // todo remove validation rules definitions from this component
 
   // todo update validation rules
   emailValidationRules = [
@@ -85,7 +88,7 @@ class LoginForm extends Component<Props> {
     const { loading } = this.props;
     if (loading === true) {
       return (
-        <CenteredSpinner />
+        <CenteredSpinner/>
       );
     }
     return null;
@@ -113,7 +116,7 @@ class LoginForm extends Component<Props> {
       submitButtonContainerStyle,
     } = styles;
     const { flexColumn } = globalStyles;
-    const { shouldDisableSubmitButton, forceDisplayErrorMessages } = this.state;
+    const { disableSubmitButton, forceErrorDisplays } = this.state;
     // todo do I even need the first view
     // todo fix focusing of inputs
     return (
@@ -129,7 +132,7 @@ class LoginForm extends Component<Props> {
                 labelIcon="person"
                 iconType="MaterialIcons"
                 validate={this.emailValidationRules}
-                forceDisplayErrorMessage={forceDisplayErrorMessages}
+                forceErrorDisplay={forceErrorDisplays}
               />
             </View>
             <View style={inputContainerStyle}>
@@ -142,13 +145,13 @@ class LoginForm extends Component<Props> {
                 secureTextEntry
                 component={InputComponent}
                 validate={this.passwordValidationRules}
-                forceDisplayErrorMessage={forceDisplayErrorMessages}
+                forceErrorDisplay={forceErrorDisplays}
               />
             </View>
             <View style={submitButtonContainerStyle}>
               <RoundedButton
                 onPress={this.onSubmitErrorChecker}
-                disabled={shouldDisableSubmitButton}
+                disabled={disableSubmitButton}
                 label="Sign In"
                 height={60}
               />
@@ -167,18 +170,18 @@ class LoginForm extends Component<Props> {
 
   checkSubmitButtonStatus() {
     const { loading, valid } = this.props;
-    const { shouldDisableSubmitButton, forceDisplayErrorMessages } = this.state;
-    const updatedDisableSubmitState = this.submitButtonHelper.shouldDisableSubmitButton()
-      || loading || (forceDisplayErrorMessages && !valid);
-    if (updatedDisableSubmitState !== shouldDisableSubmitButton) {
-      this.setState({ shouldDisableSubmitButton: updatedDisableSubmitState });
+    const { disableSubmitButton: currentStatus, forceErrorDisplays } = this.state;
+    const disableSubmitButton = this.submitButtonHelper.disableSubmitButton()
+      || loading || (forceErrorDisplays && !valid);
+    if (disableSubmitButton !== currentStatus) {
+      this.setState({ disableSubmitButton });
     }
   }
 
   onSubmitErrorChecker() {
     const { valid } = this.props;
     if (!valid) {
-      this.setState({ forceDisplayErrorMessages: true });
+      this.setState({ forceErrorDisplays: true });
     } else {
       this.onSubmit();
     }

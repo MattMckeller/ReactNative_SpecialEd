@@ -1,11 +1,13 @@
 // @flow
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import {
+  ScrollView,
   Text, TextInput, TouchableWithoutFeedback, View,
 } from 'react-native';
-import { Icon } from 'native-base';
-import globalStyles from "../../../assets/styles/GlobalStyles";
+import {
+  FontAwesome5,
+} from '@expo/vector-icons';
+import globalStyles from '../../../assets/styles/GlobalStyles';
 
 // todo update types from redux form
 type Props = {
@@ -17,8 +19,9 @@ type Props = {
   labelIcon?: string,
   iconType?: string,
   secureTextEntry?: boolean,
-  forceDisplayErrorMessage?: boolean,
+  forceErrorDisplay?: boolean,
 }
+
 class RoundedTextInput extends Component<Props> {
   textInput: TextInput;
 
@@ -40,10 +43,10 @@ class RoundedTextInput extends Component<Props> {
     const { iconStyle } = styles;
     if (labelIcon && labelIcon.length) {
       return (
-        <Icon
+        <FontAwesome5
           style={iconStyle}
           name={labelIcon}
-          type={iconType}
+          // type={iconType}
         />
       );
     }
@@ -64,10 +67,10 @@ class RoundedTextInput extends Component<Props> {
     const { error, active } = meta;
     const { value } = input;
     const {
-      label, labelIcon, shouldDisplayErrorMessage, forceDisplayErrorMessage,
+      label, labelIcon, shouldDisplayErrorMessage, forceErrorDisplay,
     } = this.props;
 
-    const doDisplayErrorMessage = (shouldDisplayErrorMessage || forceDisplayErrorMessage)
+    const doDisplayErrorMessage = (shouldDisplayErrorMessage || forceErrorDisplay)
       && error;
 
     let fullTextStyle = (labelIcon && labelIcon.length)
@@ -105,7 +108,7 @@ class RoundedTextInput extends Component<Props> {
     const fullTextInputStyle = (labelIcon && labelIcon.length)
       ? ({ ...standardTextInputStyle, ...withIconStyle }) : (standardTextInputStyle);
     return (
-      <View style={containerStyle}>
+      <ScrollView style={containerStyle} keyboardShouldPersistTaps="never">
         <TextInput
           ref={this.textInput}
           style={fullTextInputStyle}
@@ -118,7 +121,7 @@ class RoundedTextInput extends Component<Props> {
         <TouchableWithoutFeedback onPress={this._onLabelPress}>
           {this.renderLabel()}
         </TouchableWithoutFeedback>
-      </View>
+      </ScrollView>
     );
   }
 
@@ -155,7 +158,7 @@ RoundedTextInput.defaultProps = {
   labelIcon: null,
   secureTextEntry: false,
   iconType: 'FontAwesome5',
-  forceDisplayErrorMessage: false,
+  forceErrorDisplay: false,
 };
 
 const styles = {

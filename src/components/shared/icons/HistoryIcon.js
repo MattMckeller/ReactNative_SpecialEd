@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { View } from 'react-native';
-import { Icon } from 'native-base';
+import MultiTypeIcon from './MultiTypeIcon';
 
 type Props = {
   height?: number | string;
@@ -13,9 +13,8 @@ function HistoryIcon(props: Props) {
   const { iconStyle, rootContainerStyle } = styles;
   return (
     <View style={{ height, width, ...rootContainerStyle }}>
-      <Icon
+      <MultiTypeIcon
         name="history"
-        type="FontAwesome5"
         style={iconStyle}
       />
     </View>

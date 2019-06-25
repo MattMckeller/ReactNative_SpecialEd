@@ -16,10 +16,13 @@ import CenteredSpinner from '../shared/common/CenteredSpinner';
 import Required from '../../utility/validation/Required';
 import MinLength from '../../utility/validation/MinLength';
 import Validate from '../../utility/validation/Validate';
-import autoFormErrorDisplay from '../hoc/AutoFormErrorDisplay';
+import autoFormErrorDisplay from './hoc/AutoFormErrorDisplay';
 import SubmitButtonHelper from '../../utility/helpers/SubmitButtonHelper';
 import type { SubmitButtonErrorDisplayData } from '../../utility/helpers/SubmitButtonHelper';
-import { didShowCreateAccountErrorToast, doCreateAccount } from '../../redux/actions/CreateAccountActions';
+import {
+  didShowCreateAccountErrorToast,
+  doCreateAccount,
+} from '../../redux/actions/CreateAccountActions';
 import StringMatch from '../../utility/validation/StringMatch';
 import RoundedPickerInput from '../shared/common/RoundedPickerInput';
 
@@ -32,7 +35,7 @@ const InputComponent = autoFormErrorDisplay(RoundedTextInput);
 const PickerInputComponent = autoFormErrorDisplay(RoundedPickerInput);
 
 type Props = {
-  doCreateAccountAction: ({email: string, password: string, organization: string}) => {},
+  doCreateAccountAction: ({ email: string, password: string, organization: string }) => {},
   createAccountError: string,
   email: string,
   password: string,
@@ -40,11 +43,14 @@ type Props = {
   loading: boolean,
   shouldOpenErrorToast: boolean,
 } & FormProps
+
 class CreateAccountForm extends Component<Props> {
   state = {
-    shouldDisableSubmitButton: false,
-    forceDisplayErrorMessages: false,
+    disableSubmitButton: false,
+    forceErrorDisplays: false,
     organizationOptions: [],
+    // todo These seem to be saved here for validation purposes, see if they can be removed
+    // and use redux instead, also onFieldChange
     [PASSWORD_INPUT_NAME]: '',
     [PASSWORD_CONFIRMATION_INPUT_NAME]: '',
   };
@@ -57,6 +63,7 @@ class CreateAccountForm extends Component<Props> {
       ORGANIZATION_INPUT_NAME,
     ],
   );
+  // todo remove validation rules definitions from this component
 
   // todo update validation rules
   emailValidationRules = [
@@ -140,7 +147,7 @@ class CreateAccountForm extends Component<Props> {
     const { loading } = this.props;
     if (loading === true) {
       return (
-        <CenteredSpinner />
+        <CenteredSpinner/>
       );
     }
     return null;
@@ -157,7 +164,7 @@ class CreateAccountForm extends Component<Props> {
     } = styles;
     const { flexColumn } = globalStyles;
     const {
-      forceDisplayErrorMessages, shouldDisableSubmitButton, organizationOptions,
+      forceErrorDisplays, disableSubmitButton, organizationOptions,
     } = this.state;
     return (
       <View style={{ flexDirection: 'row' }}>
@@ -172,7 +179,7 @@ class CreateAccountForm extends Component<Props> {
                 labelIcon="person"
                 iconType="MaterialIcons"
                 validate={this.emailValidationRules}
-                forceDisplayErrorMessage={forceDisplayErrorMessages}
+                forceErrorDisplay={forceErrorDisplays}
               />
             </View>
             <View style={inputContainerStyle}>
@@ -186,7 +193,7 @@ class CreateAccountForm extends Component<Props> {
                 secureTextEntry
                 component={InputComponent}
                 validate={this.passwordValidationRules}
-                forceDisplayErrorMessage={forceDisplayErrorMessages}
+                forceErrorDisplay={forceErrorDisplays}
               />
             </View>
             <View style={inputContainerStyle}>
@@ -200,7 +207,7 @@ class CreateAccountForm extends Component<Props> {
                 secureTextEntry
                 component={InputComponent}
                 validate={this.passwordConfirmationValidationRules}
-                forceDisplayErrorMessage={forceDisplayErrorMessages}
+                forceErrorDisplay={forceErrorDisplays}
               />
             </View>
             <View style={inputContainerStyle}>
@@ -210,17 +217,16 @@ class CreateAccountForm extends Component<Props> {
                 options={organizationOptions}
                 label="Organization"
                 labelIcon="building"
-                iconType="FontAwesome5"
                 secureTextEntry
                 component={PickerInputComponent}
                 validate={this.organizationValidationRules}
-                forceDisplayErrorMessage={forceDisplayErrorMessages}
+                forceErrorDisplay={forceErrorDisplays}
               />
             </View>
             <View style={submitButtonContainerStyle}>
               <RoundedButton
                 onPress={this.onSubmitErrorChecker}
-                disabled={shouldDisableSubmitButton}
+                disabled={disableSubmitButton}
                 label="Create Account"
                 height={60}
               />
@@ -243,18 +249,18 @@ class CreateAccountForm extends Component<Props> {
 
   checkSubmitButtonStatus() {
     const { loading, valid } = this.props;
-    const { shouldDisableSubmitButton, forceDisplayErrorMessages } = this.state;
-    const updatedDisableSubmitState = this.submitButtonHelper.shouldDisableSubmitButton()
-      || loading || (forceDisplayErrorMessages && !valid);
-    if (updatedDisableSubmitState !== shouldDisableSubmitButton) {
-      this.setState({ shouldDisableSubmitButton: updatedDisableSubmitState });
+    const { disableSubmitButton: currentStatus, forceErrorDisplays } = this.state;
+    const disableSubmitButton = this.submitButtonHelper.shouldDisableSubmitButton()
+      || loading || (forceErrorDisplays && !valid);
+    if (disableSubmitButton !== currentStatus) {
+      this.setState({ disableSubmitButton });
     }
   }
 
   onSubmitErrorChecker() {
     const { valid } = this.props;
     if (!valid) {
-      this.setState({ forceDisplayErrorMessages: true });
+      this.setState({ forceErrorDisplays: true });
     } else {
       this.onSubmit();
     }
@@ -278,7 +284,8 @@ class CreateAccountForm extends Component<Props> {
         { label: 'Organization 3', value: '3' },
         { label: 'Organization 4', value: '4' },
         { label: 'Organization 5', value: '5' },
-      ]});
+      ],
+    });
   }
 }
 

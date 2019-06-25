@@ -1,13 +1,14 @@
 // @flow
 import React from 'react';
 import { Text, View } from 'react-native';
-import { Button, Icon } from 'native-base';
+import { Button } from 'native-base';
+import MultiTypeIcon, { MultiTypeIconTypes } from '../icons/MultiTypeIcon';
 
 type Props = {
   label: string,
   onPress: () => any,
   iconName: string,
-  iconType?: string,
+  multiIconType?: string,
   iconColor?: string,
   labelColor?: string,
 }
@@ -15,7 +16,7 @@ type Props = {
 function ActionButton(props: Props) {
   const {
     iconName,
-    iconType,
+    multiIconType,
     iconColor,
     labelColor,
     label,
@@ -33,11 +34,11 @@ function ActionButton(props: Props) {
     <Button style={{ ...dimensions, ...buttonStyle }} onPress={onPress}>
       <View style={{ ...containerStyle, ...dimensions }}>
         <View style={iconContainerStyle}>
-          <Icon
+          <MultiTypeIcon
             name={iconName}
-            type={iconType}
+            multiIconType={multiIconType}
             style={{ color: iconColor }}
-            fontSize={10}
+            size={20}
           />
         </View>
         <View style={{ ...labelContainerStyle }}>
@@ -81,7 +82,7 @@ const styles = {
 };
 
 ActionButton.defaultProps = {
-  iconType: 'FontAwesome5',
+  multiIconType: MultiTypeIconTypes.FontAwesome5,
   iconColor: 'black',
   labelColor: 'black',
 };

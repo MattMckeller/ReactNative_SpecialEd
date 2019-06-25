@@ -9,7 +9,7 @@ import GoalsNavigationButton from '../../../buttons/navigation-buttons/GoalsNavi
 import AttendanceNavigationButton
   from '../../../buttons/navigation-buttons/AttendanceNavigationButton';
 import styleVariables from '../../../../assets/StyleVariables';
-import { RouterHelpers } from '../../../../router-helpers';
+import { RouterHelpers } from '../../../../navigation/router-helpers';
 
 type Props = NavigationScreenProps & {
   currentRoute: string,

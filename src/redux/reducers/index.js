@@ -7,6 +7,7 @@ import MainFabReducer from './MainFabReducer';
 import StudentsReducer from './StudentsReducer';
 import LoadingReducer from './LoadingReducer';
 import RouteReducer from './RouteReducer';
+import BottomSlidingCardReducer from './BottomSlidingCardReducer';
 
 // todo create interface(s) for reference
 export default combineReducers({
@@ -18,4 +19,5 @@ export default combineReducers({
   studentState: StudentsReducer,
   loadingState: LoadingReducer,
   routeState: RouteReducer,
+  bottomSlidingCardState: BottomSlidingCardReducer,
 });

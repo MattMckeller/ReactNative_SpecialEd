@@ -1,16 +1,27 @@
 {
+  "main": "node_modules/expo/AppEntry.js",
   "name": "special-education",
   "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest",
-    "lint": "eslint ."
+    "clean-start": "node node_modules/react-native/local-cli/cli.js start -- --reset-cache",
+    "debug1": "open 'rndebugger://set-debugger-loc?host=192.168.1.74&port=8081'",
+    "debug2": "open 'rndebugger://set-debugger-loc?host=localhost&port=8081'",
+    "debug3": "open 'rndebugger://set-debugger-loc?host=localhost&port=19001'", "test": "jest",
+    "lint": "eslint .",
+    "start-expo": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "eject": "expo eject"
   },
   "dependencies": {
-    "@types/node": "^11.13.0",
+    "@expo/vector-icons": "^10.0.2",
+    "@types/node": "^11.13.14",
     "@types/react-navigation": "^3.0.7",
     "babel-plugin-transform-inline-environment-variables": "^0.4.3",
+    "expo": "^33.0.0",
     "lodash": "^4.17.11",
     "memoize-one": "^5.0.4",
     "native-base": "^2.12.1",
@@ -23,27 +34,28 @@
     "react-navigation": "^3.11.0",
     "react-redux": "^6.0.1",
     "redux": "^4.0.1",
-    "redux-form": "^8.2.0",
+    "redux-form": "^8.2.4",
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "7.4.0",
     "@babel/runtime": "7.4.2",
     "@react-native-community/eslint-config": "0.0.3",
-    "@types/hoist-non-react-statics": "^3.3.0",
-    "@types/react": "^16.8.8",
-    "@types/react-dom": "^16.8.3",
-    "@types/react-native": "^0.57.41",
-    "@types/react-redux": "^7.0.5",
+    "@types/hoist-non-react-statics": "^3.3.1",
+    "@types/react": "^16.8.20",
+    "@types/react-dom": "^16.8.4",
+    "@types/react-native": "^0.57.63",
+    "@types/react-redux": "^7.1.0",
     "@types/redux": "^3.6.0",
     "babel-jest": "24.5.0",
     "eslint": "5.15.3",
     "eslint-config-airbnb": "^17.1.0",
-    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-import": "^2.17.3",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "jest": "24.5.0",
     "metro-react-native-babel-preset": "0.53.1",
-    "react-test-renderer": "16.8.3"
+    "react-test-renderer": "16.8.3",
+    "redux-devtools-extension": "^2.13.8"
   },
   "jest": {
     "preset": "react-native"

@@ -8,9 +8,11 @@
 
 import React, { Component } from 'react';
 import { LayoutChangeEvent, View } from 'react-native';
+import { connect } from 'react-redux';
 import globalStyles from '../../../assets/styles/GlobalStyles';
 import MainFab from '../../buttons/MainFab';
 import CenteredSpinner from '../../shared/common/CenteredSpinner';
+import BottomSlidingCard from './cards/BottomSlidingCard';
 
 type Props = {
   children: any,
@@ -30,6 +32,33 @@ class MainLayout extends Component<Props> {
   constructor() {
     super();
     this.onFooterLayout = this.onFooterLayout.bind(this);
+  }
+
+  onFooterLayout(event: LayoutChangeEvent) {
+    const { height } = event.nativeEvent.layout;
+    this.setState({ footerHeight: height });
+  }
+
+  renderFooter() {
+    const { footer, footerContainerStyle } = this.props;
+    return (footer) ? (
+      <View
+        onLayout={this.onFooterLayout}
+        style={footerContainerStyle}
+      >
+        {footer}
+      </View>
+    ) : null;
+  }
+
+  renderSpinner() {
+    const { loading } = this.props;
+    if (loading === true) {
+      return (
+        <CenteredSpinner/>
+      );
+    }
+    return null;
   }
 
   render() {
@@ -59,33 +88,6 @@ class MainLayout extends Component<Props> {
         </View>
       </View>
     );
-  }
-
-  renderFooter() {
-    const { footer, footerContainerStyle } = this.props;
-    return (footer) ? (
-      <View
-        onLayout={this.onFooterLayout}
-        style={footerContainerStyle}
-      >
-        {footer}
-      </View>
-    ) : null;
-  }
-
-  renderSpinner() {
-    const { loading } = this.props;
-    if (loading === true) {
-      return (
-        <CenteredSpinner/>
-      );
-    }
-    return null;
-  }
-
-  onFooterLayout(event: LayoutChangeEvent) {
-    const { height } = event.nativeEvent.layout;
-    this.setState({ footerHeight: height });
   }
 }
 

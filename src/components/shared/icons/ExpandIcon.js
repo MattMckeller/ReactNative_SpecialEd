@@ -15,7 +15,6 @@ function ExpandIcon(props: Props) {
     <View style={{ height, width, ...rootContainerStyle }}>
       <Icon
         name="chevron-down"
-        type="FontAwesome5"
         style={iconStyle}
       />
     </View>
