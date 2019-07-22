@@ -6,6 +6,7 @@ const styleVariables = {
   errorColor: '#c90e27',
   warningColor: '#c9b00e',
   spinnerColor: '#000000',
+  offWhiteColor: '#F8F8F8',
   disabledButtonColor: '#cccccc',
   outlineButtonBorderColor: 'black',
   outlineButtonTextColor: 'black',
