@@ -7,8 +7,9 @@ import {
 
 
 const INITIAL_STATE = {
-  showing: true, // todo update to false
+  showing: false,
   node: <Text>Placeholder</Text>,
+  onCloseCallback: () => { console.log('default callback'); },
 };
 const BottomSlidingCardReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -16,7 +17,8 @@ const BottomSlidingCardReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         showing: true,
-        node: action.payload,
+        node: action.payload.node,
+        onCloseCallback: action.payload.onCloseCallback,
       };
     case HIDE_BOTTOM_SLIDING_CARD:
       return { ...INITIAL_STATE };

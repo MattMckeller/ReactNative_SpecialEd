@@ -8,16 +8,12 @@
 
 import React, { Component } from 'react';
 import { LayoutChangeEvent, View } from 'react-native';
-import { connect } from 'react-redux';
 import globalStyles from '../../../assets/styles/GlobalStyles';
 import MainFab from '../../buttons/MainFab';
-import CenteredSpinner from '../../shared/common/CenteredSpinner';
-import BottomSlidingCard from './cards/BottomSlidingCard';
 
 type Props = {
   children: any,
   footer?: React.Element,
-  loading?: boolean,
   contentContainerStyle?: {},
   fabContainerStyle?: {},
   footerContainerStyle?: {},
@@ -51,16 +47,6 @@ class MainLayout extends Component<Props> {
     ) : null;
   }
 
-  renderSpinner() {
-    const { loading } = this.props;
-    if (loading === true) {
-      return (
-        <CenteredSpinner/>
-      );
-    }
-    return null;
-  }
-
   render() {
     const {
       children,
@@ -84,7 +70,6 @@ class MainLayout extends Component<Props> {
           <View style={fabContainerStyle}>
             <MainFab/>
           </View>
-          {this.renderSpinner()}
         </View>
       </View>
     );
@@ -92,7 +77,6 @@ class MainLayout extends Component<Props> {
 }
 
 MainLayout.defaultProps = {
-  loading: false,
   contentContainerStyle: {
     alignItems: 'center',
     justifyContent: 'center',

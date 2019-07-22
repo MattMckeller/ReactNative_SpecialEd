@@ -17,6 +17,10 @@ const LoadingReducer = (state = INITIAL_STATE, action) => {
   if (action.meta && action.meta.finishAsyncRequest) {
     const initiallyGreaterThanZero = processingAsyncRequestCount > 0;
     const newCount = initiallyGreaterThanZero ? processingAsyncRequestCount - 1 : 0;
+    // todo keep log but move to centralized logging
+    if (!initiallyGreaterThanZero) {
+      console.log('error with loading - finishing async request even though current count is 0');
+    }
 
     return {
       ...state,

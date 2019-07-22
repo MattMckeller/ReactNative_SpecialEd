@@ -77,3 +77,5 @@ export const RETRIEVE_MULTIPLE_STUDENT_PDF_FAIL = 'retrieve_multiple_student_pdf
 export const NAVIGATION_STATE_CHANGE = 'navigation_state_change';
 export const SHOW_BOTTOM_SLIDING_CARD = 'show_bottom_sliding_card';
 export const HIDE_BOTTOM_SLIDING_CARD = 'hide_bottom_sliding_card';
+export const ADD_NEW_ERROR_TOAST = 'add_new_error_toast';
+export const DISPLAYED_TOAST = 'displayed_toast';

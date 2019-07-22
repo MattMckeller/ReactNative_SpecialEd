@@ -8,28 +8,31 @@ import styleVariables from '../../../../assets/StyleVariables';
 type Props = {
   children: any;
   outerContainerStyle?: {},
+  innerContainerStyle?: {},
 }
 
 function CenteredWrapper(props: Props) {
   const { flexColumn } = globalStyles;
   let {
     outerContainerStyle,
+    innerContainerStyle,
   } = styles;
   const {
-    innerContainerStyle,
     secondContainerStyle,
   } = styles;
   const {
     outerContainerStyle: outerContainerStyleProp,
+    innerContainerStyle: innerContainerStyleProp,
     children,
   } = props;
 
   outerContainerStyle = { ...outerContainerStyle, ...outerContainerStyleProp };
+  innerContainerStyle = { ...innerContainerStyle, ...innerContainerStyleProp };
   return (
     <View style={{
       ...outerContainerStyle,
       ...flexColumn,
-      ...{ backgroundColor: 'blue' },
+      ...{ backgroundColor: 'transparent' },
     }}
     >
       <View style={secondContainerStyle}>
@@ -49,17 +52,19 @@ const styles = {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'transparent',
   },
   innerContainerStyle: {
     width: '95%',
     height: '100%',
-    backgroundColor: 'brown',
+    backgroundColor: 'transparent',
     justifyContent: 'center',
   },
 };
 
 CenteredWrapper.defaultProps = {
   outerContainerStyle: {},
+  innerContainerStyle: {},
 };
 
 const mapStateToProps = () => ({});

@@ -5,9 +5,12 @@ import {
   SHOW_BOTTOM_SLIDING_CARD,
 } from './types';
 
-export const showBottomCard = (card: React.ReactNode) => ({
+export const showBottomCard = (node: React.ReactNode, onCloseCallback: () => any) => ({
   type: SHOW_BOTTOM_SLIDING_CARD,
-  payload: card,
+  payload: {
+    node,
+    onCloseCallback,
+  },
 });
 
 export const hideBottomCard = (card: React.ReactNode) => ({
