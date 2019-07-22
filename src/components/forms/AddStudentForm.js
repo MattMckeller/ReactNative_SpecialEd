@@ -58,38 +58,26 @@ type Props = {
   gender: string,
   grade: string,
   school: string,
-  loading: boolean,
   onErrorStateChange: (errorData: SubmitButtonErrorDisplayData) => void,
   onSubmitErrorChecker: (callback: ()=> any) => void,
   disableSubmitButton: false,
   forceErrorDisplays: false,
-  // shouldOpenErrorToast: boolean, // todo remove this from form component
 } & FormProps
 
 class AddStudentForm extends Component<Props> {
   constructor() {
     super();
     this.onSubmit = this.onSubmit.bind(this);
-    this.showErrorToast = this.showErrorToast.bind(this);
     this.attemptSubmit = this.attemptSubmit.bind(this);
   }
 
-  componentDidUpdate(prevProps: Props): void {
-    // todo remove toast handling
-    // const { shouldOpenErrorToast, loading } = this.props;
-    const { loading } = this.props;
-    // if (shouldOpenErrorToast === true) {
-    //   this.showErrorToast();
-    // }
-    if (loading !== prevProps.loading) {
-      // this.checkSubmitButtonStatus();
-    }
-  }
-
-  showErrorToast() {
-    // todo Make into HOC or something
-    // didShowErrorToastAction();
-  }
+  // componentDidUpdate(prevProps: Props): void {
+  // todo figure out why this is here, rename to processing if its actually needed?
+  // const { loading } = this.props;
+  // if (loading !== prevProps.loading) {
+  // this.checkSubmitButtonStatus();
+  // }
+  // }
 
   render() {
     const {
@@ -100,11 +88,10 @@ class AddStudentForm extends Component<Props> {
     return (
       <ScrollView
         style={{
-          backgroundColor: 'pink',
-          height: 1100,
+          height: 0, // todo remove
         }}
         contentContainerStyle={{
-          backgroundColor: 'teal',
+          // backgroundColor: 'teal',
           marginTop: 50,
           height: 1100,
         }}
@@ -144,8 +131,6 @@ class AddStudentForm extends Component<Props> {
           onPress={this.attemptSubmit}
           disabled={disableSubmitButton}
         />
-        {/* // todo why do i have spinner here? move it out */}
-        {/*{this.renderSpinner()}*/}
       </ScrollView>
     );
   }
@@ -202,24 +187,14 @@ class AddStudentForm extends Component<Props> {
 }
 
 const selector = formValueSelector(FORM_NAME);
-const mapStateToProps = (state) => {
-  const {
-    loadingState: { loading },
-    studentState: { addStudentError },
-  } = state;
-  return {
-    firstName: selector(state, FIRST_NAME_INPUT_NAME),
-    lastName: selector(state, LAST_NAME_INPUT_NAME),
-    birthDate: selector(state, BIRTH_DATE_INPUT_NAME),
-    gender: selector(state, GENDER_INPUT_NAME),
-    grade: selector(state, GRADE_INPUT_NAME),
-    school: selector(state, SCHOOL_INPUT_NAME),
-    error: addStudentError,
-    loading,
-    // todo handle toast
-    // shouldOpenErrorToast: createAccount.shouldOpenErrorToast,
-  };
-};
+const mapStateToProps = state => ({
+  firstName: selector(state, FIRST_NAME_INPUT_NAME),
+  lastName: selector(state, LAST_NAME_INPUT_NAME),
+  birthDate: selector(state, BIRTH_DATE_INPUT_NAME),
+  gender: selector(state, GENDER_INPUT_NAME),
+  grade: selector(state, GRADE_INPUT_NAME),
+  school: selector(state, SCHOOL_INPUT_NAME),
+});
 
 AddStudentForm = formHelper(AddStudentForm, AllInputFieldNames);
 AddStudentForm = reduxForm({
@@ -228,6 +203,4 @@ AddStudentForm = reduxForm({
 
 export default connect(mapStateToProps, {
   doAddStudentAction: doAddStudent,
-  // todo handle toasts
-  // didShowErrorToastAction: didShowErrorToast,
 })(AddStudentForm);

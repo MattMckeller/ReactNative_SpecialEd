@@ -20,19 +20,16 @@ const FirstNameInput = ({
   label,
   forceErrorDisplay,
   validationRules,
-}: Props) => {
-  console.log('first name input validation rules', validationRules);
-  return (
-    <Field
-      name={formName}
-      onErrorStateChange={onErrorStateChange}
-      label={label}
-      component={DefaultInput}
-      validate={validationRules}
-      forceErrorDisplay={forceErrorDisplay}
-    />
-  );
-};
+}: Props) => (
+  <Field
+    name={formName}
+    onErrorStateChange={onErrorStateChange}
+    label={label}
+    component={DefaultInput}
+    validate={validationRules}
+    forceErrorDisplay={forceErrorDisplay}
+  />
+);
 FirstNameInput.defaultProps = {
   required: true,
   fieldName: 'First Name',

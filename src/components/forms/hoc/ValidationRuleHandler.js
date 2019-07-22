@@ -66,7 +66,6 @@ const validationRuleHandler = (WrappedComponent,
     }
 
     updateValidationRules({ required, fieldName }) {
-      console.log('update validation rules', fieldName, required);
       this.validationRules = this.validationRules.filter(rule => rule !== this.requiredRule);
       this.requiredRule = Required({ fieldName });
       if (required) {

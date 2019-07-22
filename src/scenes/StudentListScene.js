@@ -20,6 +20,7 @@ import ExportAllToPdfButton from '../components/buttons/action-buttons/ExportAll
 import AddStudentButton from '../components/buttons/action-buttons/AddStudentButton';
 import { RouterHelpers } from '../navigation/router-helpers';
 import { hideBottomCard, showBottomCard } from '../redux/actions/BottomSlidingCardActions';
+import AddStudentScene from './AddStudentScene';
 
 type Props = NavigationScreenProps & {
   configureMainFabAction: () => any,
@@ -29,7 +30,6 @@ type Props = NavigationScreenProps & {
   hideBottomCardAction: (node: React.ReactNode) => any,
   didShowStudentListErrorToastAction: () => any,
   students: StudentInterface[],
-  loading: boolean,
   retrieveStudentsError: boolean,
   shouldOpenStudentListErrorToast: boolean,
   navigation: NavigationScreenProps
@@ -54,6 +54,8 @@ class StudentListScene extends Component<Props> {
       retrieveStudentsAction,
     } = this.props;
 
+    console.log('cdm student list scene');
+
     configureMainFabAction({
       buttons: [
         this.getActionFabs(),
@@ -71,9 +73,9 @@ class StudentListScene extends Component<Props> {
   }
 
   render() {
-    const { students, loading } = this.props;
+    const { students } = this.props;
     return (
-      <MainLayout loading={loading}>
+      <MainLayout>
         <CenteredWrapper>
           <StudentList students={students} onSelectStudent={this.onSelectStudent}/>
         </CenteredWrapper>
@@ -99,7 +101,10 @@ class StudentListScene extends Component<Props> {
       hideBottomCardAction,
     } = this.props;
     // todo
-    // showBottomCardAction()
+    showBottomCardAction(<AddStudentScene/>, function onCloseAddStudentCard() {
+      console.log('closed card');
+      hideBottomCardAction();
+    });
   }
 
   onExportPdf() {
@@ -135,12 +140,8 @@ const mapStateToProps = (state) => {
       shouldOpenStudentListErrorToast,
       retrieveStudentsError,
     },
-    loadingState: {
-      loading,
-    },
   } = state;
   return {
-    loading,
     students,
     shouldOpenStudentListErrorToast,
     retrieveStudentsError,
@@ -153,5 +154,5 @@ export default connect(mapStateToProps, {
   didShowStudentListErrorToastAction: didShowStudentListErrorToast,
   selectedStudentFromListAction: selectedStudentFromList,
   showBottomCardAction: showBottomCard,
-  hideBottomCardAction: showBottomCard,
+  hideBottomCardAction: hideBottomCard,
 })(StudentListScene);

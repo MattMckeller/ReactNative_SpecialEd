@@ -39,19 +39,16 @@ const formHelper = (WrappedComponent, AllInputFieldNames: string[]) => {
     // todo maybe move these to a HOC and pass properties down?
     // todo see if this can be moved to a centralized component
     onErrorStateChange(errorData: SubmitButtonErrorDisplayData) {
-      // console.log({ errorData });
       this.submitButtonHelper.onErrorStateChange(errorData);
       this.checkSubmitButtonStatus();
     }
 
     checkSubmitButtonStatus() {
-      console.log('check submit button status');
       const { loading, valid } = this.props;
       const { disableSubmitButton: currentStatus, forceErrorDisplays } = this.state;
       const disableSubmitButton = this.submitButtonHelper.shouldDisableSubmitButton()
         || loading || (forceErrorDisplays && !valid);
       if (disableSubmitButton !== currentStatus) {
-        console.log('do disable submit button');
         this.setState({ disableSubmitButton });
       }
     }
@@ -70,8 +67,6 @@ const formHelper = (WrappedComponent, AllInputFieldNames: string[]) => {
         forceErrorDisplays,
         disableSubmitButton,
       } = this.state;
-      // console.log('form helper');
-      // console.log({ ...this.props });
       return (
         <WrappedComponent
           {...this.props}
