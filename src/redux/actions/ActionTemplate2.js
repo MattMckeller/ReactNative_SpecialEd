@@ -1,4 +1,5 @@
 // @flow
+// note - register actions in index.js
 import {
   ADD_STUDENT_NOTE_START,
   ADD_STUDENT_NOTE_SUCCESS,

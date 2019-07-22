@@ -9,3 +9,4 @@ export * from './StudentProfileActions';
 export * from './AttendanceActions';
 export * from './GoalActions';
 export * from './NoteActions';
+export * from './ToastActions';

@@ -1,4 +1,4 @@
-
+// note - register actions in index.js
 export const retrievalMethod = () => (dispatch) => {
   dispatch({ type: START, payload: null });
 

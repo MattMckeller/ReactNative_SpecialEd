@@ -26,7 +26,11 @@ import {
   RETRIEVE_MULTIPLE_STUDENT_PDF_SUCCESS,
   RETRIEVE_STUDENT_DETAILS_START,
   RETRIEVE_STUDENT_DETAILS_SUCCESS,
-  RETRIEVE_STUDENT_DETAILS_FAIL, ADD_STUDENT_SUCCESS, ADD_STUDENT_FAIL, ADD_STUDENT_START,
+  RETRIEVE_STUDENT_DETAILS_FAIL,
+  ADD_STUDENT_SUCCESS,
+  ADD_STUDENT_FAIL,
+  ADD_STUDENT_START,
+  ADD_NEW_ERROR_TOAST,
 } from './types';
 import { STUDENT_LIST_TEST_DATA } from '../../../extra/testData/students';
 import type { StudentInterface } from '../../data-models/student/Student.interface';
@@ -121,21 +125,22 @@ export const doAddStudent = (student: StudentInterface) => (dispatch) => {
   });
 
   // todo implement backend calls
-  setTimeout(() => {
-    dispatch({
-      type: ADD_STUDENT_SUCCESS,
-      payload: student,
-      meta: { finishAsyncRequest: true },
-    });
-  }, 10);
-
   // setTimeout(() => {
   //   dispatch({
-  //     type: ADD_STUDENT_FAIL,
-  //     payload: { error: 'Error from backend.' },
+  //     type: ADD_STUDENT_SUCCESS,
+  //     payload: student,
   //     meta: { finishAsyncRequest: true },
   //   });
   // }, 10);
+
+  setTimeout(() => {
+    console.log('dispatch new error toast');
+    dispatch({
+      type: ADD_NEW_ERROR_TOAST,
+      payload: { message: 'Add student failed (+ backend related information).' },
+      meta: { finishAsyncRequest: true },
+    });
+  }, 10);
 };
 
 const retrieveStudentsSuccess = (dispatch, students) => {
