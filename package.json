@@ -6,10 +6,8 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "clean-start": "node node_modules/react-native/local-cli/cli.js start -- --reset-cache",
-    "debug1": "open 'rndebugger://set-debugger-loc?host=192.168.1.74&port=8081'",
-    "debug2": "open 'rndebugger://set-debugger-loc?host=localhost&port=8081'",
-    "debug3": "open 'rndebugger://set-debugger-loc?host=localhost&port=19001'", "test": "jest",
     "lint": "eslint .",
+    "start-debugger": "open \"rndebugger://set-debugger-loc?host=localhost&port=19001\"",
     "start-expo": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
@@ -35,7 +33,8 @@
     "react-redux": "^6.0.1",
     "redux": "^4.0.1",
     "redux-form": "^8.2.4",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "@babel/core": "7.4.0",
