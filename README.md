@@ -1,6 +1,8 @@
 # React Native
 Work In Progress. At this time not all features are implemented.
 
+This is a platform to aid Exceptional Student Education(ESE) by providing an organized and efficient way of recording and tracking student progress.
+
 ## Technologies
 * React Native - ES6, Flow, Eslint
 * Redux + Redux Thunk + Redux-Form
