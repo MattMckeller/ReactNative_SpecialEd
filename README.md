@@ -1,5 +1,5 @@
 # React Native
-Work In Progress. At this time not all features are implemented.
+Work In Progress.
 
 This is a platform to aid Exceptional Student Education(ESE) by providing an organized and efficient way of recording and tracking student progress.
 
