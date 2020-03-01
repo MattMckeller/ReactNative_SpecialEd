@@ -1,7 +1,7 @@
 # React Native
-Work In Progress.
-
 This is a platform to aid Exceptional Student Education(ESE) by providing an organized and efficient way of recording and tracking student progress.
+
+Work In Progress.
 
 ## Technologies
 * React Native - ES6, Flow, Eslint
