@@ -1,7 +1,7 @@
 # React Native
 This is a platform to aid Exceptional Student Education(ESE) by providing an organized and efficient way of recording and tracking student progress.
 
-Work In Progress.
+Work In Progress. Also still need to fully update to hooks
 
 ## Technologies
 * React Native - ES6, Flow, Eslint
