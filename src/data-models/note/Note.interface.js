@@ -7,7 +7,7 @@ export interface NoteInterface {
   id: number,
   name: string;
   text: string;
-  date: string; // date
+  date: string; // date or timestamp
   minutes: number | string;
   student: StudentInterface;
   user: UserInterface;
